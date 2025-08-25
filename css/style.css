@@ -196,6 +196,13 @@ img {
   border-style: none;
 }
 
+/* Brand logo sizing */
+.navbar-brand img.logo {
+  height: 70px;
+  width: auto;
+  display: block;
+}
+
 svg {
   overflow: hidden;
   vertical-align: middle;
