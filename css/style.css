@@ -9534,7 +9534,7 @@ h6,
 @media (min-width: 992px) {
   #header-carousel,
   .page-header {
-    margin-top: -42px;
+    margin-top: 0; /* fixed-top navbar: avoid pulling content under nav */
   }
 }
 
@@ -9614,3 +9614,14 @@ h1, h2, h3, h4, h5, h6,
 .page-item.active .page-link { background-color: var(--primary); border-color: var(--primary); }
 
 .testimonial-carousel .owl-dot.active { background: var(--secondary); }
+
+/* Fixed-top navbar adjustments */
+/* Ensure the navbar stays above all content */
+.navbar.fixed-top { z-index: 1050; }
+/* Keep the decorative bar behind the navbar */
+.nav-bar::before { z-index: 0; }
+/* Offset page content so it's not hidden under the fixed navbar */
+body { padding-top: 100px; }
+@media (max-width: 991.98px) {
+  body { padding-top: 85px; }
+}
