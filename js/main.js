@@ -16,6 +16,11 @@
         }
         toggleNavbarMethod();
         $(window).resize(toggleNavbarMethod);
+
+        // Auto close the navbar collapse when a link is clicked (mobile)
+        $(document).on('click', '.navbar-collapse.show .nav-link', function () {
+            $('.navbar-collapse').collapse('hide');
+        });
     });
     
     

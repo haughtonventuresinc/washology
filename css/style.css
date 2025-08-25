@@ -9625,3 +9625,24 @@ body { padding-top: 100px; }
 @media (max-width: 991.98px) {
   body { padding-top: 85px; }
 }
+
+/* Mobile hamburger expanded menu styling */
+@media (max-width: 991.98px) {
+  .navbar .navbar-collapse {
+    background: #ffffff;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Prevent horizontal overflow on small screens */
+html, body { max-width: 100vw; overflow-x: hidden; }
+/* Ensure common full-width wrappers don't bleed due to negative margins */
+.nav-bar,
+.container-fluid,
+.page-header,
+#header-carousel,
+.contact-info,
+.owl-carousel,
+.carousel {
+  overflow-x: hidden;
+}
