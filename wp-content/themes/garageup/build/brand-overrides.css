@@ -94,3 +94,141 @@ section.overlay-jade:before {
 .banner-wrapper a:hover {
   border-color: transparent !important;
 }
+
+/* Get Started section overrides */
+.get-started {
+  background-color: var(--brand-red) !important;
+  /* ensure typography inherits orange */
+  --bs-heading-color: var(--brand-orange);
+  --bs-body-color: var(--brand-orange);
+  color: var(--brand-orange) !important;
+}
+.get-started h1,
+.get-started h2,
+.get-started h3,
+.get-started h4,
+.get-started h5,
+.get-started h6,
+.get-started p,
+.get-started a,
+.get-started .section-title {
+  color: white !important;
+}
+
+/* Button inside Get Started block */
+.get-started .btn,
+.get-started .btn-primary,
+.get-started .btn-primary-dark {
+  background-color: var(--brand-orange) !important;
+  border-color: var(--brand-orange) !important;
+  color: #fff !important;
+}
+.get-started .btn:hover,
+.get-started .btn:focus,
+.get-started .btn-primary:hover,
+.get-started .btn-primary:focus,
+.get-started .btn-primary-dark:hover,
+.get-started .btn-primary-dark:focus {
+  background-color: #e79112 !important; /* slightly darker orange */
+  border-color: #e79112 !important;
+  color: #fff !important;
+}
+
+/* Who We Are: Learn More button -> brand orange */
+.who-we-are .btn.btn-primary-dark,
+.who-we-are a.btn.btn-primary-dark {
+  background-color: var(--brand-orange) !important;
+  border-color: var(--brand-orange) !important;
+  color: #fff !important;
+}
+.who-we-are .btn.btn-primary-dark:hover,
+.who-we-are .btn.btn-primary-dark:focus,
+.who-we-are a.btn.btn-primary-dark:hover,
+.who-we-are a.btn.btn-primary-dark:focus {
+  background-color: #e79112 !important; /* slightly darker orange */
+  border-color: #e79112 !important;
+  color: #fff !important;
+}
+
+/* Footer social icons: make white SVGs render as brand orange */
+.footer .social-icons-wrapper img {
+  /* approximate #F7A11A */
+  filter: invert(69%) sepia(71%) saturate(743%) hue-rotate(352deg) brightness(101%) contrast(101%);
+}
+.footer .social-icons-wrapper a:hover img,
+.footer .social-icons-wrapper a:focus img {
+  /* slightly stronger on hover */
+  filter: invert(71%) sepia(83%) saturate(902%) hue-rotate(349deg) brightness(101%) contrast(105%);
+}
+
+/* Reviews section overrides */
+.reviews .resi-review--stars svg path,
+.resi-reviews .resi-review--stars svg path {
+  /* force star icons to brand red, overriding inline fills */
+  fill: var(--brand-red) !important;
+}
+
+.resi-reviews .resi-review--content,
+.resi-reviews .resi-review--content p,
+.reviews .resi-review--content,
+.reviews .resi-review--content p {
+  /* review text in brand orange */
+  color: var(--brand-orange) !important;
+}
+
+/* Warranty page background */
+body.page-id-525,
+body.page-id-525 #wrapper,
+body.page-id-525 .page-defualt-template,
+body.page-id-525 .page-default-template {
+  background-color: var(--brand-red) !important;
+}
+
+/* Our Warranty banner background */
+.warranty.banner {
+  /* use background to override any existing image/gradient */
+  background: var(--brand-red) !important;
+  background-image: none !important;
+}
+.warranty.banner::before,
+.warranty.banner::after {
+  /* neutralize theme overlays if present */
+  background: none !important;
+  background-image: none !important;
+  display: none !important;
+  content: none !important;
+}
+
+/* Stronger specificity for homepage warranty banner */
+section.warranty.banner.bg-jade-geometric {
+  background: var(--brand-red) !important;
+  background-image: none !important;
+}
+
+/* Blog features section should be white */
+section.blogFeat {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+section.blogFeat::before,
+section.blogFeat::after {
+  background: none !important;
+  background-image: none !important;
+  content: none !important;
+}
+
+/* Blog features intro heading color */
+section.blogFeat h4 {
+  color: var(--brand-orange) !important;
+}
+
+/* Our Stats icons -> brand orange */
+.our-stats .our-stats--stat--icon img {
+  /* approximate #F7A11A */
+  filter: invert(69%) sepia(71%) saturate(743%) hue-rotate(352deg) brightness(101%) contrast(101%);
+}
+/* Slight emphasis on hover/focus */
+.our-stats .our-stats--stat:hover .our-stats--stat--icon img,
+.our-stats .our-stats--stat:focus-within .our-stats--stat--icon img {
+  filter: invert(71%) sepia(83%) saturate(902%) hue-rotate(349deg) brightness(101%) contrast(105%);
+}

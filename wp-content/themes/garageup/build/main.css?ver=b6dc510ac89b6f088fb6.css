@@ -16853,12 +16853,12 @@ h4 {
     --bs-btn-color: var(--garageup-snow);
     --bs-btn-bg: var(--garageup-carbon);
     --bs-btn-hover-color: var(--garageup-snow);
-    --bs-btn-hover-bg: var(--garageup-jade)
+    --bs-btn-hover-bg: var(--brand-orange)
 }
 
 .btn-jade {
     --bs-btn-color: var(--garageup-snow);
-    --bs-btn-bg: var(--garageup-jade);
+    --bs-btn-bg: var(--brand-orange);
     --bs-btn-hover-color: var(--garageup-snow);
     --bs-btn-hover-bg: var(--garageup-carbon)
 }
@@ -17268,7 +17268,7 @@ h4 {
     align-items: center;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
-    background: var(--garageup-jade);
+    background: var(--brand-orange);
     color: #fff;
     justify-content: center;
     margin: auto;
@@ -17373,10 +17373,6 @@ h4 {
     transform: scaleY(-1)
 }
 
-.page-template-landing .franchise {
-    --bs-heading-color: var(--garageup-snow);
-    --bs-body-color: var(--garageup-snow)
-}
 
 .page-template-landing .franchise .content-container {
     background-color: var(--garageup-carbon);
@@ -17405,7 +17401,7 @@ h4 {
 }
 
 .page-template-landing .franchise .content-container .text-container svg path {
-    fill: var(--garageup-jade);
+    fill: var(--brand-orange);
     fill-opacity: .75
 }
 
@@ -17550,7 +17546,7 @@ h4 {
 }
 
 .page-template-landing-franchise .hero .form-container {
-    background: var(--garageup-jade);
+    background: var(--brand-orange);
     border-radius: var(--garageup-border-radius);
     padding: 1.5rem
 }
@@ -17580,8 +17576,8 @@ h4 {
 }
 
 .page-template-landing-franchise .hero .wpforms-form .wpforms-field-container>div.wpforms-field-checkbox {
-    --wpforms-button-background-color: var(--garageup-jade);
-    --wpforms-field-border-color: var(--garageup-jade);
+    --wpforms-button-background-color: var(--brand-orange);
+    --wpforms-field-border-color: var(--brand-orange);
     --wpforms-field-border-size: 1px
 }
 
@@ -17605,14 +17601,14 @@ h4 {
 
 .page-template-landing-franchise .hero .wpforms-form .wpforms-submit {
     --wpforms-button-background-color: var(--garageup-acid-green);
-    --wpforms-button-text-color: var(--garageup-jade);
+    --wpforms-button-text-color: var(--brand-orange);
     font-weight: 700;
     width: 100%
 }
 
 .page-template-landing-franchise .scroller {
     --background-color: var(--garageup-ash-light);
-    --icon-fill: var(--garageup-jade)
+    --icon-fill: var(--brand-orange)
 }
 
 .page-template-landing-franchise .intro .image-container img {
@@ -17622,7 +17618,7 @@ h4 {
 }
 
 .page-template-landing-franchise .perks-wrapper .step-number {
-    color: var(--garageup-jade)
+    color: var(--brand-orange)
 }
 
 .page-template-landing-franchise .perks-wrapper img {
@@ -17768,7 +17764,7 @@ h4 {
 }
 
 .contact-page-v2-template .contact-us--hero {
-    border-bottom: var(--border-size) solid var(--garageup-jade);
+    border-bottom: var(--border-size) solid var(--brand-orange);
     margin-bottom: calc(var(--border-size)*3);
     position: relative
 }
@@ -17837,7 +17833,7 @@ h4 {
 }
 
 .contact-page-v2-template .content-bottom-wrapper {
-    background-color: var(--garageup-jade);
+    background-color: var(--brand-orange);
     border-radius: min(1.5rem, 2vw);
     color: var(--garageup-snow);
     display: -webkit-box;
@@ -17970,7 +17966,7 @@ h4 {
 }
 
 .contact-page-v2-template .bottom-form-wrapper .inner-wrapper .wpforms-submit-container button {
-    --wpforms-button-background-color-alt: var(--garageup-jade);
+    --wpforms-button-background-color-alt: var(--brand-orange);
     --wpforms-button-text-color: var(--garageup-snow);
     margin: auto;
     min-width: 50% !important
@@ -18048,7 +18044,7 @@ h4 {
 
 .page-template-squeeze .about-container,
 .page-template-squeeze-2 .about-container {
-    border-bottom: var(--border-size) solid var(--garageup-jade);
+    border-bottom: var(--border-size) solid var(--brand-orange);
     font-size: 1.25rem;
     margin-bottom: calc(var(--border-size)*3);
     position: relative
@@ -18146,7 +18142,7 @@ h4 {
 
 .page-template-squeeze .banner-image svg path,
 .page-template-squeeze-2 .banner-image svg path {
-    fill: var(--garageup-jade)
+    fill: var(--brand-orange)
 }
 
 .page-template-squeeze .warranty-container,
@@ -18709,7 +18705,7 @@ h4 {
 }
 
 .service-page-template .perks-wrapper .step-number {
-    color: var(--garageup-jade)
+    color: var(--brand-orange)
 }
 
 .service-page-template .perks-wrapper .img-fluid {
@@ -18889,7 +18885,7 @@ h4 {
 }
 
 .single-resi_city .perks-wrapper .step-number {
-    color: var(--garageup-jade)
+    color: var(--brand-orange)
 }
 
 .single-resi_city .perks-wrapper img {
@@ -19367,7 +19363,7 @@ h4 {
 }
 
 .page-template-design-studio .hero--banner-image {
-    border-bottom: min(6rem, 9vw) solid var(--garageup-jade);
+    border-bottom: min(6rem, 9vw) solid var(--brand-orange);
     position: relative
 }
 
@@ -19386,7 +19382,7 @@ h4 {
 }
 
 .page-template-design-studio .hero--banner-image svg path {
-    fill: var(--garageup-jade)
+    fill: var(--brand-orange)
 }
 
 .page-template-design-studio .design-studio--featured-image {
@@ -19607,7 +19603,7 @@ h4 {
 }
 
 .blog-archive-wrapper article .card .card-body .floating-cat p {
-    background: var(--garageup-jade);
+    background: var(--brand-orange);
     border-radius: 1000px;
     color: var(--garageup-snow);
     font-family: Futura Now;
@@ -19772,8 +19768,8 @@ h4 {
 }
 
 .post-hero .gradient-overlay {
-    background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(var(--garageup-jade)));
-    background: linear-gradient(180deg, transparent 0, var(--garageup-jade) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(var(--brand-orange)));
+    background: linear-gradient(180deg, transparent 0, var(--brand-orange) 100%);
     bottom: 0;
     height: 100%;
     position: absolute;
@@ -19849,7 +19845,7 @@ h4 {
 }
 
 #post-single-container .cat-wrapper .cat-wrapper-inner a:hover {
-    color: var(--garageup-jade);
+    color: var(--brand-orange);
     text-decoration: underline
 }
 
@@ -19961,7 +19957,7 @@ section.overlay-jade a:hover {
 }
 
 section {
-    --bs-heading-color: var(--garageup-jade);
+    --bs-heading-color: var(--brand-orange);
     color: var(--bs-body-color);
     padding: var(--garageup-section-padding-vertical) var(--garageup-section-padding-horizontal)
 }
@@ -19976,7 +19972,7 @@ section.overlay-jade {
 }
 
 section.overlay-jade:before {
-    background-color: var(--garageup-jade);
+    background-color: var(--brand-orange);
     content: "";
     height: 100%;
     left: 0;
@@ -19995,7 +19991,7 @@ section.bg-primary {
 
 section.bg-garageup-primary-dark,
 section.bg-primary-dark {
-    background-color: var(--garageup-jade)
+    background-color: var(--brand-orange)
 }
 
 section.bg-garageup-acid-green {
@@ -20015,13 +20011,9 @@ section.bg-garageup-ash-light {
     background-color: var(--garageup-ash-light)
 }
 
-section.bg-jade-geometric {
-    background: var(--garageup-jade) url(images/bg-garageup-jade-geometric.f97df94e.png) no-repeat center;
-    background-size: cover
-}
 
 section.bg-jade-squares {
-    background: var(--garageup-jade) url(images/bg-jade-squares.c7488ee0.png) no-repeat center;
+    background: var(--brand-orange) url(images/bg-jade-squares.c7488ee0.png) no-repeat center;
     background-size: cover
 }
 
@@ -20109,7 +20101,7 @@ section.stripes-triple-bottom:before {
 
 section.stripes-double-top {
     --garageup-stripe-1: var(--garageup-acid-green);
-    --garageup-stripe-2: var(--garageup-jade);
+    --garageup-stripe-2: var(--brand-orange);
     --garageup-stripe-base-size: 5px;
     padding-top: calc(var(--garageup-section-padding-vertical) + var(--garageup-stripe-base-size)*4);
     position: relative
@@ -20128,7 +20120,7 @@ section.stripes-double-top:before {
 
 section.stripes-double-bottom {
     --garageup-stripe-1: var(--garageup-acid-green);
-    --garageup-stripe-2: var(--garageup-jade);
+    --garageup-stripe-2: var(--brand-orange);
     --garageup-stripe-base-size: 10px;
     padding-bottom: calc(var(--garageup-section-padding-vertical) + var(--garageup-stripe-base-size)*4);
     position: relative
@@ -20302,11 +20294,11 @@ section img {
 }
 
 .area-served .content-wrapper .content-left .locationList-row ul li svg path {
-    fill: var(--garageup-jade)
+    fill: var(--brand-orange)
 }
 
 .area-served .content-wrapper .content-left .locationList-row ul li a {
-    color: var(--garageup-jade);
+    color: var(--brand-orange);
     font-weight: 400;
     text-decoration: none
 }
@@ -20358,7 +20350,7 @@ section img {
 }
 
 .area-served .content-wrapper .content-right .content-wrapper .contactInfo-wrapper .inner-wrapper svg path {
-    fill: var(--garageup-jade)
+    fill: var(--brand-orange)
 }
 
 .area-served .content-wrapper .content-right .content-wrapper .contactInfo-wrapper .inner-wrapper a,
@@ -20496,7 +20488,7 @@ section img {
 
 .hero.gradient-overlay {
     --bs-heading-color: var(--garageup-snow);
-    --hero-overlay: linear-gradient(180deg, transparent 0%, var(--garageup-jade) 100%);
+    --hero-overlay: linear-gradient(180deg, transparent 0%, var(--brand-orange) 100%);
     --hero-overlay-opacity: 1
 }
 
@@ -20537,7 +20529,7 @@ section img {
 
 .local {
     --bs-heading-color: #fff;
-    background-color: var(--garageup-jade);
+    background-color: var(--brand-orange);
     color: var(--garageup-snow);
     min-height: 400px;
     position: relative
@@ -21521,7 +21513,7 @@ section img {
     --bs-heading-color: #fff;
     --bs-body-color: var(--garageup-snow);
     --footer-border-radius: min(2rem, 2vw);
-    background-color: var(--garageup-jade);
+    background-color: var(--brand-orange);
     border-top-left-radius: var(--footer-border-radius);
     border-top-right-radius: var(--footer-border-radius);
     color: var(--bs-body-color);

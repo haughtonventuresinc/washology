@@ -88,6 +88,11 @@ app.get('/contact-us', (req, res) => {
   res.status(404).send('Not Found');
 });
 
+// Redirect shorthand /contact -> /contact-us
+app.get('/contact', (req, res) => {
+  return res.redirect(301, '/contact-us');
+});
+
 app.get('/privacy-policy', (req, res) => {
   if (sendHtml(res, path.join('privacy-policy', 'index.html'))) return;
   if (sendHtml(res, 'privacy-policy.html')) return;
