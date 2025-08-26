@@ -73,6 +73,21 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 <link rel='stylesheet' id='main-css' href='../wp-content/themes/garageup/build/main.css%3Fver=b6dc510ac89b6f088fb6.css' media='all' />
 <link rel="stylesheet" href="../wp-content/themes/garageup/build/nav-overrides.css" />
 <link rel="stylesheet" href="../wp-content/themes/garageup/build/brand-overrides.css" />
+<style>
+  /* Promise card numbers color */
+  .about-us-page-template .promise-card--number span {
+    color: var(--brand-red) !important;
+  }
+  /* Ensure number retains visibility if parent sets different color */
+  .about-us-page-template .promise-card--number span::selection {
+    background: rgba(255,0,0,0.15);
+  }
+  @media (prefers-contrast: more) {
+    .about-us-page-template .promise-card--number span {
+      text-shadow: 0 0 0 transparent; /* avoid glow in high-contrast */
+    }
+  }
+</style>
 <script src="../wp-includes/js/jquery/jquery.min.js%3Fver=3.7.1" id="jquery-core-js"></script>
 <script src="../wp-includes/js/jquery/jquery-migrate.min.js%3Fver=3.4.1" id="jquery-migrate-js"></script>
 <link rel="https://api.w.org/" href="../wp-json/index.html" /><link rel="alternate" title="JSON" type="application/json" href="../wp-json/wp/v2/pages/25" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://garageup.com/xmlrpc.php?rsd" />
@@ -165,18 +180,18 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 	<header>
 		<div class="banner-wrapper">
 	<div class="col-sm-12 banner-wrapper">
-		<h6 class="banner-header"><a href="../index.html%3Fp=25.html#" data-bs-toggle="modal" data-bs-target="#scheduleModal">Get Free Estimate</a></h6>
+		<h6 class="banner-header"><a href="index.html#" data-bs-toggle="modal" data-bs-target="#scheduleModal">Get Free Estimate</a></h6>
 	</div>
 </div>
 
 
-		<nav id="header" class="navbar navbar-expand-md justify-content-center navbar-light bg-light">
+		<nav id="header" class="navbar navbar-expand-md justify-content-center navbar-light bg-light home">
 	<div class="container">
 
 		<div class="mbl-nav-wrapper">
 			<!-- //TODO: Get the logo url hosted elsewhere. -->
-			<a class="navbar-brand" href="../index.html" title="Swim Studs" rel="home">
-				<img src="../wp-content/themes/garageup/images/logo-icon-mobile.svg"
+			<a class="navbar-brand" href="/" title="Swim Studs" rel="home">
+				<img src="/wp-content/themes/garageup/images/Logo Transparent.png"
 					 alt="Swim Studs"/>
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
@@ -192,29 +207,22 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 
 			<ul id="menu-main-menu-new" class="navbar-nav">
 				<!-- Left Part of the Menu -->
-				<ul id="menu-main-menu" class="navbar-nav left-menu"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-66" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nav-item menu-item-66 dropdown"><a title="Services" href="../index.html%3Fp=25.html#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" aria-expanded="false">Services <span class="caret"></span></a><ul role="menu" class="dropdown-menu"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-116" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-116"><a title="Garage Door Repair" href="../index.html%3Fp=101.html" class="dropdown-item">Garage Door Repair</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-172" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-172"><a title="Garage Door Replacement" href="../index.html%3Fp=156.html" class="dropdown-item">Garage Door Replacement</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-68" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-68"><a title="Garage Flooring" href="../index.html%3Fp=20.html" class="dropdown-item">Garage Flooring</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-129" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-129"><a title="Garage Lighting Solutions" href="../index.html%3Fp=117.html" class="dropdown-item">Garage Lighting Solutions</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-104" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-104"><a title="Garage Renovations" href="../index.html%3Fp=61.html" class="dropdown-item">Garage Renovations</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-155" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-155"><a title="Garage Storage Solutions" href="../index.html%3Fp=118.html" class="dropdown-item">Garage Storage Solutions</a></li>
+				<ul id="menu-main-menu" class="navbar-nav left-menu"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-66" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nav-item menu-item-66 dropdown"><a title="Services" href="index.html#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" aria-expanded="false">Services <span class="caret"></span></a><ul role="menu" class="dropdown-menu"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-349" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-349"><a title="Weekly Service" href="index.html%3Fp=61.html" class="dropdown-item">Weekly Service</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-348" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-348"><a title="Chemical Balancing" href="index.html%3Fp=117.html" class="dropdown-item">Chemical Balancing</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-347" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-347"><a title="Filter Cleaning" href="index.html%3Fp=20.html" class="dropdown-item">Filter Cleaning</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-345" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-345"><a title="Green Pool Cleanup" href="index.html%3Fp=101.html" class="dropdown-item">Green Pool Cleanup</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-346" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-346"><a title="Equipment Repairs" href="index.html%3Fp=156.html" class="dropdown-item">Equipment Repairs</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-350" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-350"><a title="Pump &amp; Heater Service" href="index.html%3Fp=118.html" class="dropdown-item">Pump &amp; Heater Service</a></li>
 </ul>
 </li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-69" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nav-item menu-item-69 dropdown"><a title="More" href="../index.html%3Fp=25.html#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" aria-expanded="false">More <span class="caret"></span></a><ul role="menu" class="dropdown-menu"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-313" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-313"><a title="Blog" href="../blog/index.html" class="dropdown-item">Blog</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-310" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-310"><a title="Design Studio" href="../index.html%3Fp=250.html" class="dropdown-item">Design Studio</a></li>
-</ul>
-</li>
-</ul>
-				<a class="navbar-brand" href="../index.html" title="Swim Studs" rel="home">
-					<img src="../wp-content/themes/garageup/images/logo-icon.png"
-						 alt="Swim Studs near me"/>
-				</a>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-69" class="menu-item menu-item-type-custom menu-item-object-custom nav-item menu-item-69"><a title="Blog" href="/blog" class="nav-link">Blog</a></li>
+				</ul>
 
 				<!-- Right Part of the Menu -->
 				<ul id="menu-main-menu-1" class="navbar-nav right-menu"><ul role="menu" class="dropdown-menu"></ul>
 <ul role="menu" class="dropdown-menu"></ul>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-65" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-25 current_page_item nav-item menu-item-65"><a aria-current="page" title="About Us" href="../index.html%3Fp=25.html" class="nav-link active">About Us</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-64" class="menu-item menu-item-type-post_type menu-item-object-page nav-item menu-item-64"><a title="Contact Us" href="../index.html%3Fp=63.html" class="nav-link">Contact Us</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-65" class="menu-item menu-item-type-post_type menu-item-object-page nav-item menu-item-65"><a title="About Us" href="/about-us" class="nav-link">About Us</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-64" class="menu-item menu-item-type-post_type menu-item-object-page nav-item menu-item-64"><a title="Contact Us" href="/contact-us" class="nav-link">Contact Us</a></li>
 </ul>			</ul>
 
 
@@ -231,7 +239,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 	<div id="primary" class="content-area about-us-page about-us-page-template">
 
 		<section class="hero hero-wrapper gradient-overlay"
-				 style="background-image: url('../wp-content/uploads/2025/05/test4-scaled.jpg')">
+				 style="background-image: url('https://images.ctfassets.net/ftcnv5up9dxv/7dX53kEhONSiR3WxVDA347/4e95c833c6b566b450951f3100d6f56f/What_You_ll_Need_to_Clean_Your_Pool.jpg')">
 			<h1>Pool Care Above and Beyond</h1>
 		</section>
 
@@ -251,10 +259,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 
 					<div class="col-sm-12 col-lg-6 image-col">
 						<figure>
-							<img width="1280" height="853" src="../wp-content/uploads/2025/05/about-us.jpeg" class="img-fluid wp-image-201" alt="A garage up technician working on a garage build." decoding="async" fetchpriority="high" srcset="../wp-content/uploads/2025/05/about-us.jpeg 1280w, ../wp-content/uploads/2025/05/about-us-300x200.jpeg 300w, ../wp-content/uploads/2025/05/about-us-1024x682.jpeg 1024w, ../wp-content/uploads/2025/05/about-us-768x512.jpeg 768w" sizes="(max-width: 1280px) 100vw, 1280px" data-mwl-img-id="201" />						</figure>
+							<img width="1280" height="853" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="img-fluid wp-image-201" alt="A garage up technician working on a garage build." decoding="async" fetchpriority="high" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 1280px) 100vw, 1280px" data-mwl-img-id="201" />						</figure>
 
 						<figure>
-							<img width="2560" height="1440" src="../wp-content/uploads/2025/05/Chris-Harrison-113-scaled.jpg" class="img-fluid wp-image-202" alt="" decoding="async" srcset="../wp-content/uploads/2025/05/Chris-Harrison-113-scaled.jpg 2560w, ../wp-content/uploads/2025/05/Chris-Harrison-113-300x169.jpg 300w, ../wp-content/uploads/2025/05/Chris-Harrison-113-1024x576.jpg 1024w, ../wp-content/uploads/2025/05/Chris-Harrison-113-768x432.jpg 768w, ../wp-content/uploads/2025/05/Chris-Harrison-113-1536x864.jpg 1536w, ../wp-content/uploads/2025/05/Chris-Harrison-113-2048x1152.jpg 2048w" sizes="(max-width: 2560px) 100vw, 2560px" data-mwl-img-id="202" />						</figure>
+							<img width="2560" height="1440" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="img-fluid wp-image-202" alt="" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 2560px) 100vw, 2560px" data-mwl-img-id="202" />						</figure>
 					</div>
 				</div>
 
@@ -271,29 +279,29 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 						<div class="core-values--values mb-5 mb-lg-0">
 															<div class="core-values--value">
 									<div class="core-values--icon">
-																					<img width="45" height="52" src="../wp-content/uploads/2025/05/icon-integrity.svg" class="img-fluid wp-image-83" alt="" decoding="async" data-mwl-img-id="83" />																			</div>
+																<img width="45" height="52" src="../wp-content/uploads/2025/05/icon-integrity.svg" class="img-fluid wp-image-83" alt="" decoding="async" data-mwl-img-id="83" />															</div>
 
 									<div class="core-values--content">
-										<h3>Quality Craftsmanship</h3>
-										<p>We’re genuinely excited about our work! By using top-notch parts and trusted methods, we guarantee every repair will be durable and long-lasting for your satisfaction.</p>
+										<h3>Crystal‑Clear Standards</h3>
+										<p>From chemical balancing to filter care, we use proven methods and premium supplies to keep your water safe, sparkling, and swim‑ready every day.</p>
 									</div>
 								</div>
 															<div class="core-values--value">
 									<div class="core-values--icon">
-																					<img width="52" height="49" src="../wp-content/uploads/2025/05/icon-diligence.svg" class="img-fluid wp-image-81" alt="" decoding="async" data-mwl-img-id="81" />																			</div>
+																<img width="52" height="49" src="../wp-content/uploads/2025/05/icon-diligence.svg" class="img-fluid wp-image-81" alt="" decoding="async" data-mwl-img-id="81" />															</div>
 
 									<div class="core-values--content">
-										<h3>Excellence</h3>
-										<p>Our commitment to excellence means we don’t stop at just fixing the problem; we go above and beyond to ensure your garage door operates flawlessly and safely.</p>
+										<h3>Proactive Excellence</h3>
+										<p>We don’t just fix issues—we prevent them. Regular checks, detailed reports, and tune‑ups keep your system running smoothly season after season.</p>
 									</div>
 								</div>
 															<div class="core-values--value">
 									<div class="core-values--icon">
-																					<img width="52" height="46" src="../wp-content/uploads/2025/05/icon-generosity.svg" class="img-fluid wp-image-82" alt="" decoding="async" data-mwl-img-id="82" />																			</div>
+																<img width="52" height="46" src="../wp-content/uploads/2025/05/icon-generosity.svg" class="img-fluid wp-image-82" alt="" decoding="async" data-mwl-img-id="82" />															</div>
 
 									<div class="core-values--content">
-										<h3>Customer Commitment</h3>
-										<p>Your satisfaction is our top priority. We listen to your needs, provide personalized solutions, and ensure you’re fully informed at every step of the repair process.</p>
+										<h3>Customer‑First Communication</h3>
+										<p>Your time matters. Expect clear service windows, photo updates after each visit, and fast responses whenever you need us.</p>
 									</div>
 								</div>
 													</div>
@@ -301,7 +309,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 
 					<div class="col-lg-1"></div>
 					<div class="col-sm-12 col-lg-5 right">
-						<img width="1500" height="1200" src="../wp-content/uploads/2025/05/GU-website-photos-39.png" class="img-fluid wp-image-135" alt="a custom designed garage with overhead racks, custom cabinets, and slat walls" decoding="async" srcset="../wp-content/uploads/2025/05/GU-website-photos-39.png 1500w, ../wp-content/uploads/2025/05/GU-website-photos-39-300x240.png 300w, ../wp-content/uploads/2025/05/GU-website-photos-39-1024x819.png 1024w, ../wp-content/uploads/2025/05/GU-website-photos-39-768x614.png 768w" sizes="(max-width: 1500px) 100vw, 1500px" data-mwl-img-id="135" />						<img width="750" height="600" src="../wp-content/uploads/2025/05/GU-website-photos-1.png" class="img-fluid wp-image-29" alt="" decoding="async" srcset="../wp-content/uploads/2025/05/GU-website-photos-1.png 750w, ../wp-content/uploads/2025/05/GU-website-photos-1-300x240.png 300w" sizes="(max-width: 750px) 100vw, 750px" data-mwl-img-id="29" />					</div>
+						<img width="1500" height="1200" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="img-fluid wp-image-135" alt="a custom designed garage with overhead racks, custom cabinets, and slat walls" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 1500px) 100vw, 1500px" data-mwl-img-id="135" />						<img width="750" height="600" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="img-fluid wp-image-29" alt="" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 750px) 100vw, 750px" data-mwl-img-id="29" />					</div>
 				</div>
 			</div>
 		</section>
@@ -369,34 +377,16 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 			</div>
 		</section>
 
-		<section class="callout bg-garageup-primary-dark stripes-double-top">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-sm-12 col-lg-5">
-						<h2 class="section-title">DESIGN STUDIO</h2>
-						<p>At Garage Up, we specialize in top-rated garage renovation services designed to completely transform your space. From durable epoxy floors to garage door repairs and tune-ups, our team delivers tailored solutions that enhance both function and style.</p>
-<p>Our experienced garage technicians are committed to high-quality craftsmanship and outstanding customer service. Looking for the best garage renovation company near you? Explore our recent projects and see why homeowners and businesses trust Garage Up.</p>
-<p>Contact us today for a free consultation and let us help you unlock the full potential of your garage.</p>
-						<a href="../index.html%3Fp=250.html" class="btn btn-primary mt-3"  target="_blank">Design Studio</a>					</div>
-
-					<div class="col-lg-1"></div>
-
-					<div class="col-sm-12 col-lg-6 mt-5 mt-lg-0">
-						<img width="1875" height="1500" src="../wp-content/uploads/2025/05/GU-website-photos-12.png" class="img-fluid wp-image-84" alt="a completely renovated garage with custom storage, slat walls and overhead racks installed by Garage Up" decoding="async" srcset="../wp-content/uploads/2025/05/GU-website-photos-12.png 1875w, ../wp-content/uploads/2025/05/GU-website-photos-12-300x240.png 300w, ../wp-content/uploads/2025/05/GU-website-photos-12-1024x819.png 1024w, ../wp-content/uploads/2025/05/GU-website-photos-12-768x614.png 768w, ../wp-content/uploads/2025/05/GU-website-photos-12-1536x1229.png 1536w" sizes="(max-width: 1875px) 100vw, 1875px" data-mwl-img-id="84" />					</div>
-				</div>
-			</div>
-		</section>
-
 		<section class="promise-wrapper mb-5 bg-garageup-black">
 			<div class="container">
 
 				<div class="row">
 					<div class="title-wrapper col-sm-12 col-lg-5">
-						<h2 class="section-title">The Garage Up Way</h2>
+						<h2 class="section-title">The Swim Studs Way</h2>
 					</div>
 					<div class="copy-wrapper col-sm-12 col-lg-7">
-						<p>We always go above and beyond to ensure our customers&#8217; complete satisfaction. Our team at Garage Up exceeds expectations through every phase of the project. From the initial consultation to six-month follow-ups and ongoing support, our customers can count on us for honest pricing, timely updates, and high-quality workmanship that transforms their garage into a space they&#8217;ll be proud of.</p>
-<p><strong>Let Garage Up elevate your home with expert service you can trust.</strong></p>
+						<p>We go above and beyond to keep your water crystal clear and your experience stress‑free. The Swim Studs team communicates proactively, arrives on time, and delivers dependable results on every visit—from weekly service to green‑to‑clean recovery and equipment repairs.</p>
+<p><strong>Let Swim Studs keep your pool sparkling with expert care you can trust.</strong></p>
 					</div>
 				</div>
 
@@ -411,7 +401,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 									</div>
 									<div class="promise-card--content">
 										<h3>Our Work Brings Joy</h3>
-										<p><p>We always deliver transformative work from professionals that generate a whole lot of joy. No job is too big or too small to provide excellence in quality.</p>
+										<p><p>We deliver crystal‑clear results that make pool time effortless and enjoyable. No pool is too small or system too complex for our commitment to quality.</p>
 </p>
 									</div>
 								</div>
@@ -427,7 +417,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 									</div>
 									<div class="promise-card--content">
 										<h3>Respect Time &amp; Communication</h3>
-										<p><p>We believe in respecting and honoring your time. We do everything possible to start and finish on time while communicating with you throughout the entire project. If the details or scope of work changes, we always communicate how and when things will get done.</p>
+										<p><p>Your time matters. We provide clear service windows, updates before and after each visit, and fast responses when you need help. If plans change, you’ll know right away.</p>
 </p>
 									</div>
 								</div>
@@ -443,7 +433,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 									</div>
 									<div class="promise-card--content">
 										<h3>Stress-Free, Mess-Free Service</h3>
-										<p><p>Paint is messy, but your experience shouldn’t be. We believe in cleaning up after ourselves, just like any good house guest should. We start with proper prep and end with thorough cleanup.</p>
+										<p><p>Pool care shouldn’t add stress. We use safe, proven methods, keep equipment tidy, and leave your deck clean—so all you have to do is enjoy the water.</p>
 </p>
 									</div>
 								</div>
@@ -459,7 +449,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 									</div>
 									<div class="promise-card--content">
 										<h3>Value Based Pricing</h3>
-										<p><p>We offer upfront and honest pricing without any hidden fees. Rest assured, you will get what you pay for. Above all else, we prioritize giving you the best experience and highest-quality service.</p>
+										<p><p>Transparent, upfront pricing with no surprises. Expect top‑tier service, reliable scheduling, and long‑lasting results—every visit, every season.</p>
 </p>
 									</div>
 								</div>
@@ -488,31 +478,22 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97528cd92c00261d',t:'MTc1NjIwMzE0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body><!-- /#main -->
 <footer id="footer" class="footer">
 	<div class="container">
-
-		<div class="text-center">
-			<a href="../index.html">
-				<img src="../wp-content/themes/garageup/images/logo-icon-mobile.svg"
-					 alt="GarageUp logo"
-					 class="footer-logo mb-5 mt-3" />
-			</a>
-		</div>
-
 		<div class="links-wrapper">
 
 												<div class="inner-link-wrapper">
-						<div id="nav_menu-3" class="widget widget_nav_menu"><h2 class="widget-title">Renovation Services</h2><nav class="menu-renovation-services-container" aria-label="Renovation Services"><ul id="menu-renovation-services" class="menu"><li id="menu-item-143" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-143"><a href="../index.html%3Fp=61.html">Garage Renovations</a></li>
-<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-144"><a href="../index.html%3Fp=20.html">Garage Flooring</a></li>
-<li id="menu-item-141" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-141"><a href="../index.html%3Fp=117.html">Garage Lighting Solutions</a></li>
-<li id="menu-item-140" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-140"><a href="../index.html%3Fp=118.html">Garage Storage Solutions</a></li>
+						<div id="nav_menu-3" class="widget widget_nav_menu"><h2 class="widget-title">Pool Cleaning Services</h2><nav class="menu-renovation-services-container" aria-label="Pool Cleaning Services"><ul id="menu-renovation-services" class="menu"><li id="menu-item-143" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-143"><a href="index.html%3Fp=61.html">Weekly Service</a></li>
+<li id="menu-item-141" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-141"><a href="index.html%3Fp=117.html">Chemical Balancing</a></li>
+<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-144"><a href="index.html%3Fp=20.html">Filter Cleaning</a></li>
+<li id="menu-item-101" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-101"><a href="index.html%3Fp=101.html">Green Pool Cleanup</a></li>
 </ul></nav></div>					</div>
 																<div class="inner-link-wrapper">
-						<div id="nav_menu-4" class="widget widget_nav_menu"><h2 class="widget-title">Garage Door Services</h2><nav class="menu-garage-door-services-container" aria-label="Garage Door Services"><ul id="menu-garage-door-services" class="menu"><li id="menu-item-280" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-280"><a href="../index.html%3Fp=156.html">Garage Door Replacement</a></li>
-<li id="menu-item-281" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-281"><a href="../index.html%3Fp=101.html">Garage Door Repair</a></li>
+						<div id="nav_menu-4" class="widget widget_nav_menu"><h2 class="widget-title">Equipment &amp; Repairs</h2><nav class="menu-garage-door-services-container" aria-label="Equipment &amp; Repairs"><ul id="menu-garage-door-services" class="menu"><li id="menu-item-280" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-280"><a href="index.html%3Fp=156.html">Equipment Repairs</a></li>
+<li id="menu-item-118" class="menu-item menu-item-type-post_type menu-item-object-resi_service menu-item-118"><a href="index.html%3Fp=118.html">Pump &amp; Heater Service</a></li>
 </ul></nav></div>					</div>
 																<div class="inner-link-wrapper">
-						<div id="nav_menu-5" class="widget widget_nav_menu"><h2 class="widget-title">Company</h2><nav class="menu-company-container" aria-label="Company"><ul id="menu-company" class="menu"><li id="menu-item-283" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-25 current_page_item menu-item-283"><a href="../index.html%3Fp=25.html" aria-current="page">About Us</a></li>
-<li id="menu-item-284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-284"><a href="../index.html%3Fp=250.html">Design Studio</a></li>
-<li id="menu-item-531" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-531"><a href="../index.html%3Fp=525.html">Warranty</a></li>
+						<div id="nav_menu-5" class="widget widget_nav_menu"><h2 class="widget-title">Company</h2><nav class="menu-company-container" aria-label="Company"><ul id="menu-company" class="menu"><li id="menu-item-283" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-283"><a href="index.html%3Fp=25.html">About Us</a></li>
+<li id="menu-item-284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-284"><a href="index.html%3Fp=250.html">Design Studio</a></li>
+<li id="menu-item-531" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-531"><a href="index.html%3Fp=525.html">Warranty</a></li>
 </ul></nav></div>					</div>
 																					
 			<div class="inner-link-wrapper">
@@ -523,23 +504,23 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 						<li>
 							<div class="col-sm-12 row social-icons-wrapper">
 																	<div class="col-sm-3 inner-wrapper">
-										<a href="https://www.facebook.com/GarageUpAustinTexas" target="_blank">
-											<img src="../wp-content/themes/resi-franchise/images/social/facebook.svg" />
+										<a href="/" target="_blank">
+											<img src="wp-content/themes/resi-franchise/images/social/facebook.svg" />
 										</a>
 									</div>
 																	<div class="col-sm-3 inner-wrapper">
-										<a href="https://www.instagram.com/garageupteam/" target="_blank">
-											<img src="../wp-content/themes/resi-franchise/images/social/instagram.svg" />
+										<a href="/" target="_blank">
+											<img src="wp-content/themes/resi-franchise/images/social/instagram.svg" />
 										</a>
 									</div>
 																	<div class="col-sm-3 inner-wrapper">
-										<a href="http://youtube.com/@garageupteam" target="_blank">
-											<img src="../wp-content/themes/resi-franchise/images/social/youtube.svg" />
+										<a href="/" target="_blank">
+											<img src="wp-content/themes/resi-franchise/images/social/youtube.svg" />
 										</a>
 									</div>
 																	<div class="col-sm-3 inner-wrapper">
-										<a href="https://www.linkedin.com/company/garageup" target="_blank">
-											<img src="../wp-content/themes/resi-franchise/images/social/linkedin.svg" />
+										<a href="/" target="_blank">
+											<img src="wp-content/themes/resi-franchise/images/social/linkedin.svg" />
 										</a>
 									</div>
 															</div>
@@ -560,21 +541,21 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 		</div>
 
 		<div class="branding-wrapper">
-			<img src="../wp-content/themes/garageup/images/resibrands-logo.png"
-				 alt="Resibrands logo_action exteriors"
+			<img src="/wp-content/themes/garageup/images/Logo Transparent.png"
+				 alt="Ventured Brands logo"
 				 style="margin-top:4px;"
 			/>
 			<div class="terms-policy">
 				<ul>
 					<li>
-						<a href="../index.html%3Fp=367.html">Terms & Conditions</a>
+						<a href="index.html%3Fp=367.html">Terms & Conditions</a>
 					</li>
 					<li>
-						<a href="../index.html%3Fp=3.html">Privacy Policy</a>
+						<a href="index.html%3Fp=3.html">Privacy Policy</a>
 					</li>
 				</ul>
 			</div>
-			<p>© 2025 GarageUp. All Rights Reserved.</p>
+			<p>© 2025 Swim Studs. All Rights Reserved.</p>
 		</div>
 
 	</div><!-- /.container -->
