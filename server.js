@@ -1,0 +1,153 @@
+/* Express server to serve static GarageUp site with clean routes */
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Root directory of the static site
+const siteRoot = __dirname; // /garageup.com
+
+// Utility to send an HTML file if it exists
+function sendHtml(res, relativePath) {
+  const fullPath = path.join(siteRoot, relativePath);
+  if (fs.existsSync(fullPath)) {
+    res.sendFile(fullPath);
+    return true; // explicitly return boolean so callers don't fall through
+  }
+  return false;
+}
+
+// Simple request logger (useful for debugging)
+app.use((req, res, next) => {
+  // eslint-disable-next-line no-console
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
+
+// Clean routes for top-level pages
+app.get('/', (req, res) => {
+  // Prefer root index.html
+  if (sendHtml(res, 'index.html')) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/about-us', (req, res) => {
+  // Directory index preferred
+  if (sendHtml(res, path.join('about-us', 'index.html'))) return;
+  if (sendHtml(res, 'about-us.html')) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/contact-us', (req, res) => {
+  if (sendHtml(res, path.join('contact-us', 'index.html'))) return;
+  if (sendHtml(res, 'contact-us.html')) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/privacy-policy', (req, res) => {
+  if (sendHtml(res, path.join('privacy-policy', 'index.html'))) return;
+  if (sendHtml(res, 'privacy-policy.html')) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/terms-and-conditions', (req, res) => {
+  if (sendHtml(res, path.join('terms-and-conditions', 'index.html'))) return;
+  if (sendHtml(res, 'terms-and-conditions.html')) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/design-studio', (req, res) => {
+  if (sendHtml(res, path.join('design-studio', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/warranty', (req, res) => {
+  if (sendHtml(res, path.join('warranty', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+
+// Services routes
+app.get('/services', (req, res) => {
+  // If there is a services landing, try index.html under services/
+  if (sendHtml(res, path.join('services', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/services/garage-door-repair', (req, res) => {
+  if (sendHtml(res, path.join('services', 'garage-door-repair', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/services/garage-door-replacement', (req, res) => {
+  if (sendHtml(res, path.join('services', 'garage-door-replacement', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/services/garage-flooring', (req, res) => {
+  if (sendHtml(res, path.join('services', 'garage-flooring', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+
+app.get('/services/epoxy-floor', (req, res) => {
+  if (sendHtml(res, path.join('services', 'epoxy-floor', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+
+
+app.get('/blog', (req, res) => {
+  if (sendHtml(res, path.join('blog', 'index.html'))) return;
+  res.status(404).send('Not Found');
+});
+// Blog and other nested pages will be served via the smart fallback + static
+
+// Smart clean-URL fallback: try to map 
+// 1) /path/ -> /path/index.html
+// 2) /path -> /path.html
+// 3) otherwise hand off to static middleware
+app.get('*', (req, res, next) => {
+  try {
+    const reqPath = decodeURIComponent(req.path);
+
+    // ignore obvious assets (let static handle these)
+    if (path.extname(reqPath)) return next();
+
+    // normalize: strip leading '/'
+    const rel = reqPath.replace(/^\/+/, '');
+
+    // 1) directory index
+    if (rel.length === 0) return next();
+    const tryDirIndex = path.join(rel, 'index.html');
+    if (fs.existsSync(path.join(siteRoot, tryDirIndex))) {
+      return res.sendFile(path.join(siteRoot, tryDirIndex));
+    }
+
+    // 2) html file with same name
+    const tryHtml = `${rel}.html`;
+    if (fs.existsSync(path.join(siteRoot, tryHtml))) {
+      return res.sendFile(path.join(siteRoot, tryHtml));
+    }
+
+    return next();
+  } catch (e) {
+    return next();
+  }
+});
+
+// Static middleware to serve everything else (css, js, images, and any remaining html)
+app.use(express.static(siteRoot, {
+  extensions: ['html'], // allows clean URLs to map to .html as a last resort
+  fallthrough: true,
+  maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
+}));
+
+// 404 for anything not found
+app.use((req, res) => {
+  res.status(404).send('Not Found');
+});
+
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`GarageUp site server running on http://localhost:${PORT}`);
+});

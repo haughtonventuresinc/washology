@@ -1,0 +1,96 @@
+/* Brand color overrides: Swim Studs-inspired palette */
+:root {
+  --brand-yellow: #F9EE28; /* bright lemon */
+  --brand-red: #EE3D23;    /* vivid red-orange */
+  --brand-orange: #F7A11A; /* warm orange accent */
+  --brand-dark: #1B1B1B;   /* dark text fallback */
+}
+
+/* Base */
+html, body {
+  background-color: var(--brand-yellow);
+}
+
+/* Text & links */
+a { color: var(--brand-red); }
+a:hover, a:focus { color: #d7341b; }
+
+/* Buttons */
+.btn-primary, .button, .wp-block-button__link, .btn.btn-primary {
+  background-color: var(--brand-red) !important;
+  border-color: var(--brand-red) !important;
+  color: #fff !important;
+}
+.btn-primary:hover, .button:hover, .wp-block-button__link:hover, .btn.btn-primary:hover {
+  background-color: #d7341b !important;
+  border-color: #d7341b !important;
+}
+.btn-outline-primary {
+  color: var(--brand-red) !important;
+  border-color: var(--brand-red) !important;
+}
+.btn-outline-primary:hover {
+  background-color: var(--brand-red) !important;
+  color: #fff !important;
+}
+
+/* Navbar */
+#header.navbar {
+  background-color: var(--brand-yellow) !important;
+  border-bottom: 2px solid var(--brand-orange);
+}
+#header.navbar .navbar-nav > li > a,
+#header.navbar .navbar-brand,
+#header.navbar .navbar-nav .dropdown-menu a {
+  color: var(--brand-red) !important;
+}
+#header.navbar .navbar-nav > li > a:hover,
+#header.navbar .navbar-brand:hover {
+  color: #d7341b !important;
+}
+
+/* Badges, accents */
+.bg-primary, .badge-primary { background-color: var(--brand-red) !important; }
+.text-primary { color: var(--brand-red) !important; }
+.border-primary { border-color: var(--brand-red) !important; }
+
+/* Footer */
+#footer, .site-footer {
+  background-color: var(--brand-yellow) !important;
+  color: var(--brand-dark) !important;
+}
+#footer a, .site-footer a { color: var(--brand-red) !important; }
+
+/* Cards/sections that relied on old primary */
+.card .card-header.bg-primary, .card.bg-primary { background-color: var(--brand-red) !important; }
+
+/* Forms */
+.form-control:focus {
+  border-color: var(--brand-orange) !important;
+  box-shadow: 0 0 0 .2rem rgba(247, 161, 26, 0.25) !important;
+}
+
+/* Section overlay adjustments */
+/* Switch overlay-jade to a Swim Studs red overlay */
+section.overlay-jade {
+  /* drive internal accents toward red */
+  --garageup-accent-color: var(--brand-red);
+}
+section.overlay-jade:before {
+  /* override the jade/blue background color applied in main.css */
+  background-color: rgba(249, 238, 40, 0.5) !important; /* #F9EE28 at 50% */
+}
+
+/* Top CTA banner */
+.banner-wrapper {
+  background-color: var(--brand-orange) !important;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+.banner-wrapper a {
+  color: white !important;
+  border-bottom-color: var(--brand-red) !important;
+}
+.banner-wrapper a:hover {
+  border-color: transparent !important;
+}

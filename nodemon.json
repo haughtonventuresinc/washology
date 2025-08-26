@@ -1,0 +1,25 @@
+{
+  "watch": [
+    "server.js",
+    "about-us/",
+    "services/",
+    "contact-us/",
+    "design-studio/",
+    "warranty/",
+    "privacy-policy/",
+    "terms-and-conditions/",
+    "blog/",
+    "index.html"
+  ],
+  "ignore": [
+    "node_modules/",
+    "wp-content/uploads/",
+    "wp-includes/",
+    "wp-json/",
+    "cdn-cgi/",
+    "**/*.log",
+    ".git/"
+  ],
+  "ext": "js,json,html",
+  "exec": "node server.js"
+}

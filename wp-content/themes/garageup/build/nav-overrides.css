@@ -1,0 +1,29 @@
+/* Navbar layout overrides: logo left, nav items right */
+#header.navbar {
+  justify-content: flex-start;
+}
+#header.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#header .mbl-nav-wrapper {
+  display: flex;
+  align-items: center;
+}
+/* Keep the first brand (mobile wrapper) visible on the left */
+#header .mbl-nav-wrapper > .navbar-brand {
+  margin-right: 1rem;
+}
+/* Hide the duplicate center brand inside the collapse */
+#header .navbar-collapse > .navbar-brand { display: none !important; }
+/* Push nav items to the right */
+#header .navbar-collapse { flex: 1 1 auto; }
+#header .navbar-collapse .navbar-nav { margin-left: auto; }
+/* Ensure dropdowns still align nicely */
+#header .navbar-nav .dropdown-menu { right: 0; left: auto; }
+/* On small screens keep toggle working and spacing ok */
+@media (max-width: 767.98px) {
+  #header .navbar-collapse .navbar-nav { margin-left: 0; }
+  #header .navbar-collapse { width: 100%; }
+}
