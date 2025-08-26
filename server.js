@@ -2,12 +2,54 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Root directory of the static site
 const siteRoot = __dirname; // /garageup.com
+
+// Body & cookies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Sessions (in-memory store; replace with Redis for production)
+app.use(session({
+  name: 'sid',
+  secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: !!process.env.SSL, // set true behind HTTPS/Proxy
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
+}));
+
+// Simple in-memory user store (replace with DB)
+// Password: "password123" (hashed)
+const USERS = [
+  {
+    id: 'u1',
+    email: process.env.ADMIN_EMAIL || 'admin@example.com',
+    passwordHash: process.env.ADMIN_PASSWORD_HASH || '$2a$10$Z5z5v6qrlc8cVZrIYv8i1OcUEnOQ3in7R9l9gB6qgV3YyFShd0p5m',
+    name: 'Admin'
+  }
+];
+
+function findUserByEmail(email) {
+  return USERS.find(u => u.email.toLowerCase() === String(email || '').toLowerCase());
+}
+
+function requireAuth(req, res, next) {
+  if (req.session && req.session.userId) return next();
+  return res.status(401).json({ error: 'Unauthorized' });
+}
 
 // Utility to send an HTML file if it exists
 function sendHtml(res, relativePath) {
@@ -101,6 +143,47 @@ app.get('/blog', (req, res) => {
   res.status(404).send('Not Found');
 });
 // Blog and other nested pages will be served via the smart fallback + static
+
+// --- Auth API ---
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+    const user = findUserByEmail(email);
+    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+    const ok = await bcrypt.compare(password, user.passwordHash);
+    if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
+    req.session.userId = user.id;
+    return res.json({ id: user.id, email: user.email, name: user.name });
+  } catch (e) {
+    return res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  if (!req.session) return res.json({ ok: true });
+  req.session.destroy(() => {
+    res.clearCookie('sid');
+    return res.json({ ok: true });
+  });
+});
+
+app.get('/api/auth/me', (req, res) => {
+  const uid = req.session && req.session.userId;
+  const user = uid && USERS.find(u => u.id === uid);
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+  return res.json({ id: user.id, email: user.email, name: user.name });
+});
+
+// Protect dashboard assets (create a /dashboard/ directory with index.html)
+app.use('/dashboard', requireAuth, (req, res, next) => {
+  // serve static if exists, else simple placeholder
+  const dashDir = path.join(siteRoot, 'dashboard');
+  if (fs.existsSync(dashDir)) {
+    return express.static(dashDir, { extensions: ['html'] })(req, res, next);
+  }
+  res.type('html').send('<h1>Dashboard</h1><p>Protected area. Add dashboard/index.html to customize.</p>');
+});
 
 // Smart clean-URL fallback: try to map 
 // 1) /path/ -> /path/index.html

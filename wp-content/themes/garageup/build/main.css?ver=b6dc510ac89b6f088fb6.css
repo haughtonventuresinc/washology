@@ -20195,7 +20195,6 @@ section.stripes-white {
 }
 
 section.bg-icon:after {
-    background-image: var(--bg-image);
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: contain;
@@ -20218,7 +20217,6 @@ section.bg-icon--right:after {
 }
 
 section.bg-icon-reverse:before {
-    background-image: var(--bg-image);
     background-repeat: no-repeat;
     background-size: contain;
     content: "";
@@ -20242,7 +20240,6 @@ section.bg-icon-reverse--left:after {
 
 section.bg-icon,
 section.bg-icon-reverse {
-    --bg-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTgxIiBoZWlnaHQ9IjQ5MCIgdmlld0JveD0iMCAwIDU4MSA0OTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTE0Ljg4NSAwTDAgNzMuMzUyOVYyODkuNzQ3TDExNC44ODUgMjE2LjM5NUMyMTMuNzcyIDI3OS41MjEgMzEyLjY0NSAzNDIuNjMyIDQxMS41MDIgNDA1Ljc4OFY0OTBINTgxVjI5Ny42MkwxMTQuODg1IDBaIiBmaWxsPSJibGFjayIgZmlsbC1vcGFjaXR5PSIwLjE2Ii8+Cjwvc3ZnPgo=);
     --bg-opacity: .5;
     overflow: hidden;
     position: relative;
@@ -20251,7 +20248,6 @@ section.bg-icon-reverse {
 
 section.bg-icon--light,
 section.bg-icon-reverse--light {
-    --bg-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTgxIiBoZWlnaHQ9IjQ5MCIgdmlld0JveD0iMCAwIDU4MSA0OTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTE0Ljg4NSAwTDAgNzMuMzUyOVYyODkuNzQ3TDExNC44ODUgMjE2LjM5NUMyMTMuNzcyIDI3OS41MjEgMzEyLjY0NSAzNDIuNjMyIDQxMS41MDIgNDA1Ljc4OFY0OTBINTgxVjI5Ny42MkwxMTQuODg1IDBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjUiLz4KPC9zdmc+Cg==);
     --bg-opacity: .75
 }
 
@@ -21574,7 +21570,7 @@ section img {
 
 .footer .links-wrapper .h2,
 .footer .links-wrapper h2 {
-    color: var(--garageup-acid-green);
+    color: var(--brand-red);
     font-size: var(--bs-body-font-size)
 }
 
@@ -21702,7 +21698,7 @@ section img {
 }
 
 .teal {
-    color: var(--brand-yellow)
+    color: var(--brand-orange)
 }
 
 body.page-template-page-full #main {
