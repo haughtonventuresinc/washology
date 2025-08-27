@@ -12,6 +12,10 @@ const PORT = process.env.PORT || 3000;
 // Root directory of the static site
 const siteRoot = __dirname; // /garageup.com
 
+// View engine: EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 // Body & cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -70,16 +74,11 @@ app.use((req, res, next) => {
 
 // Clean routes for top-level pages
 app.get('/', (req, res) => {
-  // Prefer root index.html
-  if (sendHtml(res, 'index.html')) return;
-  res.status(404).send('Not Found');
+  return res.render('home');
 });
 
 app.get('/about-us', (req, res) => {
-  // Directory index preferred
-  if (sendHtml(res, path.join('about-us', 'index.html'))) return;
-  if (sendHtml(res, 'about-us.html')) return;
-  res.status(404).send('Not Found');
+  return res.render('about-us');
 });
 
 app.get('/contact-us', (req, res) => {
@@ -120,6 +119,11 @@ app.get('/services', (req, res) => {
   // If there is a services landing, try index.html under services/
   if (sendHtml(res, path.join('services', 'index.html'))) return;
   res.status(404).send('Not Found');
+});
+
+// Specific SSR route for Weekly Service (EJS)
+app.get('/services/weekly-service', (req, res) => {
+  return res.render('services/weekly-service');
 });
 
 // Generic service route to serve any service folder by slug
