@@ -122,23 +122,10 @@ app.get('/services', (req, res) => {
   res.status(404).send('Not Found');
 });
 
-app.get('/services/garage-door-repair', (req, res) => {
-  if (sendHtml(res, path.join('services', 'garage-door-repair', 'index.html'))) return;
-  res.status(404).send('Not Found');
-});
-
-app.get('/services/garage-door-replacement', (req, res) => {
-  if (sendHtml(res, path.join('services', 'garage-door-replacement', 'index.html'))) return;
-  res.status(404).send('Not Found');
-});
-
-app.get('/services/garage-flooring', (req, res) => {
-  if (sendHtml(res, path.join('services', 'garage-flooring', 'index.html'))) return;
-  res.status(404).send('Not Found');
-});
-
-app.get('/services/epoxy-floor', (req, res) => {
-  if (sendHtml(res, path.join('services', 'epoxy-floor', 'index.html'))) return;
+// Generic service route to serve any service folder by slug
+app.get('/services/:slug', (req, res) => {
+  const { slug } = req.params;
+  if (sendHtml(res, path.join('services', slug, 'index.html'))) return;
   res.status(404).send('Not Found');
 });
 
