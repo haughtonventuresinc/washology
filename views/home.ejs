@@ -98,6 +98,10 @@
   .our-stats .our-stats--stat p {
     color: var(--brand-red) !important;
   }
+  /* Recolor orange SVGs to brand red within Quick Facts only */
+  .our-stats .our-stats--stat--icon img {
+    filter: invert(18%) sepia(86%) saturate(4288%) hue-rotate(356deg) brightness(94%) contrast(102%);
+  }
 </style>
 
 <section class="our-stats stripes-double-top bg-icon bg-icon--right col-sm-12 text-center">
@@ -108,10 +112,10 @@
 			</div>
 		</div>
 		<div class="row gy-4 our-stats--stats">
-			<div class="our-stats--stat locations"><div class="our-stats--stat--icon"><img width="48" height="62" src="/wp-content/uploads/2025/04/icon-location.svg" class="img-fluid wp-image-13" alt="" decoding="async" data-mwl-img-id="13" /></div><h3 class="gradient">10</h3><p>LOCATIONS</p></div>
-			<div class="our-stats--stat jobs-completed"><div class="our-stats--stat--icon"><img width="67" height="62" src="/wp-content/uploads/2025/04/icon-jobs.svg" class="img-fluid wp-image-12" alt="" decoding="async" data-mwl-img-id="12" /></div><h3 class="gradient">1000+</h3><p>JOBS COMPLETED</p></div>
-			<div class="our-stats--stat states-were-in"><div class="our-stats--stat--icon"><img width="72" height="68" src="/wp-content/uploads/2025/04/icon-texas.svg" class="img-fluid wp-image-15" alt="" decoding="async" data-mwl-img-id="15" /></div><h3 class="gradient">6</h3><p>STATES WE'RE IN</p></div>
-			<div class="our-stats--stat 5-star-reviews"><div class="our-stats--stat--icon"><img width="213" height="35" src="/wp-content/uploads/2025/04/icon-stars.svg" class="img-fluid wp-image-14" alt="" decoding="async" data-mwl-img-id="14" /></div><h3 class="gradient">400+</h3><p>5 STAR REVIEWS</p></div>
+			<div class="our-stats--stat locations"><div class="our-stats--stat--icon"><img width="48" height="62" src="/wp-content/uploads/2025/04/icon-location.svg" class="img-fluid wp-image-13" alt="" decoding="async" data-mwl-img-id="13" /></div><h3 class="gradient">1</h3><p>LOCATIONS</p></div>
+			<div class="our-stats--stat jobs-completed"><div class="our-stats--stat--icon"><img width="67" height="62" src="/wp-content/uploads/2025/04/icon-jobs.svg" class="img-fluid wp-image-12" alt="" decoding="async" data-mwl-img-id="12" /></div><h3 class="gradient">100</h3><p>JOBS COMPLETED</p></div>
+			<div class="our-stats--stat states-were-in"><div class="our-stats--stat--icon"><img width="72" height="68" src="/wp-content/uploads/2025/04/icon-texas.svg" class="img-fluid wp-image-15" alt="" decoding="async" data-mwl-img-id="15" /></div><h3 class="gradient">1</h3><p>STATES WE'RE IN</p></div>
+			<div class="our-stats--stat 5-star-reviews"><div class="our-stats--stat--icon"><img width="213" height="35" src="/wp-content/uploads/2025/04/icon-stars.svg" class="img-fluid wp-image-14" alt="" decoding="async" data-mwl-img-id="14" /></div><h3 class="gradient">50</h3><p>5 STAR REVIEWS</p></div>
 			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="67" height="65" src="/wp-content/uploads/2025/04/icon-availability.svg" class="img-fluid wp-image-10" alt="" decoding="async" data-mwl-img-id="10" /></div><h3 class="gradient">24/7</h3><p>ESTIMATES AVAILABLE</p></div>
 			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="72" height="72" src="/wp-content/uploads/2025/04/icon-check-badge.svg" class="img-fluid wp-image-11" alt="" decoding="async" data-mwl-img-id="11" /></div><h3 class="gradient">ENDLESS</h3><p>POSSIBILITIES</p></div>
 		</div>
@@ -153,9 +157,31 @@
 
 <section class="warranty banner bg-jade-geometric">
 	<div class="container text-center">
-		<div class="row"><div class="col-lg-8 justify-content-center mx-auto"><h2 class="section-title">OUR Warranty</h2><p>Known across the U.S. for exceptional garage door services, Swim Studs is dedicated to providing great value through transparent estimates, expert advice, and amazing deals on every booking. Our services are backed by manufacturer warranties, including lifetime warranties on select components, ensuring you have peace of mind with every repair or installation.</p></div></div>
+		<div class="row"><div class="col-lg-8 justify-content-center mx-auto"><h2 class="section-title" style="color: white;">OUR Warranty</h2><p>Known across the U.S. for exceptional garage door services, Swim Studs is dedicated to providing great value through transparent estimates, expert advice, and amazing deals on every booking. Our services are backed by manufacturer warranties, including lifetime warranties on select components, ensuring you have peace of mind with every repair or installation.</p></div></div>
 	</div>
 </section>
+
+<!-- Page-scoped styles: Review cards brand styling -->
+<style>
+  /* Only the individual review cards, not the whole section */
+  #reviews .resi-review .resi-review--inner {
+    background-color: var(--brand-red) !important;
+    color: #fff !important;
+    border-color: var(--brand-red) !important;
+  }
+  #reviews .resi-review .resi-review--inner .resi-review--stars,
+  #reviews .resi-review .resi-review--inner .resi-review--content,
+  #reviews .resi-review .resi-review--inner .resi-review--content p,
+  #reviews .resi-review .resi-review--inner .resi-review--author,
+  #reviews .resi-review .resi-review--inner h5,
+  #reviews .resi-review .resi-review--inner p {
+    color: #fff !important;
+  }
+  #reviews .resi-review .resi-review--inner a {
+    color: #fff !important;
+    border-color: rgba(255,255,255,0.5) !important;
+  }
+</style>
 
 <section id="reviews" class="reviews reviews-wrapper">
 	<div class="container">
