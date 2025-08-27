@@ -83,9 +83,9 @@ app.get('/about-us', (req, res) => {
 });
 
 app.get('/contact-us', (req, res) => {
-  if (sendHtml(res, path.join('contact-us', 'index.html'))) return;
-  if (sendHtml(res, 'contact-us.html')) return;
-  res.status(404).send('Not Found');
+  // SSR only; set bodyClass so styles match original contact page
+  const bodyClass = 'wp-singular page-template page-template-templates page-template-contact-us page-template-templatescontact-us-php page page-id-63 wp-theme-resi-franchise wp-child-theme-garageup';
+  return res.render('contact-us', { bodyClass });
 });
 
 // Redirect shorthand /contact -> /contact-us

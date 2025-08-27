@@ -44,7 +44,7 @@
 	<link rel="apple-touch-icon" href="/wp-content/uploads/2025/04/favicon-192x192.png" />
 	<meta name="msapplication-TileImage" content="https://garageup.com/wp-content/uploads/2025/04/favicon-192x192" />
 </head>
-<body class="home wp-singular page-template page-template-templates page-template-landing page-template-templateslanding-php page page-id-8 wp-theme-resi-franchise wp-child-theme-garageup">
+<body class="<%= typeof bodyClass !== 'undefined' && bodyClass ? bodyClass : 'home wp-singular page-template page-template-templates page-template-landing page-template-templateslanding-php page page-id-8 wp-theme-resi-franchise wp-child-theme-garageup' %>">
 	<a href="#main" class="visually-hidden-focusable">Skip to main content</a>
 	<div id="wrapper">
 		<header>
@@ -53,7 +53,7 @@
 					<h6 class="banner-header"><a href="#" data-bs-toggle="modal" data-bs-target="#scheduleModal">Get Free Estimate</a></h6>
 				</div>
 			</div>
-			<nav id="header" class="navbar navbar-expand-md justify-content-center navbar-light bg-light home">
+			<nav id="header" class="navbar navbar-expand-md justify-content-center navbar-light bg-light">
 				<div class="container">
 					<div class="mbl-nav-wrapper">
 						<a class="navbar-brand" href="/" title="Swim Studs" rel="home">

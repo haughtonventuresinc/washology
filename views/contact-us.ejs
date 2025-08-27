@@ -1,0 +1,281 @@
+<%- include('partials/header') %>
+
+<!-- Page-scoped styles from the original contact page to preserve look-and-feel -->
+<style>
+  /* Limit scope to contact page wrappers to avoid site-wide impact */
+  .contact-page-v2 .wpforms-container .wpforms-field-label,
+  .contact-page-v2 .wpforms-container legend.wpforms-field-label { color: var(--brand-dark); }
+
+  .contact-page-v2 .wpforms-container input[type="text"],
+  .contact-page-v2 .wpforms-container input[type="email"],
+  .contact-page-v2 .wpforms-container input[type="tel"],
+  .contact-page-v2 .wpforms-container textarea,
+  .contact-page-v2 .wpforms-container select {
+    border-radius: 8px;
+    border-color: var(--brand-orange);
+  }
+
+  .contact-page-v2 .wpforms-container input[type="text"]:focus,
+  .contact-page-v2 .wpforms-container input[type="email"]:focus,
+  .contact-page-v2 .wpforms-container input[type="tel"]:focus,
+  .contact-page-v2 .wpforms-container textarea:focus,
+  .contact-page-v2 .wpforms-container select:focus {
+    border-color: var(--brand-orange);
+    box-shadow: 0 0 0 .2rem rgba(247, 161, 26, 0.25);
+  }
+
+  /* Force dark text on left hero section overlay */
+  .contact-page-v2 .content-wrapper-left.overlay-jade,
+  .contact-page-v2 .content-wrapper-left.overlay-jade h1,
+  .contact-page-v2 .content-wrapper-left.overlay-jade h2,
+  .contact-page-v2 .content-wrapper-left.overlay-jade h3,
+  .contact-page-v2 .content-wrapper-left.overlay-jade h4,
+  .contact-page-v2 .content-wrapper-left.overlay-jade h5,
+  .contact-page-v2 .content-wrapper-left.overlay-jade h6,
+  .contact-page-v2 .content-wrapper-left.overlay-jade p,
+  .contact-page-v2 .content-wrapper-left.overlay-jade ul,
+  .contact-page-v2 .content-wrapper-left.overlay-jade li,
+  .contact-page-v2 .content-wrapper-left.overlay-jade strong,
+  .contact-page-v2 .content-wrapper-left.overlay-jade a {
+    color: #000 !important;
+  }
+
+  .contact-page-v2 .wpforms-submit,
+  .contact-page-v2 button[type="submit"],
+  .contact-page-v2 .wpforms-page-button {
+    background-color: var(--brand-red) !important;
+    border-color: var(--brand-red) !important;
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+  }
+  .contact-page-v2 .wpforms-submit:hover,
+  .contact-page-v2 button[type="submit"]:hover,
+  .contact-page-v2 .wpforms-page-button:hover {
+    background-color: #d7341b !important;
+    border-color: #d7341b !important;
+  }
+
+  /* Layout and spacing */
+  .contact-page-v2 .wpforms-container { max-width: 720px; margin: 0 auto; }
+  .contact-page-v2 .wpforms-container .wpforms-field { margin-bottom: 16px; }
+  /* Always stack name fields for full-width inputs */
+  .contact-page-v2 .wpforms-container .wpforms-field-row { display: block; }
+  .contact-page-v2 .wpforms-container .wpforms-field-row-block { width: 100%; }
+  .contact-page-v2 .wpforms-container .wpforms-submit-container { text-align: center; margin-top: 10px; }
+
+  /* Center both form sections containers */
+  .contact-page-v2 .content-wrapper-right .inner-wrapper,
+  .contact-page-v2 .bottom-form-wrapper .inner-wrapper { max-width: 760px; margin: 0 auto; }
+
+  /* Labels and required indicators */
+  .contact-page-v2 .wpforms-container .wpforms-field-label { font-weight: 600; }
+  .contact-page-v2 .wpforms-container .wpforms-required-label { color: var(--brand-red); margin-left: 2px; }
+  .contact-page-v2 .wpforms-container .wpforms-field-sublabel.after { display: block; margin-top: 6px; font-size: 12px; color: #6c757d; }
+
+  /* Inputs and placeholders */
+  .contact-page-v2 .wpforms-container input[type="text"],
+  .contact-page-v2 .wpforms-container input[type="email"],
+  .contact-page-v2 .wpforms-container input[type="tel"],
+  .contact-page-v2 .wpforms-container textarea,
+  .contact-page-v2 .wpforms-container select {
+    padding: 10px 12px;
+    background: #fff;
+    outline: none;
+    width: 100%;
+  }
+  .contact-page-v2 .wpforms-container input::placeholder,
+  .contact-page-v2 .wpforms-container textarea::placeholder { color: #9aa3ad; opacity: 1; }
+
+  /* Error states (compatible with WPForms modern) */
+  .contact-page-v2 .wpforms-container .wpforms-error, 
+  .contact-page-v2 .wpforms-container .wpforms-field.wpforms-has-error .wpforms-field-label { color: #d63637; }
+  .contact-page-v2 .wpforms-container input[aria-invalid="true"],
+  .contact-page-v2 .wpforms-container textarea[aria-invalid="true"],
+  .contact-page-v2 .wpforms-container select[aria-invalid="true"] {
+    border-color: #d63637;
+    box-shadow: 0 0 0 .2rem rgba(214, 54, 55, 0.15);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .contact-page-v2 .wpforms-container { max-width: 100%; padding: 0 12px; }
+    .contact-page-v2 .wpforms-container .wpforms-submit-container { text-align: center; }
+  }
+
+  /* Center section titles for both form sections */
+  .contact-page-v2 .content-wrapper-right .title-wrapper,
+  .contact-page-v2 .bottom-form-wrapper .title-wrapper { text-align: center; }
+</style>
+
+<div id="primary" class="content-area contact-page-v2 contact-page-v2-template">
+  <section class="contact-us--hero">
+    <div class="container"> 
+      <div class="content-upper-wrapper col-sm-12">
+        <div class="title-wrapper col-sm-12">
+          <h1>Book Now</h1>
+          <div class="subtitle-wrapper">
+            <h2>Free estimates within 24 hours</h2>
+            <h4>All services come with a 3 year warranty</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-bottom-wrapper col-sm-12">
+        <section class="content-wrapper-left col-sm-12 col-md-6 overlay-jade" style="background-image: url(https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg);">
+          <h3>Start Your Pool Service</h3>
+          <h4><strong>Crystal-clear water. Stress-free maintenance.</strong></h4>
+          <ul>
+            <li>WEEKLY SERVICE</li>
+            <li>CHEMICAL BALANCING</li>
+            <li>FILTER CLEANING</li>
+            <li>GREEN POOL CLEANUP</li>
+            <li>EQUIPMENT REPAIRS</li>
+            <li>PUMP &amp; HEATER SERVICE</li>
+          </ul>
+        </section>
+
+        <div class="content-wrapper-right col-sm-12 col-md-6 col-lg-6">
+          <div class="title-wrapper col-sm-12">
+            <h2>Estimates in 24 Hours or Less</h2>
+          </div>
+
+          <!-- Accessible contact form preserving original look and CSS targets -->
+          <div class="wpforms-container wpforms-container-full">
+            <form class="wpforms-form" method="post" action="/api/contact" novalidate>
+              <div class="wpforms-field-container">
+                <div class="wpforms-field">
+                  <label class="wpforms-field-label" for="contact-name">Name <span aria-hidden="true" class="wpforms-required-label">*</span></label>
+                  <div class="wpforms-field-row">
+                    <div class="wpforms-field-row-block wpforms-one-half">
+                      <input type="text" id="contact-name-first" name="firstName" placeholder="First" required />
+                    </div>
+                    <div class="wpforms-field-row-block wpforms-one-half">
+                      <input type="text" id="contact-name-last" name="lastName" placeholder="Last" required />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wpforms-field">
+                  <label class="wpforms-field-label" for="contact-phone">Phone <span aria-hidden="true" class="wpforms-required-label">*</span></label>
+                  <input type="tel" id="contact-phone" name="phone" inputmode="tel" placeholder="(555) 555-5555" required />
+                </div>
+
+                <div class="wpforms-field">
+                  <label class="wpforms-field-label" for="contact-email">Email <span aria-hidden="true" class="wpforms-required-label">*</span></label>
+                  <input type="email" id="contact-email" name="email" placeholder="you@example.com" required />
+                </div>
+
+                <div class="wpforms-field">
+                  <label class="wpforms-field-label" for="contact-zip">ZIP Code</label>
+                  <input type="text" id="contact-zip" name="zip" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" placeholder="12345" />
+                </div>
+
+                <div class="wpforms-field">
+                  <label class="wpforms-field-label" for="contact-message">How can we help?</label>
+                  <textarea id="contact-message" name="message" rows="4" placeholder="Tell us about your pool and what you need..."></textarea>
+                </div>
+              </div>
+
+              <div class="wpforms-submit-container">
+                <button type="submit" class="wpforms-submit">Get My Free Estimate</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> <!-- End Container -->
+  </section>
+
+  <!-- Reviews Block (trimmed but styled consistently) -->
+  <section class="bg-garageup-primary bg-icon reviews-container">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Discover our 5 Star Reputation</h2>
+      <section class="resi-reviews">
+        <div class="container">
+          <div class="resi-reviews--inner">
+            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>Great company!!! Very reliable. Skilled workmanship. Love our garage!!!</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Barry Kramer</h5></div></div></div>
+            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>The crew out of Lakeway did an amazing job. Very flexible with timing—overall very happy with the end result.</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Paul Flavion</h5></div></div></div>
+            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>Swim Studs gave our system a full tune-up—now it works like new again. Professional and thorough. Highly recommend.</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Michelle Morrison</h5></div></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- Bottom Form: Get An Estimate (from original contact page) -->
+  <div class="container">
+    <div class="bottom-form-wrapper mt-5 col-sm-12">
+      <div class="inner-wrapper">
+        <div class="title-wrapper col-sm-12">
+          <h2>Get An Estimate</h2>
+        </div>
+        <div class="wpforms-container wpforms-container-full wpforms-render-modern">
+          <form class="wpforms-validate wpforms-form" method="post" action="/api/contact" novalidate>
+            <div class="wpforms-field-container">
+              <div class="wpforms-field wpforms-field-name">
+                <fieldset>
+                  <legend class="wpforms-field-label">Name <span class="wpforms-required-label" aria-hidden="true">*</span></legend>
+                  <div class="wpforms-field-row wpforms-field-large">
+                    <div class="wpforms-field-row-block wpforms-first wpforms-one-half">
+                      <input type="text" class="wpforms-field-name-first wpforms-field-required" name="firstName" required />
+                      <label class="after">First</label>
+                    </div>
+                    <div class="wpforms-field-row-block wpforms-one-half">
+                      <input type="text" class="wpforms-field-name-last wpforms-field-required" name="lastName" required />
+                      <label class="after">Last</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="wpforms-field wpforms-field-phone">
+                <label class="wpforms-field-label" for="estimate-phone">Phone <span class="wpforms-required-label" aria-hidden="true">*</span></label>
+                <input id="estimate-phone" type="tel" name="phone" inputmode="tel" required />
+              </div>
+
+              <div class="wpforms-field wpforms-field-email">
+                <label class="wpforms-field-label" for="estimate-email">Email <span class="wpforms-required-label" aria-hidden="true">*</span></label>
+                <input id="estimate-email" type="email" name="email" required />
+              </div>
+
+              <div class="wpforms-field">
+                <label class="wpforms-field-label" for="estimate-zip">ZIP Code</label>
+                <input id="estimate-zip" type="text" name="zip" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" />
+              </div>
+
+              <div class="wpforms-field">
+                <label class="wpforms-field-label" for="estimate-message">How can we help?</label>
+                <textarea id="estimate-message" name="message" rows="4"></textarea>
+              </div>
+            </div>
+
+            <div class="wpforms-submit-container">
+              <button type="submit" class="wpforms-submit">Get My Free Estimate</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="container mb-5">
+    <section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
+      <div class="estimate-prompt">
+        <h2 class="section-title">Ready to get started?</h2>
+        <p>Contact us for a free onsite estimate within 24 hours.</p>
+        <div class="btn-wrapper "><a href="/contact-us" class="btn btn-primary-dark">Contact Us</a></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- WPForms CSS assets for modern layout to preserve original styling (scoped to this page) -->
+<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/fields/layout.min.css' media='all' />
+<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/fields/layout-screen-big.min.css' media='(min-width: 601px)' />
+<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/fields/layout-screen-small.min.css' media='(max-width: 600px)' />
+<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/css/frontend/modern/wpforms-full.min.css' media='all' />
+<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/frontend/modern/wpforms-full.min.css' media='all' />
+
+<%- include('partials/footer') %>
