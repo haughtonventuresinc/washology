@@ -61,6 +61,17 @@
 			padding: 4px 10px;
 		}
 		.banner-wrapper .banner-header a:hover { text-decoration: underline; color: #fff; }
+		/* Header layout adjustments */
+		#header .container { position: relative; }
+		#header .mbl-nav-wrapper { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; }
+		#header .mbl-nav-wrapper .navbar-toggler { position: absolute; right: 0; }
+		/* Desktop nav: split menus with centered logo */
+		@media (min-width: 768px) {
+		  #navbar .navbar-nav { width: 100%; display: flex; align-items: center; justify-content: center; gap: 16px; }
+		  #navbar .navbar-nav .left-menu, 
+		  #navbar .navbar-nav .right-menu { display: flex; align-items: center; gap: 12px; }
+		  #navbar .navbar-nav .center-brand { display: flex !important; align-items: center; justify-content: center; padding: 0 8px; }
+		}
 	</style>    
 </head>
 <body class="<%= typeof bodyClass !== 'undefined' && bodyClass ? bodyClass : 'home wp-singular page-template page-template-templates page-template-landing page-template-templateslanding-php page page-id-8 wp-theme-resi-franchise wp-child-theme-garageup' %>">
@@ -75,7 +86,7 @@
 			<nav id="header" class="navbar navbar-expand-md justify-content-center navbar-light bg-light">
 				<div class="container">
 					<div class="mbl-nav-wrapper">
-						<a class="navbar-brand" href="/" title="Swim Studs" rel="home">
+						<a class="navbar-brand d-md-none" href="/" title="Swim Studs" rel="home">
 							<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
 						</a>
 						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,16 +99,21 @@
 								<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nav-item dropdown">
 									<a title="Services" href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" aria-expanded="false">Services <span class="caret"></span></a>
 									<ul role="menu" class="dropdown-menu">
-										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Weekly Service" href="/services/weekly-service/" class="dropdown-item">Weekly Service</a></li>
-										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Chemical Balancing" href="/services/weekly-service/" class="dropdown-item">Chemical Balancing</a></li>
-										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Filter Cleaning" href="/index.html%3Fp=20.html" class="dropdown-item">Filter Cleaning</a></li>
-										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Green Pool Cleanup" href="/index.html%3Fp=101.html" class="dropdown-item">Green Pool Cleanup</a></li>
-										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Equipment Repairs" href="/index.html%3Fp=156.html" class="dropdown-item">Equipment Repairs</a></li>
-										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Pump &amp; Heater Service" href="/index.html%3Fp=118.html" class="dropdown-item">Pump &amp; Heater Service</a></li>
+										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Weekly Service" href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scheduleModal">Weekly Service</a></li>
+										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Chemical Balancing" href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scheduleModal">Chemical Balancing</a></li>
+										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Filter Cleaning" href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scheduleModal">Filter Cleaning</a></li>
+										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Green Pool Cleanup" href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scheduleModal">Green Pool Cleanup</a></li>
+										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Equipment Repairs" href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scheduleModal">Equipment Repairs</a></li>
+										<li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a title="Pump &amp; Heater Service" href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scheduleModal">Pump &amp; Heater Service</a></li>
 									</ul>
 								</li>
 								<li class="menu-item menu-item-type-custom menu-item-object-custom nav-item"><a title="Blog" href="/blog" class="nav-link">Blog</a></li>
 							</ul>
+							<li class="center-brand d-none d-md-flex">
+								<a class="navbar-brand" href="/" title="Swim Studs" rel="home">
+									<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
+								</a>
+							</li>
 							<ul id="menu-main-menu-1" class="navbar-nav right-menu">
 								<li class="menu-item menu-item-type-post_type menu-item-object-page nav-item"><a title="About Us" href="/about-us" class="nav-link">About Us</a></li>
 								<li class="menu-item menu-item-type-post_type menu-item-object-page nav-item"><a title="Contact Us" href="/contact-us" class="nav-link">Contact Us</a></li>

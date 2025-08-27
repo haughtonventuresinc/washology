@@ -27,3 +27,10 @@
   #header .navbar-collapse .navbar-nav { margin-left: 0; }
   #header .navbar-collapse { width: 100%; }
 }
+
+
+@media (min-width: 767.98px) {
+  .navbar .mbl-nav-wrapper {
+      display: none !important;
+  }
+}
