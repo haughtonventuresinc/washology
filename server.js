@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 
+// Load environment variables from .env if present
+try { require('dotenv').config(); } catch (_) {}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -34,19 +37,26 @@ app.use(session({
   }
 }));
 
-// Simple in-memory user store (replace with DB)
-// Password: "password123" (hashed)
-const USERS = [
-  {
-    id: 'u1',
-    email: process.env.ADMIN_EMAIL || 'admin@example.com',
-    passwordHash: process.env.ADMIN_PASSWORD_HASH || '$2a$10$Z5z5v6qrlc8cVZrIYv8i1OcUEnOQ3in7R9l9gB6qgV3YyFShd0p5m',
-    name: 'Admin'
-  }
-];
+// Local JSON user database
+const USERS_DB_PATH = path.join(siteRoot, 'data', 'users.json');
 
-function findUserByEmail(email) {
-  return USERS.find(u => u.email.toLowerCase() === String(email || '').toLowerCase());
+function loadUsers() {
+  try {
+    const raw = fs.readFileSync(USERS_DB_PATH, 'utf8');
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function findUserByIdentifier(identifier) {
+  const users = loadUsers();
+  const q = String(identifier || '').toLowerCase();
+  return users.find(u =>
+    (u.email && String(u.email).toLowerCase() === q) ||
+    (u.username && String(u.username).toLowerCase() === q)
+  );
 }
 
 function requireAuth(req, res, next) {
@@ -172,15 +182,66 @@ app.get('/blog', (req, res) => {
 });
 // Blog and other nested pages will be served via the smart fallback + static
 
+// --- Admin Login page (SSR) ---
+app.get('/admin-login', (req, res) => {
+  if (req.session && req.session.userId) {
+    return res.redirect('/dashboard');
+  }
+  const bodyClass = 'login-page wp-theme-resi-franchise wp-child-theme-garageup';
+  return res.render('admin-login', { bodyClass });
+});
+
 // --- Auth API ---
 app.post('/api/auth/login', async (req, res) => {
   try {
-    const { email, password } = req.body || {};
-    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
-    const user = findUserByEmail(email);
-    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
-    const ok = await bcrypt.compare(password, user.passwordHash);
-    if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
+    const { email, username, identifier, password } = req.body || {};
+    const key = (identifier || email || username || '').toString().trim();
+    const pwd = (password || '').toString();
+    if (!key || !pwd) return res.status(400).json({ error: 'Email/username and password required' });
+    // Temporary debug logging (identifier only)
+    console.log('[auth] login attempt for identifier:', key);
+    // 1) Environment-based admin auth (if configured)
+    const envUser = (process.env.ADMIN_USER || '').toString().trim().toLowerCase();
+    const envEmail = (process.env.ADMIN_EMAIL || '').toString().trim().toLowerCase();
+    const envPass = (process.env.ADMIN_PASS || '').toString().trim();
+    const envPassHash = (process.env.ADMIN_PASSWORD_HASH || '').toString();
+
+    const matchesEnvIdentity = (!!envUser && key.toLowerCase() === envUser) || (!!envEmail && key.toLowerCase() === envEmail);
+    if (matchesEnvIdentity) {
+      console.log('[auth] using ENV credentials for', key);
+      if (envPass) {
+        console.log('[auth] ENV method: plain password');
+        if (pwd !== envPass) {
+          const msg = process.env.NODE_ENV === 'production' ? 'Invalid credentials' : 'Invalid credentials: wrong password (env)';
+          return res.status(401).json({ error: msg });
+        }
+        req.session.userId = 'env-admin';
+        return res.json({ id: 'env-admin', email: process.env.ADMIN_EMAIL || null, name: 'Admin' });
+      } else if (envPassHash) {
+        console.log('[auth] ENV method: bcrypt hash');
+        const okEnv = await bcrypt.compare(pwd, envPassHash);
+        if (!okEnv) {
+          const msg = process.env.NODE_ENV === 'production' ? 'Invalid credentials' : 'Invalid credentials: wrong password (env hash)';
+          return res.status(401).json({ error: msg });
+        }
+        req.session.userId = 'env-admin';
+        return res.json({ id: 'env-admin', email: process.env.ADMIN_EMAIL || null, name: 'Admin' });
+      } else {
+        return res.status(500).json({ error: 'Server auth is misconfigured: set ADMIN_PASS or ADMIN_PASSWORD_HASH' });
+      }
+    }
+
+    // 2) Fallback to local users.json
+    const user = findUserByIdentifier(key);
+    if (!user) {
+      const msg = process.env.NODE_ENV === 'production' ? 'Invalid credentials' : 'Invalid credentials: user not found';
+      return res.status(401).json({ error: msg });
+    }
+    const ok = await bcrypt.compare(pwd, user.passwordHash);
+    if (!ok) {
+      const msg = process.env.NODE_ENV === 'production' ? 'Invalid credentials' : 'Invalid credentials: wrong password';
+      return res.status(401).json({ error: msg });
+    }
     req.session.userId = user.id;
     return res.json({ id: user.id, email: user.email, name: user.name });
   } catch (e) {
@@ -198,9 +259,32 @@ app.post('/api/auth/logout', (req, res) => {
 
 app.get('/api/auth/me', (req, res) => {
   const uid = req.session && req.session.userId;
-  const user = uid && USERS.find(u => u.id === uid);
+  const users = loadUsers();
+  const user = uid && users.find(u => u.id === uid);
   if (!user) return res.status(401).json({ error: 'Unauthorized' });
   return res.json({ id: user.id, email: user.email, name: user.name });
+});
+
+app.get('/api/util/hash', (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.status(404).send('Not Found');
+  }
+  const pw = (req.query.pw || '').toString();
+  if (!pw) return res.status(400).json({ error: 'Provide ?pw=' });
+  const hash = bcrypt.hashSync(pw, 10);
+  return res.json({ hash });
+});
+
+// Dev-only: report current auth status (no secrets)
+app.get('/api/util/auth-status', (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.status(404).send('Not Found');
+  }
+  const envUser = (process.env.ADMIN_USER || '').toString().trim();
+  const envEmail = (process.env.ADMIN_EMAIL || '').toString().trim();
+  const hasPlain = !!process.env.ADMIN_PASS;
+  const hasHash = !!process.env.ADMIN_PASSWORD_HASH;
+  return res.json({ envConfigured: !!(envUser || envEmail), envUser: !!envUser, envEmail: !!envEmail, method: hasPlain ? 'plain' : (hasHash ? 'hash' : 'none') });
 });
 
 // Protect dashboard assets (create a /dashboard/ directory with index.html)

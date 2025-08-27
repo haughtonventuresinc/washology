@@ -1,0 +1,9 @@
+[
+  {
+    "id": "u1",
+    "email": "admin@swimstuds.com",
+    "username": "admin",
+    "passwordHash": "$2a$10$vgBsnf0CIs.2EPul/2V.heBI.GXR7rDfMGjH6P8kwNLnG4FAv5nr2",
+    "name": "Admin"
+  }
+]
