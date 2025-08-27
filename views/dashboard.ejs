@@ -493,8 +493,88 @@
                   <h3 class="h6">Services</h3>
                   <p class="text-muted">Service editor coming soon.</p>
                 <% } else if (section === 'blog') { %>
-                  <h3 class="h6">Blog</h3>
-                  <p class="text-muted">Blog editor coming soon.</p>
+                  <form id="blogForm" class="row g-3" method="post">
+                    <div class="col-12">
+                      <h3 class="h6">Hero</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Hero Title</label>
+                      <input type="text" name="heroTitle" class="form-control" value="<%= (blog && blog.heroTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Hero Background Image URL</label>
+                      <input type="text" name="heroBg" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (blog && blog.heroBg) || '' %>" />
+                      <div class="d-flex align-items-center gap-3 mt-2">
+                        <input type="file" id="blogHeroBgFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="blogHeroBgStatus" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="blogHeroBgPreview" src="<%= (blog && blog.heroBg) || '' %>" alt="Blog hero bg preview" style="max-height: 120px; border-radius: 6px;" <%= (blog && blog.heroBg) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Posts</h3>
+                      <p class="text-muted" style="font-size: .9rem;">Manage up to 12 posts shown on the archive.</p>
+                    </div>
+                    <% for (let i = 1; i <= 12; i++) { %>
+                      <div class="col-12 mt-2"><h4 class="h6 mb-1">Post <%= i %></h4></div>
+                      <div class="col-md-6">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="post<%= i %>Title" class="form-control" value="<%= (blog && blog[`post${i}Title`]) || '' %>" />
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label">Category</label>
+                        <input type="text" name="post<%= i %>Category" class="form-control" value="<%= (blog && blog[`post${i}Category`]) || '' %>" />
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label">Read Time</label>
+                        <input type="text" name="post<%= i %>ReadMin" class="form-control" placeholder="e.g. 4 MIN" value="<%= (blog && blog[`post${i}ReadMin`]) || '' %>" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">URL</label>
+                        <input type="text" name="post<%= i %>Url" class="form-control" placeholder="/blog/... or https://..." value="<%= (blog && blog[`post${i}Url`]) || '' %>" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Image URL</label>
+                        <input type="text" name="post<%= i %>Image" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (blog && blog[`post${i}Image`]) || '' %>" />
+                        <div class="d-flex align-items-center gap-3 mt-2">
+                          <input type="file" id="post<%= i %>ImageFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                          <span id="post<%= i %>ImageStatus" class="text-muted"></span>
+                        </div>
+                        <div class="mt-2">
+                          <img id="post<%= i %>ImagePreview" src="<%= (blog && blog[`post${i}Image`]) || '' %>" alt="Post <%= i %> image preview" style="max-height: 120px; border-radius: 6px;" <%= (blog && blog[`post${i}Image`]) ? '' : 'hidden' %> />
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label">Excerpt</label>
+                        <textarea name="post<%= i %>Excerpt" class="form-control" rows="2"><%= (blog && blog[`post${i}Excerpt`]) || '' %></textarea>
+                      </div>
+                    <% } %>
+
+                    <div class="col-12 mt-4"><h3 class="h6">CTA</h3></div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Title</label>
+                      <input type="text" name="ctaTitle" class="form-control" value="<%= (blog && blog.ctaTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">CTA Body</label>
+                      <textarea name="ctaBody" class="form-control" rows="2"><%= (blog && blog.ctaBody) || '' %></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Button Label</label>
+                      <input type="text" name="ctaLabel" class="form-control" value="<%= (blog && blog.ctaLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA URL</label>
+                      <input type="text" name="ctaUrl" class="form-control" placeholder="/contact-us or https://..." value="<%= (blog && blog.ctaUrl) || '' %>" />
+                    </div>
+
+                    <div class="col-12 d-flex gap-2 mt-2">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <span id="blogStatus" class="text-muted"></span>
+                    </div>
+                  </form>
                 <% } else if (section === 'settings') { %>
                   <h3 class="h6">Settings</h3>
                   <p class="text-muted">Site settings coming soon.</p>
@@ -684,6 +764,101 @@
           }
           const statusEl = document.getElementById('aboutStatus');
           await saveAboutPartial(data, statusEl);
+        });
+      }
+
+      // --- Blog page: hydrate, save, and image wiring ---
+      const blogForm = document.getElementById('blogForm');
+
+      async function saveBlogPartial(patch, statusEl) {
+        try {
+          statusEl && (statusEl.textContent = 'Saving...');
+          const res = await fetch('/api/blog', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify(patch || {})
+          });
+          if (res.status === 401 || res.status === 403) {
+            statusEl && (statusEl.textContent = 'Session expired. Redirecting to login...');
+            setTimeout(() => { window.location.href = '/admin-login'; }, 800);
+            return null;
+          }
+          if (!res.ok) throw new Error('Save failed: ' + res.status);
+          const result = await res.json();
+          statusEl && (statusEl.textContent = 'Saved');
+          setTimeout(() => { statusEl && (statusEl.textContent = ''); }, 1200);
+          showToast('Changes saved', 'success');
+          return result;
+        } catch (e) {
+          console.error('[dashboard] blog partial save failed', e);
+          statusEl && (statusEl.textContent = 'Error saving');
+          showToast('Save failed', 'error');
+          return null;
+        }
+      }
+
+      async function hydrateBlogFromApi() {
+        if (!blogForm) return;
+        try {
+          const res = await fetch('/api/blog', { credentials: 'same-origin' });
+          if (!res.ok) return;
+          const data = await res.json();
+          const fields = blogForm.querySelectorAll('input[name], textarea[name]');
+          fields.forEach(function(el){
+            const key = el.getAttribute('name');
+            if (!key) return;
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
+              const val = data[key];
+              el.value = (val != null ? String(val) : '');
+            }
+          });
+          // Previews
+          const heroPrev = document.getElementById('blogHeroBgPreview');
+          if (heroPrev && data.heroBg) { heroPrev.src = data.heroBg; heroPrev.hidden = false; }
+          for (let i = 1; i <= 12; i++) {
+            const pv = document.getElementById(`post${i}ImagePreview`);
+            const url = data[`post${i}Image`];
+            if (pv && url) { pv.src = url; pv.hidden = false; }
+          }
+        } catch (e) {
+          // silent
+        }
+      }
+
+      // Wire blog image uploads (hero + posts)
+      const blogHeroFile = document.getElementById('blogHeroBgFile');
+      const blogHeroStatus = document.getElementById('blogHeroBgStatus');
+      const blogHeroUrlInput = document.querySelector('#blogForm input[name="heroBg"]');
+      const blogHeroPreview = document.getElementById('blogHeroBgPreview');
+      if (blogForm) wireImageField({ fileEl: blogHeroFile, urlInputEl: blogHeroUrlInput, previewEl: blogHeroPreview, statusEl: blogHeroStatus, payloadKey: 'heroBg' });
+
+      for (let i = 1; i <= 12; i++) {
+        const f = document.getElementById(`post${i}ImageFile`);
+        const s = document.getElementById(`post${i}ImageStatus`);
+        const u = document.querySelector(`#blogForm input[name="post${i}Image"]`);
+        const p = document.getElementById(`post${i}ImagePreview`);
+        if (blogForm) wireImageField({ fileEl: f, urlInputEl: u, previewEl: p, statusEl: s, payloadKey: `post${i}Image` });
+      }
+
+      if (blogForm) {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', hydrateBlogFromApi);
+        } else {
+          hydrateBlogFromApi();
+        }
+        blogForm.addEventListener('submit', async function(ev){
+          ev.preventDefault();
+          const fd = new FormData(blogForm);
+          const raw = Object.fromEntries(fd.entries());
+          const data = {};
+          for (const [k, v] of Object.entries(raw)) {
+            const s = typeof v === 'string' ? v.trim() : v;
+            if (typeof s === 'string' && s.length === 0) continue;
+            data[k] = s;
+          }
+          const statusEl = document.getElementById('blogStatus');
+          await saveBlogPartial(data, statusEl);
         });
       }
 

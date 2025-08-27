@@ -10,6 +10,27 @@ const bcrypt = require('bcryptjs');
 // Load environment variables from .env if present
 try { require('dotenv').config(); } catch (_) {}
 
+function loadBlog() {
+  try {
+    const raw = fs.readFileSync(BLOG_DB_PATH, 'utf8');
+    const obj = JSON.parse(raw);
+    return obj && typeof obj === 'object' ? obj : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveBlog(payload) {
+  try {
+    const current = loadBlog();
+    const next = { ...current, ...payload };
+    fs.writeFileSync(BLOG_DB_PATH, JSON.stringify(next, null, 2), 'utf8');
+    return next;
+  } catch (e) {
+    return null;
+  }
+}
+
 function loadHomepage() {
   try {
     const raw = fs.readFileSync(HOMEPAGE_DB_PATH, 'utf8');
@@ -84,6 +105,7 @@ app.use(session({
 const USERS_DB_PATH = path.join(siteRoot, 'data', 'users.json');
 const HOMEPAGE_DB_PATH = path.join(siteRoot, 'data', 'homepage.json');
 const ABOUT_DB_PATH = path.join(siteRoot, 'data', 'about.json');
+const BLOG_DB_PATH = path.join(siteRoot, 'data', 'blog.json');
 
 function loadUsers() {
   try {
@@ -238,7 +260,8 @@ app.get('/blog', (req, res) => {
   const blogView = path.join(app.get('views'), 'blog.ejs');
   if (fs.existsSync(blogView)) {
     const bodyClass = 'blog wp-theme-resi-franchise wp-child-theme-garageup';
-    return res.render('blog', { bodyClass });
+    const blog = loadBlog();
+    return res.render('blog', { bodyClass, blog });
   }
   if (sendHtml(res, path.join('blog', 'index.html'))) return;
   res.status(404).send('Not Found');
@@ -358,6 +381,46 @@ app.post('/api/about', requireAuth, (req, res) => {
   }
 });
 
+// --- Blog Editor API (protected) ---
+app.get('/api/blog', requireAuth, (req, res) => {
+  const data = loadBlog();
+  return res.json(data);
+});
+
+app.post('/api/blog', requireAuth, (req, res) => {
+  try { console.log('[api/blog] incoming keys:', Object.keys(req.body || {})); } catch(_) {}
+  const allowed = [
+    'heroTitle', 'heroBg',
+    'ctaTitle', 'ctaBody', 'ctaLabel', 'ctaUrl'
+  ];
+  for (let i = 1; i <= 12; i++) {
+    allowed.push(
+      `post${i}Title`, `post${i}Url`, `post${i}Category`, `post${i}ReadMin`, `post${i}Image`, `post${i}Excerpt`
+    );
+  }
+  const payload = {};
+  for (const k of allowed) {
+    if (typeof req.body[k] !== 'undefined') {
+      const v = (req.body[k] == null) ? '' : String(req.body[k]);
+      if (v.trim().length > 0) {
+        payload[k] = v;
+      }
+    }
+  }
+  try {
+    const saved = saveBlog(payload);
+    if (!saved) {
+      console.error('[api/blog] saveBlog returned null');
+      return res.status(500).json({ error: 'Failed to save blog' });
+    }
+    console.log('[api/blog] saved keys:', Object.keys(payload));
+    return res.json(saved);
+  } catch (e) {
+    console.error('[api/blog] exception while saving:', e);
+    return res.status(500).json({ error: 'Exception while saving blog' });
+  }
+});
+
 app.post('/api/auth/logout', (req, res) => {
   if (!req.session) return res.json({ ok: true });
   req.session.destroy(() => {
@@ -410,6 +473,10 @@ app.get('/dashboard/:section', requireAuth, (req, res) => {
   if (section === 'about') {
     const about = loadAbout();
     return res.render('dashboard', { section, about });
+  }
+  if (section === 'blog') {
+    const blog = loadBlog();
+    return res.render('dashboard', { section, blog });
   }
   return res.render('dashboard', { section });
 });
