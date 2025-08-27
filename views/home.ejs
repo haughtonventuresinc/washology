@@ -1,11 +1,13 @@
 <%- include('partials/header') %>
 
-<section class="hero hero-wrapper overlay-jade" style="background: url('https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg') lightgray 6.567px -254.297px / 100.156% 174.206% no-repeat;">
+<section class="hero hero-wrapper overlay-jade"
+         data-hero-bg='<%= (homepage && homepage.heroBg) || "https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg" %>'
+         style="background-image: url(<%- JSON.stringify((homepage && homepage.heroBg) || 'https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg') %>); background-repeat: no-repeat; background-size: cover; background-position: center;">
 	<div class="content-wrapper container">
 		<div class="row align-items-center justify-content-around">
 			<div class="col-lg-9 col-md-10 col-sm-12">
-				<h4 class="mb-4">Pool Cleaning, Chemical Balancing, Equipment Service, and More</h4>
-				<h1>Your Trusted Pool Care Experts</h1>
+				<h4 class="mb-4"><%= (homepage && homepage.heroSubtitle) || 'Pool Cleaning, Chemical Balancing, Equipment Service, and More' %></h4>
+				<h1><%= (homepage && homepage.heroTitle) || 'Your Trusted Pool Care Experts' %></h1>
 				<div class="zip-code-search">
 					<form role="search" aria-label="Find franchise by ZIP code">
 						<label for="zip-search-input" class="visually-hidden">ZIP Code</label>
@@ -32,10 +34,7 @@
 		<div class="scroller" data-speed="slow">
 			<ul class="tag-list scroller__inner">
 				<li>
-					<div class="h1">
-						Cleaning, Balancing, Repairs, <span class="teal">and more</span>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M38 0L0 23.0781V38H13.8184V31.4687L38 16.7812C46.0613 21.6763 54.1225 26.5713 62.1816 31.4687V38H76V23.0804L38 0Z" fill="#000000" />
-					</div>
+					<div class="h1"><%= (homepage && homepage.scrollerText) || 'Cleaning, Balancing, Repairs, and more' %></div>
 				</li>
 			</ul>
 		</div>
@@ -46,16 +45,20 @@
 	<div class="content-wrapper container">
 		<div class="row flex-wrap-reverse gap-4 gap-lg-0">
 			<div class="col-lg-5 col-sm-12">
-				<h2 class="section-title">Who We Are</h2>
-				<p>At Swim Studs, we keep pools sparkling, safe, and swim‑ready all year long. From weekly cleaning to equipment repairs, our certified technicians deliver reliable pool care you can count on.</p>
-				<p>Our mission is to be the most trusted pool service in our communities—built on consistency, transparency, and great results.</p>
-				<p>Whether you need routine service, chemical balancing, filter and pump maintenance, green‑to‑clean recovery, or leak and equipment diagnostics, our team treats your pool like it’s our own.</p>
-				<h5>Your pool should be effortless—let the Swim Studs handle the work while you enjoy the water.</h5>
-				<a href="#" class="btn mt-4" target="" style="background-color: yellow; color: var(--brand-red);">Learn More</a>
+				<h2 class="section-title"><%= (homepage && homepage.whoWeAreTitle) || 'Who We Are' %></h2>
+				<% if (homepage && homepage.whoWeAreBody) { %>
+				  <p><%= homepage.whoWeAreBody %></p>
+				<% } else { %>
+				  <p>At Swim Studs, we keep pools sparkling, safe, and swim‑ready all year long. From weekly cleaning to equipment repairs, our certified technicians deliver reliable pool care you can count on.</p>
+				  <p>Our mission is to be the most trusted pool service in our communities—built on consistency, transparency, and great results.</p>
+				  <p>Whether you need routine service, chemical balancing, filter and pump maintenance, green‑to‑clean recovery, or leak and equipment diagnostics, our team treats your pool like it’s our own.</p>
+				  <h5>Your pool should be effortless—let the Swim Studs handle the work while you enjoy the water.</h5>
+				<% } %>
+				<a href="<%= (homepage && homepage.ctaUrl) || '#' %>" class="btn mt-4" target="" style="background-color: yellow; color: var(--brand-red);"><%= (homepage && homepage.ctaLabel) || 'Learn More' %></a>
 			</div>
 			<div class="col-lg-1 d-none d-lg-block"></div>
 			<div class="col-sm-12 col-lg-6 text-center">
-				<img width="750" height="600" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="img-fluid wp-image-29" alt="" decoding="async" fetchpriority="high" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg 750w, https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg 300w" sizes="(max-width: 750px) 100vw, 750px" data-mwl-img-id="29" />
+				<img width="750" height="600" src="<%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" class="img-fluid wp-image-29" alt="" decoding="async" fetchpriority="high" srcset="<%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %> 750w, <%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %> 300w" sizes="(max-width: 750px) 100vw, 750px" data-mwl-img-id="29" />
 			</div>
 		</div>
 	</div>
@@ -65,25 +68,30 @@
 	<div class="content-wrapper container">
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<h2 class="section-title" style="color: #000000;">Our Services</h2>
+				<h2 class="section-title" style="color: #000000;"><%= (homepage && homepage.servicesTitle) || 'Our Services' %></h2>
 			</div>
 		</div>
 		<div class="row justify-content-around">
 			<div class="col-sm-10">
 				<div class="gy-4 text-center our-services--featured">
-					<a href="/" target=""><img width="800" height="642" src="/wp-content/uploads/2025/04/92a2b1320fd849d05eee3af9c8e41e87-e1750264298595-1024x822.jpg" class="img-fluid wp-image-21" alt="Swim Studs team installing a garage door motor. garage door installation" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="21" /><h3>Weekly Pool Cleaning</h3></a>
-					<a href="/" target=""><img width="800" height="640" src="/wp-content/uploads/2025/06/GU-website-photos-70-1024x819.png" class="img-fluid wp-image-332" alt="a newly installed epoxy floor by technicians at Swim Studs" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="332" /><h3>Filter &amp; Pump Service</h3></a>
-					<a href="/" target=""><img width="800" height="640" src="/wp-content/uploads/2025/05/GU-website-photos-69-1024x819.png" class="img-fluid wp-image-328" alt="a newly installed garage storage system including slat walls, an overhead rack, and cabinets" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="328" /><h3>Chemical Balancing</h3></a>
-					<a href="/" target=""><img width="800" height="640" src="/wp-content/uploads/2025/05/GU-website-photos-21-1024x819.png" class="img-fluid wp-image-106" alt="" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="106" /><h3>Equipment Repairs</h3></a>
+					<a href="<%= (homepage && homepage.featuredService1Url) || '/' %>" target=""><img width="800" height="642" src="<%= (homepage && homepage.featuredService1Image) || '/wp-content/uploads/2025/04/92a2b1320fd849d05eee3af9c8e41e87-e1750264298595-1024x822.jpg' %>" class="img-fluid wp-image-21" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="21" /><h3><%= (homepage && homepage.featuredService1Title) || 'Weekly Pool Cleaning' %></h3></a>
+					<a href="<%= (homepage && homepage.featuredService2Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService2Image) || '/wp-content/uploads/2025/06/GU-website-photos-70-1024x819.png' %>" class="img-fluid wp-image-332" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="332" /><h3><%= (homepage && homepage.featuredService2Title) || 'Filter &amp; Pump Service' %></h3></a>
+					<a href="<%= (homepage && homepage.featuredService3Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService3Image) || '/wp-content/uploads/2025/05/GU-website-photos-69-1024x819.png' %>" class="img-fluid wp-image-328" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="328" /><h3><%= (homepage && homepage.featuredService3Title) || 'Chemical Balancing' %></h3></a>
+					<a href="<%= (homepage && homepage.featuredService4Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService4Image) || '/wp-content/uploads/2025/05/GU-website-photos-21-1024x819.png' %>" class="img-fluid wp-image-106" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="106" /><h3><%= (homepage && homepage.featuredService4Title) || 'Equipment Repairs' %></h3></a>
 				</div>
 				<div class="row mt-4 align-items-center our-services--services-cont">
 					<div class="col-sm-10 text-center our-services--services">
-						<a href="/index.html%3Fp=101.html" class="btn btn-ash ">Green Pool Cleanup</a>
-						<a href="/index.html%3Fp=156.html" class="btn btn-ash ">Equipment Repairs</a>
-						<a href="/index.html%3Fp=20.html" class="btn btn-ash ">Filter Cleaning</a>
-						<a href="/index.html%3Fp=117.html" class="btn btn-ash ">Chemical Balancing</a>
-						<a href="/index.html%3Fp=61.html" class="btn btn-ash ">Weekly Service</a>
-						<a href="/index.html%3Fp=118.html" class="btn btn-ash ">Pump &amp; Heater Service</a>
+						<% 
+						  const pills = [];
+						  for (let i = 1; i <= 6; i++) {
+						    const label = homepage && homepage[`servicesBtn${i}Label`];
+						    const url = homepage && homepage[`servicesBtn${i}Url`];
+						    if (label && url) pills.push({ label, url });
+						  }
+						%>
+						<% pills.forEach(function(p){ %>
+						  <a href="<%= p.url %>" class="btn btn-ash "><%= p.label %></a>
+						<% }) %>
 					</div>
 				</div>
 			</div>
@@ -112,40 +120,42 @@
 			</div>
 		</div>
 		<div class="row gy-4 our-stats--stats">
-			<div class="our-stats--stat locations"><div class="our-stats--stat--icon"><img width="48" height="62" src="/wp-content/uploads/2025/04/icon-location.svg" class="img-fluid wp-image-13" alt="" decoding="async" data-mwl-img-id="13" /></div><h3 class="gradient">1</h3><p>LOCATIONS</p></div>
-			<div class="our-stats--stat jobs-completed"><div class="our-stats--stat--icon"><img width="67" height="62" src="/wp-content/uploads/2025/04/icon-jobs.svg" class="img-fluid wp-image-12" alt="" decoding="async" data-mwl-img-id="12" /></div><h3 class="gradient">100</h3><p>JOBS COMPLETED</p></div>
-			<div class="our-stats--stat states-were-in"><div class="our-stats--stat--icon"><img width="72" height="68" src="/wp-content/uploads/2025/04/icon-texas.svg" class="img-fluid wp-image-15" alt="" decoding="async" data-mwl-img-id="15" /></div><h3 class="gradient">1</h3><p>STATES WE'RE IN</p></div>
-			<div class="our-stats--stat 5-star-reviews"><div class="our-stats--stat--icon"><img width="213" height="35" src="/wp-content/uploads/2025/04/icon-stars.svg" class="img-fluid wp-image-14" alt="" decoding="async" data-mwl-img-id="14" /></div><h3 class="gradient">50</h3><p>5 STAR REVIEWS</p></div>
-			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="67" height="65" src="/wp-content/uploads/2025/04/icon-availability.svg" class="img-fluid wp-image-10" alt="" decoding="async" data-mwl-img-id="10" /></div><h3 class="gradient">24/7</h3><p>ESTIMATES AVAILABLE</p></div>
-			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="72" height="72" src="/wp-content/uploads/2025/04/icon-check-badge.svg" class="img-fluid wp-image-11" alt="" decoding="async" data-mwl-img-id="11" /></div><h3 class="gradient">ENDLESS</h3><p>POSSIBILITIES</p></div>
+			<div class="our-stats--stat locations"><div class="our-stats--stat--icon"><img width="48" height="62" src="/wp-content/uploads/2025/04/icon-location.svg" class="img-fluid wp-image-13" alt="" decoding="async" data-mwl-img-id="13" /></div><h3 class="gradient"><%= (homepage && homepage.quickLocations) || '1' %></h3><p><%= (homepage && homepage.quickLocationsLabel) || 'LOCATIONS' %></p></div>
+			<div class="our-stats--stat jobs-completed"><div class="our-stats--stat--icon"><img width="67" height="62" src="/wp-content/uploads/2025/04/icon-jobs.svg" class="img-fluid wp-image-12" alt="" decoding="async" data-mwl-img-id="12" /></div><h3 class="gradient"><%= (homepage && homepage.quickJobs) || '100' %></h3><p><%= (homepage && homepage.quickJobsLabel) || 'JOBS COMPLETED' %></p></div>
+			<div class="our-stats--stat states-were-in"><div class="our-stats--stat--icon"><img width="72" height="68" src="/wp-content/uploads/2025/04/icon-texas.svg" class="img-fluid wp-image-15" alt="" decoding="async" data-mwl-img-id="15" /></div><h3 class="gradient"><%= (homepage && homepage.quickStates) || '1' %></h3><p><%= (homepage && homepage.quickStatesLabel) || "STATES WE'RE IN" %></p></div>
+			<div class="our-stats--stat 5-star-reviews"><div class="our-stats--stat--icon"><img width="213" height="35" src="/wp-content/uploads/2025/04/icon-stars.svg" class="img-fluid wp-image-14" alt="" decoding="async" data-mwl-img-id="14" /></div><h3 class="gradient"><%= (homepage && homepage.quickReviews) || '50' %></h3><p><%= (homepage && homepage.quickReviewsLabel) || '5 STAR REVIEWS' %></p></div>
+			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="67" height="65" src="/wp-content/uploads/2025/04/icon-availability.svg" class="img-fluid wp-image-10" alt="" decoding="async" data-mwl-img-id="10" /></div><h3 class="gradient"><%= (homepage && homepage.quickEstimates) || '24/7' %></h3><p><%= (homepage && homepage.quickEstimatesLabel) || 'ESTIMATES AVAILABLE' %></p></div>
+			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="72" height="72" src="/wp-content/uploads/2025/04/icon-check-badge.svg" class="img-fluid wp-image-11" alt="" decoding="async" data-mwl-img-id="11" /></div><h3 class="gradient"><%= (homepage && homepage.quickPossibilities) || 'ENDLESS' %></h3><p><%= (homepage && homepage.quickPossibilitiesLabel) || 'POSSIBILITIES' %></p></div>
 		</div>
 	</div>
 </section>
 
 <section class="blogFeat blogFeat-wrapper col-sm-12">
 	<div class="content-wrapper container">
-		<h4>CHECK OUT WHAT THE PROS HAVE TO SAY</h4>
-		<h2 class="section-title">SEE WHY WE’RE THE EXPERTS</h2>
+		<h4><%= (homepage && homepage.blogKicker) || 'CHECK OUT WHAT THE PROS HAVE TO SAY' %></h4>
+		<h2 class="section-title"><%= (homepage && homepage.blogTitle) || 'SEE WHY WE’RE THE EXPERTS' %></h2>
 		<div class="blogContent blogContent-wrapper">
 			<div class="blogCards blogCards-wrapper col-sm-12">
 				<div class="container">
-					<div class="featured-posts-wrapper">
-						<a href="/index.html%3Fp=541.html" class="feat-post col-sm-12 col-md-4 col-lg-4">
-							<article class="post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
-								<div class="post-thumbnail"><img width="1875" height="1500" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-image-322 wp-post-image" alt="a completely renovated garage with new epoxy garage floors and custom cabinets completed by Swim Studs austin" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg 1875w" sizes="(max-width: 1875px) 100vw, 1875px" data-mwl-img-id="322" /></div>
-								<div class="entry-summary"><h6 class="entry-title">Swim Studs makeover Ideas For Every Enthusiast</h6><p>Discover how Swim Studs can elevate your space today with our expert renovation services!</p></div>
-							</article></a>
-						<a href="/index.html%3Fp=419.html" class="feat-post col-sm-12 col-md-4 col-lg-4">
-							<article class="post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
-								<div class="post-thumbnail"><img width="1500" height="1200" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-image-233 wp-post-image" alt="a garage with linear lights on along the borders of the ceiling" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg 1500w" sizes="(max-width: 1500px) 100vw, 1500px" data-mwl-img-id="233" /></div>
-								<div class="entry-summary"><h6 class="entry-title">Swim Studs Installation in Austin (2025): Get It Done Right the First Time</h6><p>Whether you&#8217;re upgrading an old unit or setting up a brand-new opener, proper Swim Studs installation is key to safety, performance, and peace of mind. In Austin’s hot climate and rapidly growing neighborhoods, your garage deserves more than a rushed job. It deserves precision.</p></div>
-							</article></a>
-						<a href="/index.html%3Fp=457.html" class="feat-post col-sm-12 col-md-4 col-lg-4">
-							<article class="post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
-								<div class="post-thumbnail"><img width="1660" height="1333" src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-image-21 wp-post-image" alt="Swim Studs team installing a garage door motor. garage door installation" decoding="async" srcset="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg 1660w" sizes="(max-width: 1660px) 100vw, 1660px" data-mwl-img-id="21" /></div>
-								<div class="entry-summary"><h6 class="entry-title">Swim Studs opener Installation &amp; Repair in Austin (2025): Fast, Smart, and Reliable Solutions</h6><p>According to a 2024 survey by the National Home Tech Association, over 60% of homeowners in urban areas like Austin have upgraded to smart Swim Studs openers for better convenience and safety. Whether you&#8217;re returning from a weekend at Lake Travis or heading out to catch live music downtown, you need a garage door system that just works.</p></div>
-							</article></a>
-					</div>
+						<div class="featured-posts-wrapper">
+							<% 
+							  const posts = [];
+							  for (let i = 1; i <= 3; i++) {
+							    const pt = homepage && homepage[`blogFeat${i}Title`];
+							    const pu = homepage && homepage[`blogFeat${i}Url`];
+							    const pi = homepage && homepage[`blogFeat${i}Image`];
+							    const pe = homepage && homepage[`blogFeat${i}Excerpt`];
+							    if (pt && pu && pi) posts.push({ title: pt, url: pu, image: pi, excerpt: pe || '' });
+							  }
+							%>
+							  <% posts.forEach(function(p){ %>
+							    <a href="<%= p.url %>" class="feat-post col-sm-12 col-md-4 col-lg-4">
+							    	<article class="post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+							    		<div class="post-thumbnail"><img width="800" height="600" src="<%= p.image %>" class="attachment-post-thumbnail size-post-thumbnail" alt="" decoding="async" /></div>
+							    		<div class="entry-summary"><h6 class="entry-title"><%= p.title %></h6><% if (p.excerpt) { %><p><%= p.excerpt %></p><% } %></div>
+							    	</article></a>
+							  <% }) %>
+						</div>
 				</div>
 			</div>
 			<div class="text-center">
@@ -157,7 +167,7 @@
 
 <section class="warranty banner bg-jade-geometric">
 	<div class="container text-center">
-		<div class="row"><div class="col-lg-8 justify-content-center mx-auto"><h2 class="section-title" style="color: white;">OUR Warranty</h2><p>Known across the U.S. for exceptional garage door services, Swim Studs is dedicated to providing great value through transparent estimates, expert advice, and amazing deals on every booking. Our services are backed by manufacturer warranties, including lifetime warranties on select components, ensuring you have peace of mind with every repair or installation.</p></div></div>
+		<div class="row"><div class="col-lg-8 justify-content-center mx-auto"><h2 class="section-title" style="color: white;"><%= (homepage && homepage.warrantyTitle) || 'OUR Warranty' %></h2><p><%= (homepage && homepage.warrantyBody) || 'Known across the U.S. for exceptional garage door services, Swim Studs is dedicated to providing great value through transparent estimates, expert advice, and amazing deals on every booking. Our services are backed by manufacturer warranties, including lifetime warranties on select components, ensuring you have peace of mind with every repair or installation.' %></p></div></div>
 	</div>
 </section>
 
@@ -188,9 +198,17 @@
 		<section class="resi-reviews">
 			<div class="container">
 				<div class="resi-reviews--inner">
-					<div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>Great company!!! Very reliable. Skilled workmanship. Love our garage!!!</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Barry Kramer</h5></div></div></div>
-					<div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>The crew out of Lakeway, did an amazing job. Very flexible with timing due to rain showers … overall very happy with the end result</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Paul Flavion</h5></div></div></div>
-					<div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>All I can say is WOW! Swim Studs came out and gave our garage door a full tune-up, and now it works like new again. Gilly and his trainees were incredibly professional, thorough, and respectful throughout the entire visit. My husband was so impressed—and when he’s happy, I’m happy! Highly recommend Swim Studs.</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Michelle Morrison</h5></div></div></div>
+					<% 
+					  const reviews = [];
+					  for (let i = 1; i <= 3; i++) {
+					    const text = homepage && homepage[`review${i}Text`];
+					    const author = homepage && homepage[`review${i}Author`];
+					    if (text && author) reviews.push({ text, author });
+					  }
+					%>
+					<% reviews.forEach(function(r){ %>
+					  <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p><%= r.text %></p></div></div><div class="resi-review--meta"><h5 class="resi-review--author"><%= r.author %></h5></div></div></div>
+					<% }); %>
 				</div>
 			</div>
 		</section>
@@ -200,13 +218,29 @@
 <div class="container mb-5">
 	<section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
 		<div class="estimate-prompt">
-			<h2 class="section-title">Ready to get started?</h2>
-			<p>Contact us for a free onsite estimate within 24 hours.</p>
+			<h2 class="section-title"><%= (homepage && homepage.getStartedTitle) || 'Ready to get started?' %></h2>
+			<p><%= (homepage && homepage.getStartedBody) || 'Contact us for a free onsite estimate within 24 hours.' %></p>
 			<div class="btn-wrapper ">
-				<a href="/contact" class="btn btn-primary-dark" target="">Contact Us</a>
+				<a href="<%= (homepage && homepage.getStartedCtaUrl) || '/contact' %>" class="btn btn-primary-dark" target=""><%= (homepage && homepage.getStartedCtaLabel) || 'Contact Us' %></a>
 			</div>
 		</div>
 	</section>
 </div>
 
+<script>
+  (function () {
+    try {
+      var hero = document.querySelector('section.hero.hero-wrapper.overlay-jade');
+      if (hero) {
+        var bg = hero.getAttribute('data-hero-bg');
+        if (bg) {
+          hero.style.backgroundImage = 'url(' + JSON.stringify(bg) + ')';
+          hero.style.backgroundRepeat = 'no-repeat';
+          hero.style.backgroundSize = 'cover';
+          hero.style.backgroundPosition = 'center';
+        }
+      }
+    } catch (e) { /* no-op */ }
+  })();
+  </script>
 <%- include('partials/footer') %>

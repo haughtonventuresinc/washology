@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <link rel='stylesheet' href='/wp-includes/css/dist/block-library/style.min.css%3Fver=6.8.2.css' />
+  <link rel='stylesheet' href='/wp-content/themes/garageup/build/main.css%3Fver=b6dc510ac89b6f088fb6.css' />
+  <link rel='stylesheet' href='/wp-content/themes/garageup/build/nav-overrides.css' />
+  <link rel='stylesheet' href='/wp-content/themes/garageup/build/brand-overrides.css' />
+  <style>
+    html, body { height: 100%; }
+    body { background: white; }
+    .dashboard { min-height: 100vh; }
+    .dashboard .row { min-height: 100vh; }
+    .dashboard aside { position: sticky; top: 0; height: 100vh; overflow: auto; }
+    .dashboard .list-group-item { border: 0; border-bottom: 1px solid #eee; }
+    .dashboard .list-group-item.active, .dashboard .list-group-item:hover { background: #fff2f3; }
+    .dashboard .dash-link { text-decoration: none; color: inherit; display: block; }
+    .dashboard .content-col { max-height: 100vh; overflow: auto; }
+    /* Toasts */
+    .toast-container { position: fixed; right: 16px; bottom: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+    .toast { color: #fff; padding: 10px 14px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.15); opacity: 0; transform: translateY(10px); transition: opacity .2s ease, transform .2s ease; font-size: 14px; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: #198754; }
+    .toast.error { background: #dc3545; }
+    .toast.info { background: #0d6efd; }
+    .toast.warn { background: #fd7e14; }
+  </style>
+  <link rel="icon" href="/wp-content/uploads/2025/04/favicon-32x32.png" sizes="32x32" />
+</head>
+<body class="dashboard-page">
+  <main>
+    <section class="dashboard py-4">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <aside class="col-12 col-md-3 col-lg-2 mb-4 mb-md-0">
+            <nav class="card shadow-sm border-0" style="border-radius: 10px; overflow: hidden;">
+              <div class="card-header" style="background: var(--brand-red); color: #fff;">
+                <h3 class="my-2" style="font-size: 1.1rem; letter-spacing: .02em;">Admin Panel</h3>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item <%= section === 'home' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/home">Overview</a></li>
+                <li class="list-group-item <%= section === 'homepage' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/homepage">Homepage</a></li>
+                <li class="list-group-item <%= section === 'pages' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/pages">Pages</a></li>
+                <li class="list-group-item <%= section === 'services' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/services">Services</a></li>
+                <li class="list-group-item <%= section === 'blog' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/blog">Blog</a></li>
+                <li class="list-group-item <%= section === 'settings' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/settings">Settings</a></li>
+              </ul>
+              <div class="card-body">
+                <button id="logoutBtn" class="btn w-100" style="background: var(--brand-red); color: #fff;">Logout</button>
+              </div>
+            </nav>
+          </aside>
+
+          <!-- Main content -->
+          <div class="col-12 col-md-9 col-lg-10 content-col">
+            <div class="card shadow-sm border-0" style="border-radius: 10px; overflow: hidden;">
+              <div class="card-header bg-light d-flex align-items-center justify-content-between">
+                <h2 class="h5 my-2">Dashboard <span class="text-muted">/ <%= section %></span></h2>
+                <a class="btn btn-sm btn-outline-secondary" href="/" target="_blank">View Site</a>
+              </div>
+              <div class="card-body">
+                <% if (section === 'home') { %>
+                  <p class="mb-0">Welcome to your dashboard. Choose a section on the left to begin editing content.</p>
+                <% } else if (section === 'homepage') { %>
+                  <form id="homepageForm" class="row g-3" method="post">
+                    <div class="col-12">
+                      <h3 class="h6">Top Scroller</h3>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Scroller Text</label>
+                      <input type="text" name="scrollerText" class="form-control" value="<%= (homepage && homepage.scrollerText) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <h3 class="h6">Hero</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Hero Title</label>
+                      <input type="text" name="heroTitle" class="form-control" value="<%= (homepage && homepage.heroTitle) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Hero Subtitle</label>
+                      <input type="text" name="heroSubtitle" class="form-control" value="<%= (homepage && homepage.heroSubtitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Hero Background Image URL</label>
+                      <input type="text" name="heroBg" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (homepage && homepage.heroBg) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <div class="d-flex align-items-center gap-3 mt-1">
+                        <input type="file" id="heroBgFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="heroBgUploadStatus" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="heroBgPreview" src="<%= (homepage && homepage.heroBg) || '' %>" alt="Hero background preview" style="max-height: 120px; border-radius: 6px;" <%= (homepage && homepage.heroBg) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Who We Are</h3>
+                    </div>
+                    <div class="col-12 mt-3">
+                      <label class="form-label">Image URL</label>
+                      <input type="text" name="whoWeAreImage" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (homepage && homepage.whoWeAreImage) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <div class="d-flex align-items-center gap-3 mt-1">
+                        <input type="file" id="whoWeAreImageFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="whoWeAreImageStatus" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="whoWeAreImagePreview" src="<%= (homepage && homepage.whoWeAreImage) || '' %>" alt="Who we are image preview" style="max-height: 120px; border-radius: 6px;" <%= (homepage && homepage.whoWeAreImage) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Section Title</label>
+                      <input type="text" name="whoWeAreTitle" class="form-control" value="<%= (homepage && homepage.whoWeAreTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Body</label>
+                      <textarea name="whoWeAreBody" class="form-control" rows="4"><%= (homepage && homepage.whoWeAreBody) || '' %></textarea>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Label</label>
+                      <input type="text" name="ctaLabel" class="form-control" value="<%= (homepage && homepage.ctaLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA URL</label>
+                      <input type="text" name="ctaUrl" class="form-control" placeholder="/contact or https://example.com/contact" value="<%= (homepage && homepage.ctaUrl) || '' %>" />
+                    </div>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">Services</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Services Title</label>
+                      <input type="text" name="servicesTitle" class="form-control" value="<%= (homepage && homepage.servicesTitle) || '' %>" />
+                    </div>
+                    <!-- Featured Services -->
+                    <% for (let i = 1; i <= 4; i++) { %>
+                      <div class="col-12 mt-2">
+                        <h4 class="h6 mb-1">Featured Service <%= i %></h4>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="featuredService<%= i %>Title" class="form-control" value="<%= (homepage && homepage[`featuredService${i}Title`]) || '' %>" />
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Link URL</label>
+                        <input type="text" name="featuredService<%= i %>Url" class="form-control" placeholder="/services/..." value="<%= (homepage && homepage[`featuredService${i}Url`]) || '' %>" />
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Image URL</label>
+                        <input type="text" name="featuredService<%= i %>Image" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (homepage && homepage[`featuredService${i}Image`]) || '' %>" />
+                      </div>
+                      <div class="col-12">
+                        <div class="d-flex align-items-center gap-3 mt-1">
+                          <input type="file" id="fs<%= i %>ImageFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                          <span id="fs<%= i %>ImageStatus" class="text-muted"></span>
+                        </div>
+                        <div class="mt-2">
+                          <img id="fs<%= i %>ImagePreview" src="<%= (homepage && homepage[`featuredService${i}Image`]) || '' %>" alt="Featured service <%= i %> preview" style="max-height: 120px; border-radius: 6px;" <%= (homepage && homepage[`featuredService${i}Image`]) ? '' : 'hidden' %> />
+                        </div>
+                      </div>
+                    <% } %>
+
+                    <!-- Services: Pills/Quick Links -->
+                    <div class="col-12 mt-3">
+                      <h4 class="h6 mb-2">Service Pills</h4>
+                      <p class="text-muted" style="font-size: .9rem;">Configure up to 6 quick-link buttons.</p>
+                    </div>
+                    <% for (let i = 1; i <= 6; i++) { %>
+                      <div class="col-md-6">
+                        <label class="form-label">Service Pill <%= i %> Label</label>
+                        <input type="text" name="servicesBtn<%= i %>Label" class="form-control" value="<%= (homepage && homepage[`servicesBtn${i}Label`]) || '' %>" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Service Pill <%= i %> URL</label>
+                        <input type="text" name="servicesBtn<%= i %>Url" class="form-control" placeholder="/services/... or https://..." value="<%= (homepage && homepage[`servicesBtn${i}Url`]) || '' %>" />
+                      </div>
+                    <% } %>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">Quick Facts</h3>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Locations (Number)</label>
+                      <input type="text" name="quickLocations" class="form-control" value="<%= (homepage && homepage.quickLocations) || '' %>" />
+                      <label class="form-label mt-2">Locations (Label)</label>
+                      <input type="text" name="quickLocationsLabel" class="form-control" placeholder="LOCATIONS" value="<%= (homepage && homepage.quickLocationsLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Jobs Completed (Number)</label>
+                      <input type="text" name="quickJobs" class="form-control" value="<%= (homepage && homepage.quickJobs) || '' %>" />
+                      <label class="form-label mt-2">Jobs Completed (Label)</label>
+                      <input type="text" name="quickJobsLabel" class="form-control" placeholder="JOBS COMPLETED" value="<%= (homepage && homepage.quickJobsLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">States We're In (Number)</label>
+                      <input type="text" name="quickStates" class="form-control" value="<%= (homepage && homepage.quickStates) || '' %>" />
+                      <label class="form-label mt-2">States We're In (Label)</label>
+                      <input type="text" name="quickStatesLabel" class="form-control" placeholder="STATES WE'RE IN" value="<%= (homepage && homepage.quickStatesLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">5 Star Reviews (Number)</label>
+                      <input type="text" name="quickReviews" class="form-control" value="<%= (homepage && homepage.quickReviews) || '' %>" />
+                      <label class="form-label mt-2">5 Star Reviews (Label)</label>
+                      <input type="text" name="quickReviewsLabel" class="form-control" placeholder="5 STAR REVIEWS" value="<%= (homepage && homepage.quickReviewsLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Estimates Available (Number)</label>
+                      <input type="text" name="quickEstimates" class="form-control" value="<%= (homepage && homepage.quickEstimates) || '' %>" />
+                      <label class="form-label mt-2">Estimates Available (Label)</label>
+                      <input type="text" name="quickEstimatesLabel" class="form-control" placeholder="ESTIMATES AVAILABLE" value="<%= (homepage && homepage.quickEstimatesLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Possibilities (Number/Text)</label>
+                      <input type="text" name="quickPossibilities" class="form-control" value="<%= (homepage && homepage.quickPossibilities) || '' %>" />
+                      <label class="form-label mt-2">Possibilities (Label)</label>
+                      <input type="text" name="quickPossibilitiesLabel" class="form-control" placeholder="POSSIBILITIES" value="<%= (homepage && homepage.quickPossibilitiesLabel) || '' %>" />
+                    </div>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">Blog Section</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Blog Kicker</label>
+                      <input type="text" name="blogKicker" class="form-control" value="<%= (homepage && homepage.blogKicker) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Blog Title</label>
+                      <input type="text" name="blogTitle" class="form-control" value="<%= (homepage && homepage.blogTitle) || '' %>" />
+                    </div>
+
+                    <!-- Featured Posts (3 cards) -->
+                    <div class="col-12 mt-2">
+                      <h4 class="h6 mb-2">Featured Posts</h4>
+                    </div>
+                    <% for (let i = 1; i <= 3; i++) { %>
+                      <div class="col-12 mt-1">
+                        <h5 class="h6">Post <%= i %></h5>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Post <%= i %> Title</label>
+                        <input type="text" name="blogFeat<%= i %>Title" class="form-control" value="<%= (homepage && homepage[`blogFeat${i}Title`]) || '' %>" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Post <%= i %> URL</label>
+                        <input type="text" name="blogFeat<%= i %>Url" class="form-control" placeholder="/blog/... or https://..." value="<%= (homepage && homepage[`blogFeat${i}Url`]) || '' %>" />
+                      </div>
+                      <div class="col-md-8">
+                        <label class="form-label">Post <%= i %> Image URL</label>
+                        <input type="text" name="blogFeat<%= i %>Image" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (homepage && homepage[`blogFeat${i}Image`]) || '' %>" />
+                        <div class="d-flex align-items-center gap-3 mt-2">
+                          <input type="file" id="blogFeat<%= i %>ImageFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                          <span id="blogFeat<%= i %>ImageStatus" class="text-muted"></span>
+                        </div>
+                        <div class="mt-2">
+                          <img id="blogFeat<%= i %>ImagePreview" src="<%= (homepage && homepage[`blogFeat${i}Image`]) || '' %>" alt="Featured post <%= i %> image preview" style="max-height: 120px; border-radius: 6px;" <%= (homepage && homepage[`blogFeat${i}Image`]) ? '' : 'hidden' %> />
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Post <%= i %> Excerpt</label>
+                        <input type="text" name="blogFeat<%= i %>Excerpt" class="form-control" value="<%= (homepage && homepage[`blogFeat${i}Excerpt`]) || '' %>" />
+                      </div>
+                    <% } %>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">Warranty</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Warranty Title</label>
+                      <input type="text" name="warrantyTitle" class="form-control" value="<%= (homepage && homepage.warrantyTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Warranty Body</label>
+                      <textarea name="warrantyBody" class="form-control" rows="3"><%= (homepage && homepage.warrantyBody) || '' %></textarea>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">Get Started</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Title</label>
+                      <input type="text" name="getStartedTitle" class="form-control" value="<%= (homepage && homepage.getStartedTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Body</label>
+                      <textarea name="getStartedBody" class="form-control" rows="2"><%= (homepage && homepage.getStartedBody) || '' %></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Label</label>
+                      <input type="text" name="getStartedCtaLabel" class="form-control" value="<%= (homepage && homepage.getStartedCtaLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA URL</label>
+                      <input type="text" name="getStartedCtaUrl" class="form-control" placeholder="/contact or https://example.com/contact" value="<%= (homepage && homepage.getStartedCtaUrl) || '' %>" />
+                    </div>
+
+                    <!-- Reviews -->
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">Reviews</h3>
+                      <p class="text-muted" style="font-size: .9rem;">Configure up to 3 reviews (text and author).</p>
+                    </div>
+                    <% for (let i = 1; i <= 3; i++) { %>
+                      <div class="col-12 mt-1">
+                        <h5 class="h6">Review <%= i %></h5>
+                      </div>
+                      <div class="col-md-8">
+                        <label class="form-label">Review <%= i %> Text</label>
+                        <textarea name="review<%= i %>Text" class="form-control" rows="2"><%= (homepage && homepage[`review${i}Text`]) || '' %></textarea>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Review <%= i %> Author</label>
+                        <input type="text" name="review<%= i %>Author" class="form-control" value="<%= (homepage && homepage[`review${i}Author`]) || '' %>" />
+                      </div>
+                    <% } %>
+
+                    <div class="col-12 d-flex gap-2 mt-2">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <span id="homepageStatus" class="text-muted"></span>
+                    </div>
+                  </form>
+                <% } else if (section === 'pages') { %>
+                  <h3 class="h6">Pages</h3>
+                  <p class="text-muted">Page editor coming soon.</p>
+                <% } else if (section === 'services') { %>
+                  <h3 class="h6">Services</h3>
+                  <p class="text-muted">Service editor coming soon.</p>
+                <% } else if (section === 'blog') { %>
+                  <h3 class="h6">Blog</h3>
+                  <p class="text-muted">Blog editor coming soon.</p>
+                <% } else if (section === 'settings') { %>
+                  <h3 class="h6">Settings</h3>
+                  <p class="text-muted">Site settings coming soon.</p>
+                <% } else { %>
+                  <p class="text-muted">Unknown section.</p>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script>
+    (function(){
+      // Toast helper
+      function showToast(message, type) {
+        try {
+          const container = document.getElementById('toastContainer');
+          if (!container) return;
+          const t = document.createElement('div');
+          t.className = 'toast ' + (type || 'info');
+          t.textContent = message || '';
+          container.appendChild(t);
+          // trigger animation
+          requestAnimationFrame(() => t.classList.add('show'));
+          // auto-hide
+          setTimeout(() => { t.classList.remove('show'); }, 2200);
+          setTimeout(() => { t.remove(); }, 2600);
+        } catch (_) {}
+      }
+      // Boot log to verify script execution
+      try { console.log('[dashboard] script loaded'); } catch (_) {}
+
+      // Global error handler to surface JS errors that may stop execution
+      try {
+        window.addEventListener('error', function(e){
+          try { console.error('[dashboard] JS error:', e.message, e.filename, e.lineno, e.colno); } catch(_) {}
+          const statusEl = document.getElementById('homepageStatus');
+          if (statusEl && !statusEl.textContent) {
+            statusEl.textContent = 'Script error: ' + (e && e.message ? e.message : 'unknown error');
+          }
+        });
+        window.addEventListener('unhandledrejection', function(e){
+          try { console.error('[dashboard] unhandled rejection:', e.reason); } catch(_) {}
+          const statusEl = document.getElementById('homepageStatus');
+          if (statusEl && !statusEl.textContent) {
+            statusEl.textContent = 'Unhandled error saving: ' + (e && e.reason && (e.reason.message || e.reason) || 'unknown');
+          }
+        });
+      } catch (_) {}
+      // Wrap fetch to log auth failures (do not auto-redirect)
+      if (window.fetch && !window.__fetchAuthWrapped) {
+        const origFetch = window.fetch.bind(window);
+        window.fetch = async function() {
+          const res = await origFetch.apply(null, arguments);
+          if (res && (res.status === 401 || res.status === 403)) {
+            try { console.warn('[dashboard] auth expired during request:', arguments && arguments[0]); } catch(_) {}
+            // Do not redirect here; let callers handle so UI can show a message first
+          }
+          return res;
+        };
+        window.__fetchAuthWrapped = true;
+      }
+
+      const btn = document.getElementById('logoutBtn');
+      if (btn) {
+        btn.addEventListener('click', async function(){
+          try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.href = '/admin-login';
+          } catch (e) {
+            window.location.href = '/admin-login';
+          }
+        });
+      }
+
+      // Image upload helper
+      async function uploadImage(file, statusEl){
+        if (!file) return null;
+        statusEl && (statusEl.textContent = 'Uploading...');
+        try {
+          const fd = new FormData();
+          fd.append('file', file);
+          const res = await fetch('/api/upload', { method: 'POST', credentials: 'same-origin', body: fd });
+          if (!res.ok) throw new Error('Upload failed');
+          if (res.status === 401 || res.status === 403) {
+            statusEl && (statusEl.textContent = 'Session expired. Redirecting to login...');
+            setTimeout(() => { window.location.href = '/admin-login'; }, 800);
+            return null;
+          }
+          const json = await res.json();
+          statusEl && (statusEl.textContent = 'Uploaded');
+          setTimeout(() => { statusEl && (statusEl.textContent = ''); }, 1200);
+          showToast('Image uploaded', 'success');
+          return json && json.url;
+        } catch (e) {
+          statusEl && (statusEl.textContent = 'Upload error');
+          showToast('Upload failed', 'error');
+          return null;
+        }
+      }
+
+      // Generic image field wiring
+      function wireImageField({ fileEl, urlInputEl, previewEl, statusEl, payloadKey }) {
+        if (!fileEl || !urlInputEl) return;
+        async function run() {
+          const file = fileEl && fileEl.files && fileEl.files[0];
+          if (!file) { statusEl && (statusEl.textContent = 'Choose an image first'); return; }
+          const url = await uploadImage(file, statusEl);
+          if (!url) return;
+          urlInputEl.value = url;
+          if (previewEl) { previewEl.src = url; previewEl.hidden = false; }
+          console.log('[dashboard] auto-saving', payloadKey, url);
+          const saved = await saveHomepagePartial({ [payloadKey]: url }, statusEl);
+          console.log('[dashboard] auto-save result', saved);
+          const finalUrl = saved && saved[payloadKey] ? saved[payloadKey] : url;
+          urlInputEl.value = finalUrl;
+          if (previewEl) { previewEl.src = finalUrl; previewEl.hidden = false; }
+        }
+        fileEl.addEventListener('change', run);
+      }
+
+      // Hero BG upload wiring
+      const heroFile = document.getElementById('heroBgFile');
+      const heroStatus = document.getElementById('heroBgUploadStatus');
+      const heroUrlInput = document.querySelector('input[name="heroBg"]');
+      const heroPreview = document.getElementById('heroBgPreview');
+      wireImageField({ fileEl: heroFile, urlInputEl: heroUrlInput, previewEl: heroPreview, statusEl: heroStatus, payloadKey: 'heroBg' });
+
+      // Who We Are image wiring
+      const wwaFile = document.getElementById('whoWeAreImageFile');
+      const wwaStatus = document.getElementById('whoWeAreImageStatus');
+      const wwaUrlInput = document.querySelector('input[name="whoWeAreImage"]');
+      const wwaPreview = document.getElementById('whoWeAreImagePreview');
+      wireImageField({ fileEl: wwaFile, urlInputEl: wwaUrlInput, previewEl: wwaPreview, statusEl: wwaStatus, payloadKey: 'whoWeAreImage' });
+
+      // Featured services image wiring
+      for (let i = 1; i <= 4; i++) {
+        const f = document.getElementById(`fs${i}ImageFile`);
+        const s = document.getElementById(`fs${i}ImageStatus`);
+        const u = document.querySelector(`input[name="featuredService${i}Image"]`);
+        const p = document.getElementById(`fs${i}ImagePreview`);
+        wireImageField({ fileEl: f, urlInputEl: u, previewEl: p, statusEl: s, payloadKey: `featuredService${i}Image` });
+      }
+
+      // Featured blog posts image wiring
+      for (let i = 1; i <= 3; i++) {
+        const f = document.getElementById(`blogFeat${i}ImageFile`);
+        const s = document.getElementById(`blogFeat${i}ImageStatus`);
+        const u = document.querySelector(`input[name="blogFeat${i}Image"]`);
+        const p = document.getElementById(`blogFeat${i}ImagePreview`);
+        wireImageField({ fileEl: f, urlInputEl: u, previewEl: p, statusEl: s, payloadKey: `blogFeat${i}Image` });
+      }
+
+      // --- Hydrate editor from current /api/homepage on page load ---
+      // Do not overwrite once the user starts editing
+      const form = document.getElementById('homepageForm');
+      let userStartedEditing = false;
+      if (form) {
+        form.addEventListener('input', function onAnyInput(){ userStartedEditing = true; }, { once: true });
+      }
+
+      async function hydrateFromApi() {
+        try {
+          const res = await fetch('/api/homepage', { credentials: 'same-origin' });
+          if (!res.ok) return;
+          const hp = await res.json();
+          if (!hp || userStartedEditing) return;
+
+          // Populate all inputs/textareas that have matching keys
+          const fields = form ? form.querySelectorAll('input[name], textarea[name]') : [];
+          fields.forEach(function(el){
+            const key = el.getAttribute('name');
+            if (!key) return;
+            if (Object.prototype.hasOwnProperty.call(hp, key)) {
+              const val = hp[key];
+              if (el.tagName === 'TEXTAREA') {
+                el.value = (val != null ? String(val) : '');
+              } else {
+                el.value = (val != null ? String(val) : '');
+              }
+            }
+          });
+
+          // Update image previews if URLs are present
+          function setPreview(previewEl, url) {
+            if (!previewEl) return;
+            if (url && String(url).trim().length) {
+              previewEl.src = url;
+              previewEl.hidden = false;
+            }
+          }
+
+          setPreview(heroPreview, hp.heroBg);
+          setPreview(wwaPreview, hp.whoWeAreImage);
+          for (let i = 1; i <= 4; i++) {
+            const url = hp[`featuredService${i}Image`];
+            const pv = document.getElementById(`fs${i}ImagePreview`);
+            setPreview(pv, url);
+          }
+
+          // Featured blog post images
+          for (let i = 1; i <= 3; i++) {
+            const bUrl = hp[`blogFeat${i}Image`];
+            const bPv = document.getElementById(`blogFeat${i}ImagePreview`);
+            setPreview(bPv, bUrl);
+          }
+
+          // No toast here to keep noise down; rely on visible fields updating
+        } catch (e) {
+          // Silent failure; editor still works with SSR values
+        }
+      }
+
+      // Kick off hydration soon after load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hydrateFromApi);
+      } else {
+        hydrateFromApi();
+      }
+      // Helper: save partial homepage update
+      async function saveHomepagePartial(patch, statusEl) {
+        try {
+          statusEl && (statusEl.textContent = 'Saving...');
+          const res = await fetch('/api/homepage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify(patch || {})
+          });
+          if (res.status === 401 || res.status === 403) {
+            statusEl && (statusEl.textContent = 'Session expired. Redirecting to login...');
+            setTimeout(() => { window.location.href = '/admin-login'; }, 800);
+            return null;
+          }
+          if (!res.ok) throw new Error('Save failed: ' + res.status);
+          const result = await res.json();
+          statusEl && (statusEl.textContent = 'Saved');
+          setTimeout(() => { statusEl && (statusEl.textContent = ''); }, 1200);
+          showToast('Changes saved', 'success');
+          return result;
+        } catch (e) {
+          console.error('[dashboard] partial save failed', e);
+          statusEl && (statusEl.textContent = 'Error saving');
+          showToast('Save failed', 'error');
+          return null;
+        }
+      }
+      // Removed undefined handleHeroUploadFlow listener that caused a JS error
+
+      // Homepage form
+      // (form variable may already be defined above)
+      if (form) {
+        console.log('Homepage form found, adding submit handler');
+        form.addEventListener('submit', async function(ev){
+          ev.preventDefault();
+          console.log('Form submitted, processing...');
+          const fd = new FormData(form);
+          const raw = Object.fromEntries(fd.entries());
+          // Remove empty-string values so blanks don't wipe existing content
+          const data = {};
+          for (const [k, v] of Object.entries(raw)) {
+            const s = typeof v === 'string' ? v.trim() : v;
+            if (typeof s === 'string' && s.length === 0) continue;
+            data[k] = s;
+          }
+          console.log('Form data (cleaned):', data);
+          const statusEl = document.getElementById('homepageStatus');
+          statusEl && (statusEl.textContent = 'Saving...');
+          try {
+            console.log('Sending POST to /api/homepage');
+            const res = await fetch('/api/homepage', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'same-origin',
+              body: JSON.stringify(data)
+            });
+            console.log('Response status:', res.status);
+            if (res.status === 401 || res.status === 403) {
+              statusEl && (statusEl.textContent = 'Session expired. Redirecting to login...');
+              setTimeout(() => { window.location.href = '/admin-login'; }, 800);
+              return;
+            }
+            if (!res.ok) {
+              const errorText = await res.text();
+              console.error('Save failed:', errorText);
+              throw new Error('Save failed: ' + res.status);
+            }
+            const result = await res.json();
+            console.log('Save successful:', result);
+            statusEl && (statusEl.textContent = 'Saved');
+            setTimeout(() => { statusEl && (statusEl.textContent = ''); }, 1500);
+            showToast('Homepage saved', 'success');
+          } catch (e) {
+            console.error('Error saving:', e);
+            statusEl && (statusEl.textContent = 'Error saving: ' + e.message);
+            showToast('Save failed', 'error');
+          }
+        });
+      } else {
+        console.log('Homepage form not found');
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -3,11 +3,33 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 
 // Load environment variables from .env if present
 try { require('dotenv').config(); } catch (_) {}
+
+function loadHomepage() {
+  try {
+    const raw = fs.readFileSync(HOMEPAGE_DB_PATH, 'utf8');
+    const obj = JSON.parse(raw);
+    return obj && typeof obj === 'object' ? obj : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveHomepage(payload) {
+  try {
+    const current = loadHomepage();
+    const next = { ...current, ...payload };
+    fs.writeFileSync(HOMEPAGE_DB_PATH, JSON.stringify(next, null, 2), 'utf8');
+    return next;
+  } catch (e) {
+    return null;
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,6 +61,7 @@ app.use(session({
 
 // Local JSON user database
 const USERS_DB_PATH = path.join(siteRoot, 'data', 'users.json');
+const HOMEPAGE_DB_PATH = path.join(siteRoot, 'data', 'homepage.json');
 
 function loadUsers() {
   try {
@@ -61,7 +84,22 @@ function findUserByIdentifier(identifier) {
 
 function requireAuth(req, res, next) {
   if (req.session && req.session.userId) return next();
-  return res.status(401).json({ error: 'Unauthorized' });
+  // For API requests, return 401 JSON; for others, redirect to login
+  const isApi = req.path && req.path.startsWith('/api/');
+  try {
+    const hasCookie = !!(req.headers && req.headers.cookie);
+    console.warn('[auth] unauthorized access', {
+      path: req.path,
+      isApi,
+      hasCookie,
+      sessionExists: !!req.session,
+      sessionUserId: req.session && req.session.userId ? 'present' : 'absent'
+    });
+  } catch (_) {}
+  if (isApi) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  return res.redirect('/admin-login');
 }
 
 // Utility to send an HTML file if it exists
@@ -84,7 +122,8 @@ app.use((req, res, next) => {
 // Clean routes for top-level pages
 app.get('/', (req, res) => {
   // Server-side render home page via EJS
-  return res.render('home');
+  const homepage = loadHomepage();
+  return res.render('home', { homepage });
 });
 
 app.get('/about-us', (req, res) => {
@@ -287,14 +326,121 @@ app.get('/api/util/auth-status', (req, res) => {
   return res.json({ envConfigured: !!(envUser || envEmail), envUser: !!envUser, envEmail: !!envEmail, method: hasPlain ? 'plain' : (hasHash ? 'hash' : 'none') });
 });
 
-// Protect dashboard assets (create a /dashboard/ directory with index.html)
-app.use('/dashboard', requireAuth, (req, res, next) => {
-  // serve static if exists, else simple placeholder
-  const dashDir = path.join(siteRoot, 'dashboard');
-  if (fs.existsSync(dashDir)) {
-    return express.static(dashDir, { extensions: ['html'] })(req, res, next);
+// --- Dashboard (protected) ---
+app.get('/dashboard', requireAuth, (req, res) => {
+  return res.render('dashboard', { section: 'home' });
+});
+
+app.get('/dashboard/:section', requireAuth, (req, res) => {
+  const section = req.params.section || 'home';
+  if (section === 'homepage') {
+    const homepage = loadHomepage();
+    return res.render('dashboard', { section, homepage });
   }
-  res.type('html').send('<h1>Dashboard</h1><p>Protected area. Add dashboard/index.html to customize.</p>');
+  return res.render('dashboard', { section });
+});
+
+// --- Homepage Editor API (protected) ---
+app.get('/api/homepage', requireAuth, (req, res) => {
+  const data = loadHomepage();
+  return res.json(data);
+});
+
+app.post('/api/homepage', requireAuth, (req, res) => {
+  // Debug: log incoming body keys (do not log full content in prod)
+  try { console.log('[api/homepage] incoming keys:', Object.keys(req.body || {})); } catch(_) {}
+  const allowed = [
+    'heroTitle', 'heroSubtitle', 'heroBg',
+    'whoWeAreTitle', 'whoWeAreBody',
+    'ctaLabel', 'ctaUrl',
+    'servicesTitle',
+    // New fields
+    'scrollerText',
+    'whoWeAreImage',
+    'featuredService1Title', 'featuredService1Url', 'featuredService1Image',
+    'featuredService2Title', 'featuredService2Url', 'featuredService2Image',
+    'featuredService3Title', 'featuredService3Url', 'featuredService3Image',
+    'featuredService4Title', 'featuredService4Url', 'featuredService4Image',
+    'quickLocations', 'quickJobs', 'quickStates', 'quickReviews', 'quickEstimates', 'quickPossibilities',
+    // Quick Facts labels
+    'quickLocationsLabel', 'quickJobsLabel', 'quickStatesLabel', 'quickReviewsLabel', 'quickEstimatesLabel', 'quickPossibilitiesLabel',
+    'blogKicker', 'blogTitle',
+    'warrantyTitle', 'warrantyBody',
+    'getStartedTitle', 'getStartedBody', 'getStartedCtaLabel', 'getStartedCtaUrl'
+  ];
+  // Extend with service pills (1..6), featured posts (1..3), and reviews (1..3)
+  for (let i = 1; i <= 6; i++) {
+    allowed.push(`servicesBtn${i}Label`, `servicesBtn${i}Url`);
+  }
+  for (let i = 1; i <= 3; i++) {
+    allowed.push(
+      `blogFeat${i}Title`, `blogFeat${i}Url`, `blogFeat${i}Image`, `blogFeat${i}Excerpt`
+    );
+  }
+  for (let i = 1; i <= 3; i++) {
+    allowed.push(`review${i}Text`, `review${i}Author`);
+  }
+  const payload = {};
+  for (const k of allowed) {
+    if (typeof req.body[k] !== 'undefined') {
+      const v = (req.body[k] == null) ? '' : String(req.body[k]);
+      // Ignore empty-string values to avoid wiping existing content unintentionally
+      if (v.trim().length > 0) {
+        payload[k] = v;
+      }
+    }
+  }
+  try {
+    const saved = saveHomepage(payload);
+    if (!saved) {
+      console.error('[api/homepage] saveHomepage returned null');
+      return res.status(500).json({ error: 'Failed to save homepage' });
+    }
+    console.log('[api/homepage] saved keys:', Object.keys(payload));
+    return res.json(saved);
+  } catch (e) {
+    console.error('[api/homepage] exception while saving:', e);
+    return res.status(500).json({ error: 'Exception while saving homepage' });
+  }
+});
+
+// --- Upload API (protected) ---
+// Store uploads under /wp-content/uploads/YYYY/MM
+function ensureUploadDir() {
+  const now = new Date();
+  const yyyy = String(now.getFullYear());
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const rel = path.join('wp-content', 'uploads', yyyy, mm);
+  const abs = path.join(siteRoot, rel);
+  fs.mkdirSync(abs, { recursive: true });
+  return { abs, rel };
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const { abs } = ensureUploadDir();
+    cb(null, abs);
+  },
+  filename: function (req, file, cb) {
+    const ts = Date.now();
+    const safe = String(file.originalname || 'upload').replace(/[^a-z0-9._-]+/gi, '-');
+    cb(null, ts + '-' + safe);
+  }
+});
+const upload = multer({ storage });
+
+app.post('/api/upload', requireAuth, upload.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No file' });
+  // Build public URL path
+  const fullPath = req.file.path; // absolute
+  const relIndex = fullPath.indexOf(path.join('wp-content', 'uploads'));
+  let urlPath;
+  if (relIndex !== -1) {
+    urlPath = '/' + fullPath.substring(relIndex).replace(/\\/g, '/');
+  } else {
+    urlPath = '/wp-content/uploads/' + path.basename(fullPath);
+  }
+  return res.json({ url: urlPath });
 });
 
 // Smart clean-URL fallback: try to map 
@@ -360,5 +506,5 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`GarageUp site server running on http://localhost:${PORT}`);
+  console.log(`Swimstuds site server running on http://localhost:${PORT}`);
 });
