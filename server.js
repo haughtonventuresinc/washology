@@ -10,6 +10,27 @@ const bcrypt = require('bcryptjs');
 // Load environment variables from .env if present
 try { require('dotenv').config(); } catch (_) {}
 
+function loadContact() {
+  try {
+    const raw = fs.readFileSync(CONTACT_DB_PATH, 'utf8');
+    const obj = JSON.parse(raw);
+    return obj && typeof obj === 'object' ? obj : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveContact(payload) {
+  try {
+    const current = loadContact();
+    const next = { ...current, ...payload };
+    fs.writeFileSync(CONTACT_DB_PATH, JSON.stringify(next, null, 2), 'utf8');
+    return next;
+  } catch (e) {
+    return null;
+  }
+}
+
 function loadBlog() {
   try {
     const raw = fs.readFileSync(BLOG_DB_PATH, 'utf8');
@@ -106,6 +127,7 @@ const USERS_DB_PATH = path.join(siteRoot, 'data', 'users.json');
 const HOMEPAGE_DB_PATH = path.join(siteRoot, 'data', 'homepage.json');
 const ABOUT_DB_PATH = path.join(siteRoot, 'data', 'about.json');
 const BLOG_DB_PATH = path.join(siteRoot, 'data', 'blog.json');
+const CONTACT_DB_PATH = path.join(siteRoot, 'data', 'contact.json');
 
 function loadUsers() {
   try {
@@ -180,7 +202,8 @@ app.get('/about-us', (req, res) => {
 app.get('/contact-us', (req, res) => {
   // SSR only; set bodyClass so styles match original contact page
   const bodyClass = 'wp-singular page-template page-template-templates page-template-contact-us page-template-templatescontact-us-php page page-id-63 wp-theme-resi-franchise wp-child-theme-garageup';
-  return res.render('contact-us', { bodyClass });
+  const contact = loadContact();
+  return res.render('contact-us', { bodyClass, contact });
 });
 
 // Redirect shorthand /contact -> /contact-us
@@ -335,6 +358,63 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// --- Contact Page Editor API (protected) ---
+app.get('/api/contact-page', requireAuth, (req, res) => {
+  const data = loadContact();
+  return res.json(data);
+});
+
+app.post('/api/contact-page', requireAuth, (req, res) => {
+  try { console.log('[api/contact-page] incoming keys:', Object.keys(req.body || {})); } catch(_) {}
+  const allowed = [
+    // Hero
+    'heroTitle', 'heroSubtitle', 'heroBg',
+    // Left column
+    'leftTitle', 'leftSubtitle', 'leftBg',
+    'bullet1', 'bullet2', 'bullet3', 'bullet4', 'bullet5', 'bullet6',
+    // Right column
+    'rightTitle',
+    // Bottom form
+    'bottomTitle',
+    // Reviews
+    'reviewsTitle',
+    'review1Text', 'review1Author',
+    'review2Text', 'review2Author',
+    'review3Text', 'review3Author',
+    // CTA
+    'ctaTitle', 'ctaBody', 'ctaLabel', 'ctaUrl'
+  ];
+  const payload = {};
+  for (const k of allowed) {
+    if (typeof req.body[k] !== 'undefined') {
+      const v = (req.body[k] == null) ? '' : String(req.body[k]);
+      if (v.trim().length > 0) payload[k] = v;
+    }
+  }
+  try {
+    const saved = saveContact(payload);
+    if (!saved) {
+      console.error('[api/contact-page] saveContact returned null');
+      return res.status(500).json({ error: 'Failed to save contact page' });
+    }
+    console.log('[api/contact-page] saved keys:', Object.keys(payload));
+    return res.json(saved);
+  } catch (e) {
+    console.error('[api/contact-page] exception while saving:', e);
+    return res.status(500).json({ error: 'Exception while saving contact page' });
+  }
+});
+
+// --- Public Contact form submission endpoint ---
+app.post('/api/contact', (req, res) => {
+  try {
+    const { firstName, lastName, phone, email, zip, message } = req.body || {};
+    console.log('[contact] submission', { firstName, lastName, phone, email, zip, hasMessage: !!(message && String(message).trim()) });
+  } catch(_) {}
+  // For now, just acknowledge. Hook to email/CRM later.
+  return res.json({ ok: true });
+});
+
 // --- About Page Editor API (protected) ---
 app.get('/api/about', requireAuth, (req, res) => {
   const data = loadAbout();
@@ -477,6 +557,10 @@ app.get('/dashboard/:section', requireAuth, (req, res) => {
   if (section === 'blog') {
     const blog = loadBlog();
     return res.render('dashboard', { section, blog });
+  }
+  if (section === 'contact') {
+    const contact = loadContact();
+    return res.render('dashboard', { section, contact });
   }
   return res.render('dashboard', { section });
 });

@@ -47,6 +47,7 @@
                 <li class="list-group-item <%= section === 'pages' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/pages">Pages</a></li>
                 <li class="list-group-item <%= section === 'services' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/services">Services</a></li>
                 <li class="list-group-item <%= section === 'blog' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/blog">Blog</a></li>
+                <li class="list-group-item <%= section === 'contact' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/contact">Contact Us</a></li>
                 <li class="list-group-item <%= section === 'settings' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/settings">Settings</a></li>
               </ul>
               <div class="card-body">
@@ -486,6 +487,111 @@
                       <span id="aboutStatus" class="text-muted"></span>
                     </div>
                   </form>
+                <% } else if (section === 'contact') { %>
+                  <form id="contactPageForm" class="row g-3" method="post">
+                    <div class="col-12">
+                      <h3 class="h6">Hero</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Hero Title</label>
+                      <input type="text" name="heroTitle" class="form-control" value="<%= (contact && contact.heroTitle) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Hero Subtitle</label>
+                      <input type="text" name="heroSubtitle" class="form-control" value="<%= (contact && contact.heroSubtitle) || '' %>" />
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Left Panel</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Left Title</label>
+                      <input type="text" name="leftTitle" class="form-control" value="<%= (contact && contact.leftTitle) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Left Subtitle</label>
+                      <input type="text" name="leftSubtitle" class="form-control" value="<%= (contact && contact.leftSubtitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Left Background Image URL</label>
+                      <input type="text" name="leftBg" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (contact && contact.leftBg) || '' %>" />
+                      <div class="d-flex align-items-center gap-3 mt-2">
+                        <input type="file" id="contactLeftBgFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="contactLeftBgStatus" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="contactLeftBgPreview" src="<%= (contact && contact.leftBg) || '' %>" alt="Left bg preview" style="max-height: 120px; border-radius: 6px;" <%= (contact && contact.leftBg) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+                    <% for (let i = 1; i <= 6; i++) { %>
+                      <div class="col-md-4">
+                        <label class="form-label">Bullet <%= i %></label>
+                        <input type="text" name="bullet<%= i %>" class="form-control" value="<%= (contact && contact[`bullet${i}`]) || '' %>" />
+                      </div>
+                    <% } %>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Right Panel</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Right Title</label>
+                      <input type="text" name="rightTitle" class="form-control" value="<%= (contact && contact.rightTitle) || '' %>" />
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Bottom Form Title</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Bottom Title</label>
+                      <input type="text" name="bottomTitle" class="form-control" value="<%= (contact && contact.bottomTitle) || '' %>" />
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Reviews Section</h3>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Section Title</label>
+                      <input type="text" name="reviewsTitle" class="form-control" value="<%= (contact && contact.reviewsTitle) || '' %>" />
+                    </div>
+                    <% for (let i = 1; i <= 3; i++) { %>
+                      <div class="col-12 mt-2">
+                        <h4 class="h6 mb-1">Review <%= i %></h4>
+                      </div>
+                      <div class="col-md-8">
+                        <label class="form-label">Review <%= i %> Text</label>
+                        <textarea name="review<%= i %>Text" class="form-control" rows="2"><%= (contact && contact[`review${i}Text`]) || '' %></textarea>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Review <%= i %> Author</label>
+                        <input type="text" name="review<%= i %>Author" class="form-control" value="<%= (contact && contact[`review${i}Author`]) || '' %>" />
+                      </div>
+                    <% } %>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">CTA</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Title</label>
+                      <input type="text" name="ctaTitle" class="form-control" value="<%= (contact && contact.ctaTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">CTA Body</label>
+                      <textarea name="ctaBody" class="form-control" rows="2"><%= (contact && contact.ctaBody) || '' %></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Button Label</label>
+                      <input type="text" name="ctaLabel" class="form-control" value="<%= (contact && contact.ctaLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA URL</label>
+                      <input type="text" name="ctaUrl" class="form-control" placeholder="/contact-us or https://..." value="<%= (contact && contact.ctaUrl) || '' %>" />
+                    </div>
+
+                    <div class="col-12 d-flex gap-2 mt-2">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <span id="contactPageStatus" class="text-muted"></span>
+                    </div>
+                  </form>
                 <% } else if (section === 'pages') { %>
                   <h3 class="h6">Pages</h3>
                   <p class="text-muted">Page editor coming soon.</p>
@@ -920,6 +1026,26 @@
         fileEl.addEventListener('change', run);
       }
 
+      // Contact: image wiring that saves to /api/contact-page
+      function wireContactImageField({ fileEl, urlInputEl, previewEl, statusEl, payloadKey }) {
+        if (!fileEl || !urlInputEl) return;
+        async function run() {
+          const file = fileEl && fileEl.files && fileEl.files[0];
+          if (!file) { statusEl && (statusEl.textContent = 'Choose an image first'); return; }
+          const url = await uploadImage(file, statusEl);
+          if (!url) return;
+          urlInputEl.value = url;
+          if (previewEl) { previewEl.src = url; previewEl.hidden = false; }
+          console.log('[dashboard-contact] auto-saving', payloadKey, url);
+          const saved = await saveContactPagePartial({ [payloadKey]: url }, statusEl);
+          console.log('[dashboard-contact] auto-save result', saved);
+          const finalUrl = saved && saved[payloadKey] ? saved[payloadKey] : url;
+          urlInputEl.value = finalUrl;
+          if (previewEl) { previewEl.src = finalUrl; previewEl.hidden = false; }
+        }
+        fileEl.addEventListener('change', run);
+      }
+
       // Hero BG upload wiring
       const heroFile = document.getElementById('heroBgFile');
       const heroStatus = document.getElementById('heroBgUploadStatus');
@@ -1099,6 +1225,118 @@
         });
       } else {
         console.log('Homepage form not found');
+      }
+
+      // --- Contact Page Editor wiring ---
+      const contactForm = document.getElementById('contactPageForm');
+      // Partial save for contact page
+      async function saveContactPagePartial(patch, statusEl) {
+        try {
+          statusEl && (statusEl.textContent = 'Saving...');
+          const res = await fetch('/api/contact-page', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify(patch || {})
+          });
+          if (res.status === 401 || res.status === 403) {
+            statusEl && (statusEl.textContent = 'Session expired. Redirecting to login...');
+            setTimeout(() => { window.location.href = '/admin-login'; }, 800);
+            return null;
+          }
+          if (!res.ok) throw new Error('Save failed: ' + res.status);
+          const result = await res.json();
+          statusEl && (statusEl.textContent = 'Saved');
+          setTimeout(() => { statusEl && (statusEl.textContent = ''); }, 1200);
+          showToast('Changes saved', 'success');
+          return result;
+        } catch (e) {
+          console.error('[dashboard-contact] partial save failed', e);
+          statusEl && (statusEl.textContent = 'Error saving');
+          showToast('Save failed', 'error');
+          return null;
+        }
+      }
+
+      // Wire contact image uploads
+      if (contactForm) {
+        const cLeftFile = document.getElementById('contactLeftBgFile');
+        const cLeftStatus = document.getElementById('contactLeftBgStatus');
+        const cLeftUrlInput = contactForm.querySelector('input[name="leftBg"]');
+        const cLeftPreview = document.getElementById('contactLeftBgPreview');
+        wireContactImageField({ fileEl: cLeftFile, urlInputEl: cLeftUrlInput, previewEl: cLeftPreview, statusEl: cLeftStatus, payloadKey: 'leftBg' });
+      }
+
+      // Hydrate contact form from API
+      async function hydrateContactFromApi() {
+        if (!contactForm) return;
+        try {
+          const res = await fetch('/api/contact-page', { credentials: 'same-origin' });
+          if (!res.ok) return;
+          const data = await res.json();
+          const fields = contactForm.querySelectorAll('input[name], textarea[name]');
+          fields.forEach(function(el){
+            const key = el.getAttribute('name');
+            if (!key) return;
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
+              const val = data[key];
+              if (el.tagName === 'TEXTAREA') {
+                el.value = (val != null ? String(val) : '');
+              } else {
+                el.value = (val != null ? String(val) : '');
+              }
+            }
+          });
+          // update previews
+          const cLeftPreview2 = document.getElementById('contactLeftBgPreview');
+          if (cLeftPreview2 && data.leftBg) { cLeftPreview2.src = data.leftBg; cLeftPreview2.hidden = false; }
+        } catch (e) {
+          // silent
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hydrateContactFromApi);
+      } else {
+        hydrateContactFromApi();
+      }
+
+      // Contact form submit
+      if (contactForm) {
+        contactForm.addEventListener('submit', async function(ev){
+          ev.preventDefault();
+          const fd = new FormData(contactForm);
+          const raw = Object.fromEntries(fd.entries());
+          const data = {};
+          for (const [k, v] of Object.entries(raw)) {
+            const s = typeof v === 'string' ? v.trim() : v;
+            if (typeof s === 'string' && s.length === 0) continue;
+            data[k] = s;
+          }
+          const statusEl = document.getElementById('contactPageStatus');
+          statusEl && (statusEl.textContent = 'Saving...');
+          try {
+            const res = await fetch('/api/contact-page', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'same-origin',
+              body: JSON.stringify(data)
+            });
+            if (res.status === 401 || res.status === 403) {
+              statusEl && (statusEl.textContent = 'Session expired. Redirecting to login...');
+              setTimeout(() => { window.location.href = '/admin-login'; }, 800);
+              return;
+            }
+            if (!res.ok) throw new Error('Save failed: ' + res.status);
+            await res.json();
+            statusEl && (statusEl.textContent = 'Saved');
+            setTimeout(() => { statusEl && (statusEl.textContent = ''); }, 1500);
+            showToast('Contact page saved', 'success');
+          } catch (e) {
+            statusEl && (statusEl.textContent = 'Error saving: ' + e.message);
+            showToast('Save failed', 'error');
+          }
+        });
       }
     })();
   </script>

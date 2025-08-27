@@ -21322,13 +21322,6 @@ section img {
     aspect-ratio: 6/5
 }
 
-.scroller {
-    --background-color: var(--garageup-snow);
-    --icon-fill: var(--garageup-acid-green);
-    --text-color: var(--garageup-carbon);
-    background-color: var(--background-color);
-    width: 100%
-}
 
 .scroller .scroller__inner {
     display: -webkit-box;

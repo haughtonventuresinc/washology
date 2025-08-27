@@ -106,6 +106,25 @@
   /* Center section titles for both form sections */
   .contact-page-v2 .content-wrapper-right .title-wrapper,
   .contact-page-v2 .bottom-form-wrapper .title-wrapper { text-align: center; }
+
+  /* Reviews: only cards are red; section keeps default background */
+  .contact-page-v2 .reviews-container .resi-reviews--inner { gap: 16px; }
+  .contact-page-v2 .reviews-container .resi-review--inner {
+    background: var(--brand-red) !important;
+    color: #fff !important;
+    border: 0;
+    border-radius: 10px;
+  }
+  .contact-page-v2 .reviews-container .resi-review--inner .resi-review--stars,
+  .contact-page-v2 .reviews-container .resi-review--inner .resi-review--author,
+  .contact-page-v2 .reviews-container .resi-review--inner p,
+  .contact-page-v2 .reviews-container .resi-review--inner h1,
+  .contact-page-v2 .reviews-container .resi-review--inner h2,
+  .contact-page-v2 .reviews-container .resi-review--inner h3,
+  .contact-page-v2 .reviews-container .resi-review--inner h4,
+  .contact-page-v2 .reviews-container .resi-review--inner h5,
+  .contact-page-v2 .reviews-container .resi-review--inner h6,
+  .contact-page-v2 .reviews-container .resi-review--inner a { color: #fff !important; }
 </style>
 
 <div id="primary" class="content-area contact-page-v2 contact-page-v2-template">
@@ -113,31 +132,31 @@
     <div class="container"> 
       <div class="content-upper-wrapper col-sm-12">
         <div class="title-wrapper col-sm-12">
-          <h1>Book Now</h1>
+          <h1 style="color: var(--brand-red) !important;"><%= (contact && contact.heroTitle) || 'Book Now' %></h1>
           <div class="subtitle-wrapper">
-            <h2>Free estimates within 24 hours</h2>
+            <h2 style="color: var(--brand-red) !important;"><%= (contact && contact.heroSubtitle) || 'Free estimates within 24 hours' %></h2>
             <h4>All services come with a 3 year warranty</h4>
           </div>
         </div>
       </div>
 
       <div class="content-bottom-wrapper col-sm-12">
-        <section class="content-wrapper-left col-sm-12 col-md-6 overlay-jade" style="background-image: url(https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg);">
-          <h3>Start Your Pool Service</h3>
-          <h4><strong>Crystal-clear water. Stress-free maintenance.</strong></h4>
+        <section class="content-wrapper-left col-sm-12 col-md-6 overlay-jade" style="background-image: url(<%= (contact && contact.leftBg) || 'https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg' %>);">
+          <h3 style="color: white !important;"><%= (contact && contact.leftTitle) || 'Start Your Pool Service' %></h3>
+          <h4 style="color: white !important;"><b><%= (contact && contact.leftSubtitle) || 'Crystal-clear water. Stress-free maintenance.' %></b></h4>
           <ul>
-            <li>WEEKLY SERVICE</li>
-            <li>CHEMICAL BALANCING</li>
-            <li>FILTER CLEANING</li>
-            <li>GREEN POOL CLEANUP</li>
-            <li>EQUIPMENT REPAIRS</li>
-            <li>PUMP &amp; HEATER SERVICE</li>
+            <li style="color: white !important;"><%= (contact && contact.bullet1) || 'WEEKLY SERVICE' %></li>
+            <li style="color: white !important;"><%= (contact && contact.bullet2) || 'CHEMICAL BALANCING' %></li>
+            <li style="color: white !important;"><%= (contact && contact.bullet3) || 'FILTER CLEANING' %></li>
+            <li style="color: white !important;"><%= (contact && contact.bullet4) || 'GREEN POOL CLEANUP' %></li>
+            <li style="color: white !important;"><%= (contact && contact.bullet5) || 'EQUIPMENT REPAIRS' %></li>
+            <li style="color: white !important;"><%= (contact && contact.bullet6) || 'PUMP & HEATER SERVICE' %></li>
           </ul>
         </section>
 
-        <div class="content-wrapper-right col-sm-12 col-md-6 col-lg-6">
+        <div class="content-wrapper-right col-sm-12 col-md-6 col-lg-6" style="background-color: var(--brand-red) !important;">
           <div class="title-wrapper col-sm-12">
-            <h2>Estimates in 24 Hours or Less</h2>
+            <h2 style="color: white !important;"><%= (contact && contact.rightTitle) || 'Estimates in 24 Hours or Less' %></h2>
           </div>
 
           <!-- Accessible contact form preserving original look and CSS targets -->
@@ -145,7 +164,7 @@
             <form class="wpforms-form" method="post" action="/api/contact" novalidate>
               <div class="wpforms-field-container">
                 <div class="wpforms-field">
-                  <label class="wpforms-field-label" for="contact-name">Name <span aria-hidden="true" class="wpforms-required-label">*</span></label>
+                  <label class="wpforms-field-label" for="contact-name" style="color: white !important;">Name <span aria-hidden="true" class="wpforms-required-label">*</span></label>
                   <div class="wpforms-field-row">
                     <div class="wpforms-field-row-block wpforms-one-half">
                       <input type="text" id="contact-name-first" name="firstName" placeholder="First" required />
@@ -157,28 +176,28 @@
                 </div>
 
                 <div class="wpforms-field">
-                  <label class="wpforms-field-label" for="contact-phone">Phone <span aria-hidden="true" class="wpforms-required-label">*</span></label>
+                  <label class="wpforms-field-label" for="contact-phone" style="color: white !important;">Phone <span aria-hidden="true" class="wpforms-required-label">*</span></label>
                   <input type="tel" id="contact-phone" name="phone" inputmode="tel" placeholder="(555) 555-5555" required />
                 </div>
 
                 <div class="wpforms-field">
-                  <label class="wpforms-field-label" for="contact-email">Email <span aria-hidden="true" class="wpforms-required-label">*</span></label>
+                  <label class="wpforms-field-label" for="contact-email" style="color: white !important;">Email <span aria-hidden="true" class="wpforms-required-label">*</span></label>
                   <input type="email" id="contact-email" name="email" placeholder="you@example.com" required />
                 </div>
 
                 <div class="wpforms-field">
-                  <label class="wpforms-field-label" for="contact-zip">ZIP Code</label>
+                  <label class="wpforms-field-label" for="contact-zip" style="color: white !important;">ZIP Code</label>
                   <input type="text" id="contact-zip" name="zip" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" placeholder="12345" />
                 </div>
 
                 <div class="wpforms-field">
-                  <label class="wpforms-field-label" for="contact-message">How can we help?</label>
+                  <label class="wpforms-field-label" for="contact-message" style="color: white !important;">How can we help?</label>
                   <textarea id="contact-message" name="message" rows="4" placeholder="Tell us about your pool and what you need..."></textarea>
                 </div>
               </div>
 
               <div class="wpforms-submit-container">
-                <button type="submit" class="wpforms-submit">Get My Free Estimate</button>
+                <button type="submit" class="wpforms-submit" style="background-color: white !important; color: var(--brand-red) !important;">Get My Free Estimate</button>
               </div>
             </form>
           </div>
@@ -187,16 +206,16 @@
     </div> <!-- End Container -->
   </section>
 
-  <!-- Reviews Block (trimmed but styled consistently) -->
+  <!-- Reviews Block (editable) -->
   <section class="bg-garageup-primary bg-icon reviews-container">
     <div class="container">
-      <h2 class="section-title text-center mb-5">Discover our 5 Star Reputation</h2>
+      <h2 class="section-title text-center mb-5"><%= (contact && contact.reviewsTitle) || 'Discover our 5 Star Reputation' %></h2>
       <section class="resi-reviews">
         <div class="container">
           <div class="resi-reviews--inner">
-            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>Great company!!! Very reliable. Skilled workmanship. Love our garage!!!</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Barry Kramer</h5></div></div></div>
-            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>The crew out of Lakeway did an amazing job. Very flexible with timing—overall very happy with the end result.</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Paul Flavion</h5></div></div></div>
-            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>Swim Studs gave our system a full tune-up—now it works like new again. Professional and thorough. Highly recommend.</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author">Michelle Morrison</h5></div></div></div>
+            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p><%= (contact && contact.review1Text) || 'Great company!!! Very reliable. Skilled workmanship. Love our garage!!!' %></p></div></div><div class="resi-review--meta"><h5 class="resi-review--author"><%= (contact && contact.review1Author) || 'Barry Kramer' %></h5></div></div></div>
+            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p><%= (contact && contact.review2Text) || 'The crew out of Lakeway did an amazing job. Very flexible with timing—overall very happy with the end result.' %></p></div></div><div class="resi-review--meta"><h5 class="resi-review--author"><%= (contact && contact.review2Author) || 'Paul Flavion' %></h5></div></div></div>
+            <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p><%= (contact && contact.review3Text) || 'Swim Studs gave our system a full tune-up—now it works like new again. Professional and thorough. Highly recommend.' %></p></div></div><div class="resi-review--meta"><h5 class="resi-review--author"><%= (contact && contact.review3Author) || 'Michelle Morrison' %></h5></div></div></div>
           </div>
         </div>
       </section>
@@ -208,7 +227,7 @@
     <div class="bottom-form-wrapper mt-5 col-sm-12">
       <div class="inner-wrapper">
         <div class="title-wrapper col-sm-12">
-          <h2>Get An Estimate</h2>
+          <h2><%= (contact && contact.bottomTitle) || 'Get An Estimate' %></h2>
         </div>
         <div class="wpforms-container wpforms-container-full wpforms-render-modern">
           <form class="wpforms-validate wpforms-form" method="post" action="/api/contact" novalidate>
@@ -263,9 +282,9 @@
   <div class="container mb-5">
     <section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
       <div class="estimate-prompt">
-        <h2 class="section-title">Ready to get started?</h2>
-        <p>Contact us for a free onsite estimate within 24 hours.</p>
-        <div class="btn-wrapper "><a href="/contact-us" class="btn btn-primary-dark">Contact Us</a></div>
+        <h2 class="section-title"><%= (contact && contact.ctaTitle) || 'Ready to get started?' %></h2>
+        <p><%= (contact && contact.ctaBody) || 'Contact us for a free onsite estimate within 24 hours.' %></p>
+        <div class="btn-wrapper "><a href="<%= (contact && contact.ctaUrl) || '/contact-us' %>" class="btn btn-primary-dark"><%= (contact && contact.ctaLabel) || 'Contact Us' %></a></div>
       </div>
     </section>
   </div>
