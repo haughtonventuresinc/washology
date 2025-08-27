@@ -43,6 +43,7 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item <%= section === 'home' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/home">Overview</a></li>
                 <li class="list-group-item <%= section === 'homepage' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/homepage">Homepage</a></li>
+                <li class="list-group-item <%= section === 'about' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/about">About Us</a></li>
                 <li class="list-group-item <%= section === 'pages' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/pages">Pages</a></li>
                 <li class="list-group-item <%= section === 'services' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/services">Services</a></li>
                 <li class="list-group-item <%= section === 'blog' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/blog">Blog</a></li>
@@ -324,6 +325,167 @@
                       <span id="homepageStatus" class="text-muted"></span>
                     </div>
                   </form>
+                <% } else if (section === 'about') { %>
+                  <form id="aboutForm" class="row g-3" method="post">
+                    <div class="col-12">
+                      <h3 class="h6">Hero</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Hero Title</label>
+                      <input type="text" name="heroTitle" class="form-control" value="<%= (about && about.heroTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Hero Background Image URL</label>
+                      <input type="text" name="heroBg" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.heroBg) || '' %>" />
+                      <div class="d-flex align-items-center gap-3 mt-2">
+                        <input type="file" id="aboutHeroBgFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="aboutHeroBgStatus" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="aboutHeroBgPreview" src="<%= (about && about.heroBg) || '' %>" alt="About hero bg preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.heroBg) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Intro / Our Story</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Intro Title</label>
+                      <input type="text" name="introTitle" class="form-control" value="<%= (about && about.introTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Intro Body</label>
+                      <textarea name="introBody" class="form-control" rows="4"><%= (about && about.introBody) || '' %></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Intro Image 1 URL</label>
+                      <input type="text" name="introImage1" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.introImage1) || '' %>" />
+                      <div class="d-flex align-items-center gap-3 mt-2">
+                        <input type="file" id="introImage1File" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="introImage1Status" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="introImage1Preview" src="<%= (about && about.introImage1) || '' %>" alt="Intro image 1 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.introImage1) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Intro Image 2 URL</label>
+                      <input type="text" name="introImage2" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.introImage2) || '' %>" />
+                      <div class="d-flex align-items-center gap-3 mt-2">
+                        <input type="file" id="introImage2File" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="introImage2Status" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="introImage2Preview" src="<%= (about && about.introImage2) || '' %>" alt="Intro image 2 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.introImage2) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">Core Values</h3>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Core Values Title</label>
+                      <input type="text" name="coreValuesTitle" class="form-control" value="<%= (about && about.coreValuesTitle) || '' %>" />
+                    </div>
+                    <% for (let i = 1; i <= 3; i++) { %>
+                      <div class="col-12 mt-2">
+                        <h4 class="h6 mb-1">Core Value <%= i %></h4>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Icon URL</label>
+                        <input type="text" name="coreValue<%= i %>Icon" class="form-control" placeholder="/wp-content/uploads/..." value="<%= (about && about[`coreValue${i}Icon`]) || '' %>" />
+                        <div class="d-flex align-items-center gap-3 mt-2">
+                          <input type="file" id="coreValue<%= i %>IconFile" accept="image/*" class="form-control" style="max-width: 320px;" />
+                          <span id="coreValue<%= i %>IconStatus" class="text-muted"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="coreValue<%= i %>Title" class="form-control" value="<%= (about && about[`coreValue${i}Title`]) || '' %>" />
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Body</label>
+                        <input type="text" name="coreValue<%= i %>Body" class="form-control" value="<%= (about && about[`coreValue${i}Body`]) || '' %>" />
+                      </div>
+                    <% } %>
+
+                    <div class="col-md-6">
+                      <label class="form-label">Right Image 1 URL</label>
+                      <input type="text" name="coreRightImage1" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.coreRightImage1) || '' %>" />
+                      <div class="d-flex align-items-center gap-3 mt-2">
+                        <input type="file" id="coreRightImage1File" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="coreRightImage1Status" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="coreRightImage1Preview" src="<%= (about && about.coreRightImage1) || '' %>" alt="Right image 1 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.coreRightImage1) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Right Image 2 URL</label>
+                      <input type="text" name="coreRightImage2" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.coreRightImage2) || '' %>" />
+                      <div class="d-flex align-items-center gap-3 mt-2">
+                        <input type="file" id="coreRightImage2File" accept="image/*" class="form-control" style="max-width: 320px;" />
+                        <span id="coreRightImage2Status" class="text-muted"></span>
+                      </div>
+                      <div class="mt-2">
+                        <img id="coreRightImage2Preview" src="<%= (about && about.coreRightImage2) || '' %>" alt="Right image 2 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.coreRightImage2) ? '' : 'hidden' %> />
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">The Swim Studs Way</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Section Title</label>
+                      <input type="text" name="wayTitle" class="form-control" value="<%= (about && about.wayTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Body</label>
+                      <textarea name="wayBody" class="form-control" rows="3"><%= (about && about.wayBody) || '' %></textarea>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <h3 class="h6">Promises</h3>
+                    </div>
+                    <% for (let i = 1; i <= 4; i++) { %>
+                      <div class="col-12 mt-1">
+                        <h5 class="h6">Promise <%= i %></h5>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="promise<%= i %>Title" class="form-control" value="<%= (about && about[`promise${i}Title`]) || '' %>" />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Body</label>
+                        <input type="text" name="promise<%= i %>Body" class="form-control" value="<%= (about && about[`promise${i}Body`]) || '' %>" />
+                      </div>
+                    <% } %>
+
+                    <div class="col-12 mt-4">
+                      <h3 class="h6">CTA</h3>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Title</label>
+                      <input type="text" name="ctaTitle" class="form-control" value="<%= (about && about.ctaTitle) || '' %>" />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">CTA Body</label>
+                      <textarea name="ctaBody" class="form-control" rows="2"><%= (about && about.ctaBody) || '' %></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA Button Label</label>
+                      <input type="text" name="ctaLabel" class="form-control" value="<%= (about && about.ctaLabel) || '' %>" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">CTA URL</label>
+                      <input type="text" name="ctaUrl" class="form-control" placeholder="/contact-us or https://..." value="<%= (about && about.ctaUrl) || '' %>" />
+                    </div>
+
+                    <div class="col-12 d-flex gap-2 mt-2">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <span id="aboutStatus" class="text-muted"></span>
+                    </div>
+                  </form>
                 <% } else if (section === 'pages') { %>
                   <h3 class="h6">Pages</h3>
                   <p class="text-muted">Page editor coming soon.</p>
@@ -400,6 +562,129 @@
           return res;
         };
         window.__fetchAuthWrapped = true;
+      }
+
+      // --- About page: hydrate, save, and image wiring ---
+      const aboutForm = document.getElementById('aboutForm');
+
+      function setPreview(previewEl, url) {
+        if (!previewEl) return;
+        if (url && String(url).trim().length) {
+          previewEl.src = url;
+          previewEl.hidden = false;
+        }
+      }
+
+      async function hydrateAboutFromApi() {
+        if (!aboutForm) return;
+        try {
+          const res = await fetch('/api/about', { credentials: 'same-origin' });
+          if (!res.ok) return;
+          const data = await res.json();
+          const fields = aboutForm.querySelectorAll('input[name], textarea[name]');
+          fields.forEach(function(el){
+            const key = el.getAttribute('name');
+            if (!key) return;
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
+              const val = data[key];
+              el.value = (val != null ? String(val) : '');
+            }
+          });
+          setPreview(document.getElementById('aboutHeroBgPreview'), data.heroBg);
+          setPreview(document.getElementById('introImage1Preview'), data.introImage1);
+          setPreview(document.getElementById('introImage2Preview'), data.introImage2);
+          setPreview(document.getElementById('coreRightImage1Preview'), data.coreRightImage1);
+          setPreview(document.getElementById('coreRightImage2Preview'), data.coreRightImage2);
+        } catch (e) {
+          // silent
+        }
+      }
+
+      async function saveAboutPartial(patch, statusEl) {
+        try {
+          statusEl && (statusEl.textContent = 'Saving...');
+          const res = await fetch('/api/about', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify(patch || {})
+          });
+          if (res.status === 401 || res.status === 403) {
+            statusEl && (statusEl.textContent = 'Session expired. Redirecting to login...');
+            setTimeout(() => { window.location.href = '/admin-login'; }, 800);
+            return null;
+          }
+          if (!res.ok) throw new Error('Save failed: ' + res.status);
+          const result = await res.json();
+          statusEl && (statusEl.textContent = 'Saved');
+          setTimeout(() => { statusEl && (statusEl.textContent = ''); }, 1200);
+          showToast('Changes saved', 'success');
+          return result;
+        } catch (e) {
+          console.error('[dashboard] about partial save failed', e);
+          statusEl && (statusEl.textContent = 'Error saving');
+          showToast('Save failed', 'error');
+          return null;
+        }
+      }
+
+      // Image wiring for About page fields
+      const aboutHeroFile = document.getElementById('aboutHeroBgFile');
+      const aboutHeroStatus = document.getElementById('aboutHeroBgStatus');
+      const aboutHeroUrlInput = document.querySelector('#aboutForm input[name="heroBg"]');
+      const aboutHeroPreview = document.getElementById('aboutHeroBgPreview');
+      if (aboutForm) wireImageField({ fileEl: aboutHeroFile, urlInputEl: aboutHeroUrlInput, previewEl: aboutHeroPreview, statusEl: aboutHeroStatus, payloadKey: 'heroBg' });
+
+      const i1f = document.getElementById('introImage1File');
+      const i1s = document.getElementById('introImage1Status');
+      const i1u = document.querySelector('#aboutForm input[name="introImage1"]');
+      const i1p = document.getElementById('introImage1Preview');
+      if (aboutForm) wireImageField({ fileEl: i1f, urlInputEl: i1u, previewEl: i1p, statusEl: i1s, payloadKey: 'introImage1' });
+
+      const i2f = document.getElementById('introImage2File');
+      const i2s = document.getElementById('introImage2Status');
+      const i2u = document.querySelector('#aboutForm input[name="introImage2"]');
+      const i2p = document.getElementById('introImage2Preview');
+      if (aboutForm) wireImageField({ fileEl: i2f, urlInputEl: i2u, previewEl: i2p, statusEl: i2s, payloadKey: 'introImage2' });
+
+      const cr1f = document.getElementById('coreRightImage1File');
+      const cr1s = document.getElementById('coreRightImage1Status');
+      const cr1u = document.querySelector('#aboutForm input[name="coreRightImage1"]');
+      const cr1p = document.getElementById('coreRightImage1Preview');
+      if (aboutForm) wireImageField({ fileEl: cr1f, urlInputEl: cr1u, previewEl: cr1p, statusEl: cr1s, payloadKey: 'coreRightImage1' });
+
+      const cr2f = document.getElementById('coreRightImage2File');
+      const cr2s = document.getElementById('coreRightImage2Status');
+      const cr2u = document.querySelector('#aboutForm input[name="coreRightImage2"]');
+      const cr2p = document.getElementById('coreRightImage2Preview');
+      if (aboutForm) wireImageField({ fileEl: cr2f, urlInputEl: cr2u, previewEl: cr2p, statusEl: cr2s, payloadKey: 'coreRightImage2' });
+
+      for (let i = 1; i <= 3; i++) {
+        const f = document.getElementById(`coreValue${i}IconFile`);
+        const s = document.getElementById(`coreValue${i}IconStatus`);
+        const u = document.querySelector(`#aboutForm input[name="coreValue${i}Icon"]`);
+        if (aboutForm) wireImageField({ fileEl: f, urlInputEl: u, previewEl: null, statusEl: s, payloadKey: `coreValue${i}Icon` });
+      }
+
+      if (aboutForm) {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', hydrateAboutFromApi);
+        } else {
+          hydrateAboutFromApi();
+        }
+        aboutForm.addEventListener('submit', async function(ev){
+          ev.preventDefault();
+          const fd = new FormData(aboutForm);
+          const raw = Object.fromEntries(fd.entries());
+          const data = {};
+          for (const [k, v] of Object.entries(raw)) {
+            const s = typeof v === 'string' ? v.trim() : v;
+            if (typeof s === 'string' && s.length === 0) continue;
+            data[k] = s;
+          }
+          const statusEl = document.getElementById('aboutStatus');
+          await saveAboutPartial(data, statusEl);
+        });
       }
 
       const btn = document.getElementById('logoutBtn');

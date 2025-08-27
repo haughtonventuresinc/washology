@@ -92,8 +92,8 @@
     <main id="main">
       <!-- Hero -->
       <section class="hero hero-wrapper gradient-overlay"
-        style="background-image: url('https://images.ctfassets.net/ftcnv5up9dxv/7dX53kEhONSiR3WxVDA347/4e95c833c6b566b450951f3100d6f56f/What_You_ll_Need_to_Clean_Your_Pool.jpg')">
-        <h1>Pool Care Above and Beyond</h1>
+        style="background-image: url('<%= (about && about.heroBg) || 'https://images.ctfassets.net/ftcnv5up9dxv/7dX53kEhONSiR3WxVDA347/4e95c833c6b566b450951f3100d6f56f/What_You_ll_Need_to_Clean_Your_Pool.jpg' %>')">
+        <h1><%= (about && about.heroTitle) || 'Pool Care Above and Beyond' %></h1>
       </section>
 
       <!-- Intro / Our Story -->
@@ -101,20 +101,38 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-12 col-lg-5">
-              <h2 class="section-title">Our Story</h2>
-              <p>At Swim Studs, our mission is to keep pools sparkling, safe, and effortless to enjoy. From weekly cleaning and chemical balancing to filter and pump maintenance, we deliver dependable service tailored to your pool’s needs.</p>
-              <p>We’re committed, certified pool technicians who take pride in the details—so you can relax. Whether it’s routine care, green‑to‑clean recovery, or equipment repairs, Swim Studs keeps your water crystal clear and hassle‑free.</p>
-              <p><strong>We’re growing across the region and remain focused on transparent communication, trusted results, and five‑star service—every visit.</strong></p>
+              <h2 class="section-title"><%= (about && about.introTitle) || 'Our Story' %></h2>
+              <% 
+                const introBody = (about && about.introBody) || '';
+                const introHasHtml = /<\w+[^>]*>/.test(introBody || '');
+                if (introHasHtml) { %>
+                  <%- introBody %>
+              <% } else { 
+                   const paragraphs = (introBody || '').split(/\n\s*\n/).filter(Boolean);
+                   if (paragraphs.length) {
+                     paragraphs.forEach(function(p, idx){ %>
+                       <% if (idx === paragraphs.length - 1) { %>
+                         <p><strong><%- p %></strong></p>
+                       <% } else { %>
+                         <p><%- p %></p>
+                       <% } %>
+                   <% });
+                   } else { %>
+                     <p>At Swim Studs, our mission is to keep pools sparkling, safe, and effortless to enjoy. From weekly cleaning and chemical balancing to filter and pump maintenance, we deliver dependable service tailored to your pool’s needs.</p>
+                     <p>We’re committed, certified pool technicians who take pride in the details—so you can relax. Whether it’s routine care, green‑to‑clean recovery, or equipment repairs, Swim Studs keeps your water crystal clear and hassle‑free.</p>
+                     <p><strong>We’re growing across the region and remain focused on transparent communication, trusted results, and five‑star service—every visit.</strong></p>
+                   <% }
+                 } %>
             </div>
             <div class="col-lg-1"></div>
             <div class="col-sm-12 col-lg-6 image-col">
               <figure>
                 <img width="1280" height="853" class="img-fluid" alt="A Swim Studs technician at work"
-                  src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" />
+                  src="<%= (about && about.introImage1) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" />
               </figure>
               <figure>
                 <img width="2560" height="1440" class="img-fluid" alt="Pool maintenance"
-                  src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" />
+                  src="<%= (about && about.introImage2) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" />
               </figure>
             </div>
           </div>
@@ -126,33 +144,33 @@
         <div class="container">
           <div class="row">
             <div class="left col-sm-12 col-lg-6">
-              <h2 class="section-title">Our Core Values</h2>
+              <h2 class="section-title"><%= (about && about.coreValuesTitle) || 'Our Core Values' %></h2>
               <div class="core-values--values mb-5 mb-lg-0">
                 <div class="core-values--value">
                   <div class="core-values--icon">
-                    <img width="45" height="52" src="/wp-content/uploads/2025/05/icon-integrity.svg" class="img-fluid" alt="Integrity icon" />
+                    <img width="45" height="52" src="<%= (about && about.coreValue1Icon) || '/wp-content/uploads/2025/05/icon-integrity.svg' %>" class="img-fluid" alt="Integrity icon" />
                   </div>
                   <div class="core-values--content">
-                    <h3>Crystal‑Clear Standards</h3>
-                    <p>From chemical balancing to filter care, we use proven methods and premium supplies to keep your water safe, sparkling, and swim‑ready every day.</p>
+                    <h3><%= (about && about.coreValue1Title) || 'Crystal‑Clear Standards' %></h3>
+                    <p><%= (about && about.coreValue1Body) || 'From chemical balancing to filter care, we use proven methods and premium supplies to keep your water safe, sparkling, and swim‑ready every day.' %></p>
                   </div>
                 </div>
                 <div class="core-values--value">
                   <div class="core-values--icon">
-                    <img width="52" height="49" src="/wp-content/uploads/2025/05/icon-diligence.svg" class="img-fluid" alt="Diligence icon" />
+                    <img width="52" height="49" src="<%= (about && about.coreValue2Icon) || '/wp-content/uploads/2025/05/icon-diligence.svg' %>" class="img-fluid" alt="Diligence icon" />
                   </div>
                   <div class="core-values--content">
-                    <h3>Proactive Excellence</h3>
-                    <p>We don’t just fix issues—we prevent them. Regular checks, detailed reports, and tune‑ups keep your system running smoothly season after season.</p>
+                    <h3><%= (about && about.coreValue2Title) || 'Proactive Excellence' %></h3>
+                    <p><%= (about && about.coreValue2Body) || 'We don’t just fix issues—we prevent them. Regular checks, detailed reports, and tune‑ups keep your system running smoothly season after season.' %></p>
                   </div>
                 </div>
                 <div class="core-values--value">
                   <div class="core-values--icon">
-                    <img width="52" height="46" src="/wp-content/uploads/2025/05/icon-generosity.svg" class="img-fluid" alt="Communication icon" />
+                    <img width="52" height="46" src="<%= (about && about.coreValue3Icon) || '/wp-content/uploads/2025/05/icon-generosity.svg' %>" class="img-fluid" alt="Communication icon" />
                   </div>
                   <div class="core-values--content">
-                    <h3>Customer‑First Communication</h3>
-                    <p>Your time matters. Expect clear service windows, photo updates after each visit, and fast responses whenever you need us.</p>
+                    <h3><%= (about && about.coreValue3Title) || 'Customer‑First Communication' %></h3>
+                    <p><%= (about && about.coreValue3Body) || 'Your time matters. Expect clear service windows, photo updates after each visit, and fast responses whenever you need us.' %></p>
                   </div>
                 </div>
               </div>
@@ -160,9 +178,9 @@
             <div class="col-lg-1"></div>
             <div class="col-sm-12 col-lg-5 right">
               <img width="1500" height="1200" class="img-fluid" alt="Custom maintenance setup"
-                   src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" />
+                   src="<%= (about && about.coreRightImage1) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" />
               <img width="750" height="600" class="img-fluid" alt="Pool cleaning"
-                   src="https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg" />
+                   src="<%= (about && about.coreRightImage2) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" />
             </div>
           </div>
         </div>
@@ -175,33 +193,33 @@
           <div class="row gy-4 our-stats--stats">
             <div class="our-stats--stat number-of-locations">
               <div class="our-stats--stat--icon"><img src="/wp-content/themes/garageup/images/icon-locations.svg" alt="10 icon"></div>
-              <h3 class="gradient">10</h3>
-              <p>Number of Locations</p>
+              <h3 class="gradient"><%= (homepage && homepage.quickLocations) || '10' %></h3>
+              <p><%= (homepage && (homepage.quickLocationsLabel || 'LOCATIONS')) || 'Number of Locations' %></p>
             </div>
             <div class="our-stats--stat number-of-jobs-completed">
               <div class="our-stats--stat--icon"><img src="/wp-content/themes/garageup/images/icon-jobs.svg" alt="1000+ icon"></div>
-              <h3 class="gradient">1000+</h3>
-              <p>Number of Jobs Completed</p>
+              <h3 class="gradient"><%= (homepage && homepage.quickJobs) || '1000+' %></h3>
+              <p><%= (homepage && (homepage.quickJobsLabel || 'JOBS COMPLETED')) || 'Number of Jobs Completed' %></p>
             </div>
             <div class="our-stats--stat number-of-states-were-in">
               <div class="our-stats--stat--icon"><img src="/wp-content/themes/garageup/images/icon-states.svg" alt="6 icon"></div>
-              <h3 class="gradient">6</h3>
-              <p>Number of States We're In</p>
+              <h3 class="gradient"><%= (homepage && homepage.quickStates) || '6' %></h3>
+              <p><%= (homepage && (homepage.quickStatesLabel || "STATES WE'RE IN")) || "Number of States We're In" %></p>
             </div>
             <div class="our-stats--stat 5-star-reviews">
               <div class="our-stats--stat--icon"><img src="/wp-content/themes/garageup/images/icon-stars.svg" alt="400+ icon"></div>
-              <h3 class="gradient">400+</h3>
-              <p>5 Star Reviews</p>
+              <h3 class="gradient"><%= (homepage && homepage.quickReviews) || '400+' %></h3>
+              <p><%= (homepage && (homepage.quickReviewsLabel || '5 STAR REVIEWS')) || '5 Star Reviews' %></p>
             </div>
             <div class="our-stats--stat estimates-availability">
               <div class="our-stats--stat--icon"><img src="/wp-content/themes/garageup/images/icon-availability.svg" alt="24/7 icon"></div>
-              <h3 class="gradient">24/7</h3>
-              <p>Estimates Availability</p>
+              <h3 class="gradient"><%= (homepage && homepage.quickEstimates) || '24/7' %></h3>
+              <p><%= (homepage && (homepage.quickEstimatesLabel || 'ESTIMATES AVAILABLE')) || 'Estimates Availability' %></p>
             </div>
             <div class="our-stats--stat possibilities">
               <div class="our-stats--stat--icon"><img src="/wp-content/themes/garageup/images/icon-check-badge.svg" alt="Endless icon"></div>
-              <h3 class="gradient">Endless</h3>
-              <p>Possibilities</p>
+              <h3 class="gradient"><%= (homepage && homepage.quickPossibilities) || 'Endless' %></h3>
+              <p><%= (homepage && (homepage.quickPossibilitiesLabel || 'POSSIBILITIES')) || 'Possibilities' %></p>
             </div>
           </div>
         </div>
@@ -212,11 +230,29 @@
         <div class="container">
           <div class="row">
             <div class="title-wrapper col-sm-12 col-lg-5">
-              <h2 class="section-title">The Swim Studs Way</h2>
+              <h2 class="section-title"><%= (about && about.wayTitle) || 'The Swim Studs Way' %></h2>
             </div>
             <div class="copy-wrapper col-sm-12 col-lg-7">
-              <p>We go above and beyond to keep your water crystal clear and your experience stress‑free. The Swim Studs team communicates proactively, arrives on time, and delivers dependable results on every visit—from weekly service to green‑to‑clean recovery and equipment repairs.</p>
-              <p><strong>Let Swim Studs keep your pool sparkling with expert care you can trust.</strong></p>
+              <% 
+                const wayBody = (about && about.wayBody) || '';
+                const wayHasHtml = /<\w+[^>]*>/.test(wayBody || '');
+                if (wayHasHtml) { %>
+                  <%- wayBody %>
+              <% } else { 
+                   const wps = (wayBody || '').split(/\n\s*\n/).filter(Boolean);
+                   if (wps.length) {
+                     wps.forEach(function(p, idx){ %>
+                       <% if (idx === wps.length - 1) { %>
+                         <p><strong><%- p %></strong></p>
+                       <% } else { %>
+                         <p><%- p %></p>
+                       <% } %>
+                   <% });
+                   } else { %>
+                     <p>We go above and beyond to keep your water crystal clear and your experience stress‑free. The Swim Studs team communicates proactively, arrives on time, and delivers dependable results on every visit—from weekly service to green‑to‑clean recovery and equipment repairs.</p>
+                     <p><strong>Let Swim Studs keep your pool sparkling with expert care you can trust.</strong></p>
+                   <% }
+                 } %>
             </div>
           </div>
 
@@ -227,8 +263,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>01</span></div>
                   <div class="promise-card--content">
-                    <h3>Our Work Brings Joy</h3>
-                    <p>We deliver crystal‑clear results that make pool time effortless and enjoyable. No pool is too small or system too complex for our commitment to quality.</p>
+                    <h3><%= (about && about.promise1Title) || 'Our Work Brings Joy' %></h3>
+                    <p><%= (about && about.promise1Body) || 'We deliver crystal‑clear results that make pool time effortless and enjoyable. No pool is too small or system too complex for our commitment to quality.' %></p>
                   </div>
                 </div>
               </div>
@@ -240,8 +276,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>02</span></div>
                   <div class="promise-card--content">
-                    <h3>Respect Time &amp; Communication</h3>
-                    <p>Your time matters. We provide clear service windows, updates before and after each visit, and fast responses when you need help. If plans change, you’ll know right away.</p>
+                    <h3><%= (about && about.promise2Title) || 'Respect Time & Communication' %></h3>
+                    <p><%= (about && about.promise2Body) || 'Your time matters. We provide clear service windows, updates before and after each visit, and fast responses when you need help. If plans change, you’ll know right away.' %></p>
                   </div>
                 </div>
               </div>
@@ -253,8 +289,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>03</span></div>
                   <div class="promise-card--content">
-                    <h3>Stress-Free, Mess-Free Service</h3>
-                    <p>Pool care shouldn’t add stress. We use safe, proven methods, keep equipment tidy, and leave your deck clean—so all you have to do is enjoy the water.</p>
+                    <h3><%= (about && about.promise3Title) || 'Stress-Free, Mess-Free Service' %></h3>
+                    <p><%= (about && about.promise3Body) || 'Pool care shouldn’t add stress. We use safe, proven methods, keep equipment tidy, and leave your deck clean—so all you have to do is enjoy the water.' %></p>
                   </div>
                 </div>
               </div>
@@ -266,8 +302,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>04</span></div>
                   <div class="promise-card--content">
-                    <h3>Value Based Pricing</h3>
-                    <p>Transparent, upfront pricing with no surprises. Expect top‑tier service, reliable scheduling, and long‑lasting results—every visit, every season.</p>
+                    <h3><%= (about && about.promise4Title) || 'Value Based Pricing' %></h3>
+                    <p><%= (about && about.promise4Body) || 'Transparent, upfront pricing with no surprises. Expect top‑tier service, reliable scheduling, and long‑lasting results—every visit, every season.' %></p>
                   </div>
                 </div>
               </div>
@@ -280,9 +316,9 @@
       <div class="container mb-5">
         <section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
           <div class="estimate-prompt">
-            <h2 class="section-title">Ready to get started?</h2>
-            <p>Contact us for a free onsite estimate within 24 hours.</p>
-            <div class="btn-wrapper "><a href="/contact-us" class="btn btn-primary-dark">Contact Us</a></div>
+            <h2 class="section-title"><%= (about && about.ctaTitle) || 'Ready to get started?' %></h2>
+            <p><%= (about && about.ctaBody) || 'Contact us for a free onsite estimate within 24 hours.' %></p>
+            <div class="btn-wrapper "><a href="<%= (about && about.ctaUrl) || '/contact-us' %>" class="btn btn-primary-dark"><%= (about && about.ctaLabel) || 'Contact Us' %></a></div>
           </div>
         </section>
       </div>

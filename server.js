@@ -31,6 +31,27 @@ function saveHomepage(payload) {
   }
 }
 
+function loadAbout() {
+  try {
+    const raw = fs.readFileSync(ABOUT_DB_PATH, 'utf8');
+    const obj = JSON.parse(raw);
+    return obj && typeof obj === 'object' ? obj : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveAbout(payload) {
+  try {
+    const current = loadAbout();
+    const next = { ...current, ...payload };
+    fs.writeFileSync(ABOUT_DB_PATH, JSON.stringify(next, null, 2), 'utf8');
+    return next;
+  } catch (e) {
+    return null;
+  }
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -62,6 +83,7 @@ app.use(session({
 // Local JSON user database
 const USERS_DB_PATH = path.join(siteRoot, 'data', 'users.json');
 const HOMEPAGE_DB_PATH = path.join(siteRoot, 'data', 'homepage.json');
+const ABOUT_DB_PATH = path.join(siteRoot, 'data', 'about.json');
 
 function loadUsers() {
   try {
@@ -128,7 +150,9 @@ app.get('/', (req, res) => {
 
 app.get('/about-us', (req, res) => {
   // SSR only
-  return res.render('about-us');
+  const about = loadAbout();
+  const homepage = loadHomepage();
+  return res.render('about-us', { about, homepage });
 });
 
 app.get('/contact-us', (req, res) => {
@@ -288,6 +312,52 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// --- About Page Editor API (protected) ---
+app.get('/api/about', requireAuth, (req, res) => {
+  const data = loadAbout();
+  return res.json(data);
+});
+
+app.post('/api/about', requireAuth, (req, res) => {
+  try { console.log('[api/about] incoming keys:', Object.keys(req.body || {})); } catch(_) {}
+  const allowed = [
+    'heroTitle', 'heroBg',
+    'introTitle', 'introBody', 'introImage1', 'introImage2',
+    'coreValuesTitle',
+    'coreValue1Icon', 'coreValue1Title', 'coreValue1Body',
+    'coreValue2Icon', 'coreValue2Title', 'coreValue2Body',
+    'coreValue3Icon', 'coreValue3Title', 'coreValue3Body',
+    'coreRightImage1', 'coreRightImage2',
+    'wayTitle', 'wayBody',
+    'promise1Title', 'promise1Body',
+    'promise2Title', 'promise2Body',
+    'promise3Title', 'promise3Body',
+    'promise4Title', 'promise4Body',
+    'ctaTitle', 'ctaBody', 'ctaLabel', 'ctaUrl'
+  ];
+  const payload = {};
+  for (const k of allowed) {
+    if (typeof req.body[k] !== 'undefined') {
+      const v = (req.body[k] == null) ? '' : String(req.body[k]);
+      if (v.trim().length > 0) {
+        payload[k] = v;
+      }
+    }
+  }
+  try {
+    const saved = saveAbout(payload);
+    if (!saved) {
+      console.error('[api/about] saveAbout returned null');
+      return res.status(500).json({ error: 'Failed to save about' });
+    }
+    console.log('[api/about] saved keys:', Object.keys(payload));
+    return res.json(saved);
+  } catch (e) {
+    console.error('[api/about] exception while saving:', e);
+    return res.status(500).json({ error: 'Exception while saving about' });
+  }
+});
+
 app.post('/api/auth/logout', (req, res) => {
   if (!req.session) return res.json({ ok: true });
   req.session.destroy(() => {
@@ -336,6 +406,10 @@ app.get('/dashboard/:section', requireAuth, (req, res) => {
   if (section === 'homepage') {
     const homepage = loadHomepage();
     return res.render('dashboard', { section, homepage });
+  }
+  if (section === 'about') {
+    const about = loadAbout();
+    return res.render('dashboard', { section, about });
   }
   return res.render('dashboard', { section });
 });
