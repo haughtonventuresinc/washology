@@ -43,6 +43,25 @@
 	<link rel="icon" href="/wp-content/uploads/2025/04/favicon-192x192.png" sizes="192x192" />
 	<link rel="apple-touch-icon" href="/wp-content/uploads/2025/04/favicon-192x192.png" />
 	<meta name="msapplication-TileImage" content="https://garageup.com/wp-content/uploads/2025/04/favicon-192x192" />
+	<style>
+		/* Global top banner styles */
+		.banner-wrapper { background-color: var(--brand-red); }
+		.banner-wrapper .banner-header { 
+			margin: 0; 
+			text-align: center; 
+			text-transform: uppercase; 
+			font-weight: 700; 
+			letter-spacing: .02em;
+			padding: 8px 0;
+		}
+		.banner-wrapper .banner-header a { 
+			color: #fff; 
+			text-decoration: none; 
+			display: inline-block; 
+			padding: 4px 10px;
+		}
+		.banner-wrapper .banner-header a:hover { text-decoration: underline; color: #fff; }
+	</style>
 </head>
 <body class="<%= typeof bodyClass !== 'undefined' && bodyClass ? bodyClass : 'home wp-singular page-template page-template-templates page-template-landing page-template-templateslanding-php page page-id-8 wp-theme-resi-franchise wp-child-theme-garageup' %>">
 	<a href="#main" class="visually-hidden-focusable">Skip to main content</a>

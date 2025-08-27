@@ -94,29 +94,54 @@ app.get('/contact', (req, res) => {
 });
 
 app.get('/privacy-policy', (req, res) => {
+  // Prefer EJS view if available
+  const viewA = path.join(app.get('views'), 'privacy-policy.ejs');
+  const viewB = path.join(app.get('views'), 'privacy-policy', 'index.ejs');
+  if (fs.existsSync(viewA)) return res.render('privacy-policy');
+  if (fs.existsSync(viewB)) return res.render('privacy-policy/index');
   if (sendHtml(res, path.join('privacy-policy', 'index.html'))) return;
   if (sendHtml(res, 'privacy-policy.html')) return;
   res.status(404).send('Not Found');
 });
 
 app.get('/terms-and-conditions', (req, res) => {
+  // Prefer EJS view if available
+  const viewA = path.join(app.get('views'), 'terms-and-conditions.ejs');
+  const viewB = path.join(app.get('views'), 'terms-and-conditions', 'index.ejs');
+  if (fs.existsSync(viewA)) return res.render('terms-and-conditions');
+  if (fs.existsSync(viewB)) return res.render('terms-and-conditions/index');
   if (sendHtml(res, path.join('terms-and-conditions', 'index.html'))) return;
   if (sendHtml(res, 'terms-and-conditions.html')) return;
   res.status(404).send('Not Found');
 });
 
 app.get('/design-studio', (req, res) => {
+  // Prefer EJS view if available
+  const viewA = path.join(app.get('views'), 'design-studio.ejs');
+  const viewB = path.join(app.get('views'), 'design-studio', 'index.ejs');
+  if (fs.existsSync(viewA)) return res.render('design-studio');
+  if (fs.existsSync(viewB)) return res.render('design-studio/index');
   if (sendHtml(res, path.join('design-studio', 'index.html'))) return;
   res.status(404).send('Not Found');
 });
 
 app.get('/warranty', (req, res) => {
+  // Prefer EJS view if available
+  const viewA = path.join(app.get('views'), 'warranty.ejs');
+  const viewB = path.join(app.get('views'), 'warranty', 'index.ejs');
+  if (fs.existsSync(viewA)) return res.render('warranty');
+  if (fs.existsSync(viewB)) return res.render('warranty/index');
   if (sendHtml(res, path.join('warranty', 'index.html'))) return;
   res.status(404).send('Not Found');
 });
 
 // Services routes
 app.get('/services', (req, res) => {
+  // Prefer EJS view if available
+  const viewA = path.join(app.get('views'), 'services.ejs');
+  const viewB = path.join(app.get('views'), 'services', 'index.ejs');
+  if (fs.existsSync(viewA)) return res.render('services');
+  if (fs.existsSync(viewB)) return res.render('services/index');
   // If there is a services landing, try index.html under services/
   if (sendHtml(res, path.join('services', 'index.html'))) return;
   res.status(404).send('Not Found');
@@ -125,12 +150,23 @@ app.get('/services', (req, res) => {
 // Generic service route to serve any service folder by slug
 app.get('/services/:slug', (req, res) => {
   const { slug } = req.params;
+  // Prefer EJS view if available
+  const viewA = path.join(app.get('views'), 'services', `${slug}.ejs`);
+  const viewB = path.join(app.get('views'), 'services', slug, 'index.ejs');
+  if (fs.existsSync(viewA)) return res.render(`services/${slug}`);
+  if (fs.existsSync(viewB)) return res.render(`services/${slug}/index`);
   if (sendHtml(res, path.join('services', slug, 'index.html'))) return;
   res.status(404).send('Not Found');
 });
 
 
 app.get('/blog', (req, res) => {
+  // Prefer EJS SSR for blog archive if view exists
+  const blogView = path.join(app.get('views'), 'blog.ejs');
+  if (fs.existsSync(blogView)) {
+    const bodyClass = 'blog wp-theme-resi-franchise wp-child-theme-garageup';
+    return res.render('blog', { bodyClass });
+  }
   if (sendHtml(res, path.join('blog', 'index.html'))) return;
   res.status(404).send('Not Found');
 });
@@ -190,6 +226,22 @@ app.get('*', (req, res, next) => {
 
     // normalize: strip leading '/'
     const rel = reqPath.replace(/^\/+/, '');
+
+    // 0) Prefer EJS views if present (SSR)
+    if (rel.length > 0) {
+      // Try views/rel.ejs
+      const candidateView = path.join(app.get('views'), `${rel}.ejs`);
+      if (fs.existsSync(candidateView)) {
+        const viewName = rel.replace(/\\/g, '/');
+        return res.render(viewName);
+      }
+      // Try views/rel/index.ejs
+      const candidateIndexView = path.join(app.get('views'), rel, 'index.ejs');
+      if (fs.existsSync(candidateIndexView)) {
+        const viewName = path.join(rel, 'index').replace(/\\/g, '/');
+        return res.render(viewName);
+      }
+    }
 
     // 1) directory index
     if (rel.length === 0) return next();

@@ -16661,7 +16661,8 @@ h2 {
 .section-title.h2,
 h2.section-title {
     font-size: min(2.75rem, 5.5vw);
-    margin-bottom: .5em
+    margin-bottom: .5em;
+    color: var(--brand-red);
 }
 
 .h1,

@@ -82,11 +82,6 @@ section.overlay-jade:before {
 }
 
 /* Top CTA banner */
-.banner-wrapper {
-  background-color: var(--brand-orange) !important;
-  text-align: center;
-  padding: 0.5rem 0;
-}
 .banner-wrapper a {
   color: white !important;
   border-bottom-color: var(--brand-red) !important;

@@ -18,6 +18,70 @@
     @media (prefers-contrast: more) {
       .about-us-page-template .promise-card--number span { text-shadow: 0 0 0 transparent; }
     }
+
+    /* Centered, full-width form styling (parity with Contact page) */
+    .about-us-page-template .wpforms-container { max-width: 720px; margin: 0 auto; }
+    .about-us-page-template .wpforms-container .wpforms-field { margin-bottom: 16px; }
+    .about-us-page-template .wpforms-container .wpforms-field-row { display: block; }
+    .about-us-page-template .wpforms-container .wpforms-field-row-block { width: 100%; }
+    .about-us-page-template .wpforms-container .wpforms-submit-container { text-align: center; margin-top: 10px; }
+
+    .about-us-page-template .wpforms-container .wpforms-field-label,
+    .about-us-page-template .wpforms-container legend.wpforms-field-label { color: var(--brand-dark); font-weight: 600; }
+    .about-us-page-template .wpforms-container .wpforms-required-label { color: var(--brand-red); margin-left: 2px; }
+
+    .about-us-page-template .wpforms-container input[type="text"],
+    .about-us-page-template .wpforms-container input[type="email"],
+    .about-us-page-template .wpforms-container input[type="tel"],
+    .about-us-page-template .wpforms-container textarea,
+    .about-us-page-template .wpforms-container select {
+      width: 100%;
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      outline: none;
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    .about-us-page-template .wpforms-container input:focus,
+    .about-us-page-template .wpforms-container textarea:focus,
+    .about-us-page-template .wpforms-container select:focus {
+      border-color: var(--brand-red);
+      box-shadow: 0 0 0 .2rem rgba(255, 87, 34, 0.25);
+    }
+    .about-us-page-template .wpforms-container input::placeholder,
+    .about-us-page-template .wpforms-container textarea::placeholder { color: #9aa3ad; opacity: 1; }
+
+    .about-us-page-template .wpforms-submit,
+    .about-us-page-template button[type="submit"],
+    .about-us-page-template .wpforms-page-button {
+      background-color: var(--brand-red) !important;
+      border-color: var(--brand-red) !important;
+      color: #fff !important;
+      border-radius: 8px;
+      padding: 0.6rem 1.25rem;
+    }
+    .about-us-page-template .wpforms-submit:hover,
+    .about-us-page-template button[type="submit"]:hover,
+    .about-us-page-template .wpforms-page-button:hover {
+      background-color: #d7341b !important;
+      border-color: #d7341b !important;
+    }
+
+    /* Error states */
+    .about-us-page-template .wpforms-container .wpforms-error,
+    .about-us-page-template .wpforms-container .wpforms-field.wpforms-has-error .wpforms-field-label { color: #d63637; }
+    .about-us-page-template .wpforms-container input[aria-invalid="true"],
+    .about-us-page-template .wpforms-container textarea[aria-invalid="true"],
+    .about-us-page-template .wpforms-container select[aria-invalid="true"] {
+      border-color: #d63637;
+      box-shadow: 0 0 0 .2rem rgba(214, 54, 55, 0.15);
+    }
+
+    @media (max-width: 600px) {
+      .about-us-page-template .wpforms-container { max-width: 100%; padding: 0 12px; }
+      .about-us-page-template .wpforms-container .wpforms-submit-container { text-align: center; }
+    }
   </style>
 </head>
 <body class="about-us-page about-us-page-template">
