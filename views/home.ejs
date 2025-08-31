@@ -77,31 +77,53 @@
   }
   .hero-aesthetic .zip-card {
     margin-top: 1rem;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: saturate(140%) blur(6px);
-    -webkit-backdrop-filter: saturate(140%) blur(6px);
-    border-radius: 16px;
-    padding: 0.75rem;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: saturate(140%) blur(8px);
+    -webkit-backdrop-filter: saturate(140%) blur(8px);
+    border-radius: 28px;
+    padding: 0.9rem;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.20), 0 2px 8px rgba(0, 0, 0, 0.10);
     border: 1px solid rgba(0, 0, 0, 0.06);
-    width: min(100%, 560px);
+    width: min(100%, 620px);
     margin-left: auto;
     margin-right: auto;
     position: relative;
     z-index: 1;
+    transition: box-shadow .2s ease, border-color .2s ease;
+  }
+  .hero-aesthetic .zip-card:focus-within {
+    box-shadow: 0 0 0 3px var(--brand-red), 0 12px 30px rgba(0,0,0,.25);
+    border-color: var(--brand-red);
   }
   .hero-aesthetic .hero-eyebrow {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
   }
-  .hero-aesthetic .zip-card .form-control { border-radius: 12px 0 0 12px; box-shadow: none; }
-  .hero-aesthetic .zip-card .input-group-text { border-radius: 12px 0 0 12px; }
+  .hero-aesthetic .zip-card .input-group-text {
+    background: transparent !important;
+    border: none !important;
+    padding-left: .75rem;
+    padding-right: .5rem;
+  }
+  .hero-aesthetic .zip-card .form-control {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 18px 0 0 18px;
+    padding: .75rem .25rem;
+    font-size: 1.05rem;
+    color: #05132D;
+  }
+  .hero-aesthetic .zip-card .form-control::placeholder { color: rgba(5, 19, 45, 0.55); }
   .hero-aesthetic .zip-card .btn {
-    border-radius: 0 12px 12px 0;
+    border-radius: 18px;
     font-weight: 700;
     letter-spacing: 0.02em;
+    box-shadow: 0 8px 18px rgba(0,0,0,.18);
+    transition: transform .15s ease, box-shadow .15s ease;
   }
+  .hero-aesthetic .zip-card .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.22); }
   /* Align button with site brand colors */
   .hero-aesthetic .btn.btn-primary-dark {
     background-color: var(--brand-red) !important;
@@ -112,6 +134,27 @@
   .hero-aesthetic .btn.btn-primary-dark:focus {
     filter: brightness(1.05);
   }
+  /* Modernized ZIP results card */
+  .hero-aesthetic .zip-code-results {
+    display: none;
+    max-width: 620px;
+    margin: 0.75rem auto 0 auto;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 18px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    color: #05132D;
+  }
+  .hero-aesthetic .zip-code-results.is-visible { display: block; }
+  .hero-aesthetic .zip-code-results .result-item {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: .75rem; padding: .6rem .25rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .hero-aesthetic .zip-code-results .result-item:last-child { border-bottom: 0; }
+  .hero-aesthetic .zip-code-results .result-title { font-weight: 800; }
+  .hero-aesthetic .zip-code-results .result-meta { opacity: .7; }
   /* Ensure consistent spacing below the search card */
   .hero-aesthetic .zip-code-search { margin-bottom: 3.5rem !important; }
   @media (max-width: 576px) {
@@ -137,6 +180,155 @@
       inner.innerHTML = inner.innerHTML + inner.innerHTML;
       inner.dataset.duplicated = 'true';
     } catch (e) { /* no-op */ }
+  })();
+</script>
+
+<!-- Page-scoped styles: Blog, Warranty, Reviews, CTA modern refresh -->
+<style>
+  /* Blog Featured */
+  .blogFeat { padding: 3rem 0 2rem; }
+  .blogFeat .content-wrapper > h4 {
+    letter-spacing: .12em; font-weight: 800; color: var(--brand-red); opacity: .9; margin-bottom: .25rem;
+  }
+  .blogFeat .content-wrapper > .section-title { margin-bottom: 1.5rem; }
+  .featured-posts-wrapper { display: grid; gap: 1rem; grid-template-columns: repeat(12, 1fr); }
+  /* Use existing bootstrap col classes as fallbacks; enhance with CSS grid spans */
+  .featured-posts-wrapper > a.feat-post { grid-column: span 4; position: relative; border-radius: 16px; overflow: hidden; display: block; background: var(--brand-yellow); box-shadow: 0 14px 28px rgba(0,0,0,.16); transition: transform .18s ease, box-shadow .18s ease; }
+  .featured-posts-wrapper > a.feat-post:hover { transform: translateY(-4px); box-shadow: 0 18px 36px rgba(0,0,0,.22); }
+  .featured-posts-wrapper .post { height: 100%; display: grid; grid-template-rows: auto 1fr; }
+  .featured-posts-wrapper .post-thumbnail { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+  .featured-posts-wrapper .post-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.02); transition: transform .4s ease; }
+  .featured-posts-wrapper a.feat-post:hover .post-thumbnail img { transform: scale(1.06); }
+  .featured-posts-wrapper .entry-summary { position: relative; padding: 1rem; background: transparent; color: var(--brand-red); }
+  .featured-posts-wrapper .entry-summary .entry-title { font-size: 1.05rem; line-height: 1.35; font-weight: 800; margin: 0 0 .35rem; }
+  .featured-posts-wrapper .entry-summary p { margin: 0; opacity: .9; font-size: .95rem; max-height: 3.4em; overflow: hidden; }
+  /* Split layout */
+  .blog-split { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
+  .blog-split.show-detail { grid-template-columns: 7fr 5fr; }
+  .featured-post-detail[hidden] { display: none !important; }
+  .featured-post-detail { min-height: 320px; display: block; }
+  .featured-post-detail .detail-card { background: var(--brand-yellow); color: var(--brand-red); border-radius: 16px; overflow: hidden; box-shadow: 0 14px 28px rgba(0,0,0,.16); border: 1px solid rgba(0,0,0,0.06); position: sticky; top: 1rem; width: 100%; }
+  .featured-post-detail .detail-thumb img { width: 100%; height: auto; display:   block; }
+  .featured-post-detail .detail-body { padding: 1rem; }
+  .featured-post-detail .detail-title { margin: 0 0 .5rem; font-weight: 900; }
+  .featured-post-detail .detail-excerpt { margin: 0 0 .75rem; }
+  .featured-post-detail .detail-actions .btn { border-radius: 999px; }
+  /* Center the posts grid on the page */
+  .featured-posts-wrapper { max-width: 980px; margin: 0 auto; }
+  /* Active card outline */
+  .featured-posts-wrapper a.feat-post.is-active { outline: 3px solid var(--brand-red); outline-offset: 2px; }
+  @media (max-width: 991.98px) { .featured-posts-wrapper { grid-template-columns: repeat(6, 1fr); } .featured-posts-wrapper > a.feat-post { grid-column: span 6; } }
+  @media (max-width: 768px) {
+    .blog-split { grid-template-columns: 1fr; }
+    .featured-post-detail { order: -1; }
+    .featured-post-detail .detail-card { position: static; }
+  }
+  @media (max-width: 576px) { .featured-posts-wrapper { grid-template-columns: repeat(4, 1fr); gap: .75rem; } .featured-posts-wrapper > a.feat-post { grid-column: span 4; border-radius: 12px; } }
+
+  /* Warranty Banner */
+  .warranty.banner { position: relative; padding: 3.25rem 0; border-radius: 20px; overflow: hidden; margin: 2rem auto; }
+  .warranty.banner::before { content: ""; position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 0%, rgba(255,255,255,.12), rgba(255,255,255,0)); opacity: .35; pointer-events: none; }
+  .warranty .section-title { font-weight: 900; letter-spacing: .02em; text-transform: uppercase; }
+  .warranty p { color: #fff; max-width: 900px; margin-left: auto; margin-right: auto; opacity: .95; }
+  .warranty .section-title + p { margin-top: .5rem; }
+
+  /* Reviews as scroll-snap cards */
+  .resi-reviews--inner { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .25rem 0 .5rem; }
+  .resi-reviews--inner::-webkit-scrollbar { height: 8px; }
+  .resi-reviews--inner::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 999px; }
+  .resi-review { flex: 0 0 auto; min-width: 320px; max-width: 420px; scroll-snap-align: start; }
+  .resi-review--inner { background: #ffffff; border-radius: 14px; box-shadow: 0 10px 22px rgba(0,0,0,.12); padding: 1rem; height: 100%; display: grid; grid-template-rows: auto 1fr auto; border: 1px solid rgba(0,0,0,.06); }
+  .resi-review--stars { color: var(--brand-red); font-size: 1.05rem; letter-spacing: .06em; }
+  .resi-review--content { color: #05132D; }
+  .resi-review--author { font-weight: 800; margin: .5rem 0 0; color: #05132D; }
+  @media (max-width: 576px) { .resi-review { min-width: 85%; } }
+
+  /* Get Started CTA */
+  .get-started { position: relative; border-radius: 20px; padding: 2rem 1.25rem; overflow: hidden; box-shadow: 0 18px 36px rgba(0,0,0,.14); }
+  .get-started::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,0)); pointer-events: none; }
+  .get-started .estimate-prompt { text-align: center; }
+  .get-started .section-title { color: #fff; font-weight: 900; }
+  .get-started p { color: #fff; opacity: .95; }
+  .get-started .btn-wrapper .btn { border-radius: 999px; padding: .75rem 1.25rem; font-weight: 800; }
+
+  /* Clamp long text and add Read more button (on-brand) */
+  .clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .clamp-4 { display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .fade-after { position: relative; }
+  .fade-after::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2.2em;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+    pointer-events: none;
+  }
+  /* Adjust fade to yellow cards inside blog */
+  .featured-posts-wrapper a.feat-post .entry-summary.fade-after::after { background: linear-gradient(to bottom, rgba(255,255,255,0), var(--brand-yellow)); }
+  .read-more-btn { background: none; border: none; color: var(--brand-red); font-weight: 800; padding: .25rem 0; cursor: pointer; }
+  .read-more-btn:focus { outline: 3px solid var(--brand-red); outline-offset: 2px; }
+</style>
+
+<script>
+  (function(){
+    try {
+      var results = document.querySelector('.zip-code-results');
+      if (!results) return;
+      var update = function(){
+        var hasContent = (results.textContent || '').trim().length > 0 || results.children.length > 0;
+        results.classList.toggle('is-visible', !!hasContent);
+      };
+      update();
+      var mo = new MutationObserver(update);
+      mo.observe(results, { childList: true, subtree: true, characterData: true });
+    } catch(e) { /* no-op */ }
+  })();
+</script>
+
+<script>
+  // Add Read more / Show less toggles for long text in blog cards and reviews
+  (function(){
+    try {
+      function clampify(containerSelector, paragraphSelector, clampClass, maxChars){
+        var containers = document.querySelectorAll(containerSelector);
+        containers.forEach(function(container){
+          var ps = container.querySelectorAll(paragraphSelector);
+          ps.forEach(function(p){
+            // Skip if button already added
+            if (p.dataset.processed === 'true') return;
+            var text = (p.textContent || '').trim();
+            if (text.length <= maxChars) { p.dataset.processed = 'true'; return; }
+            p.classList.add(clampClass);
+            // Add fade effect if parent allows background
+            var parent = p.closest('.entry-summary') || p.parentElement;
+            if (parent) parent.classList.add('fade-after');
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'read-more-btn';
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'Read more';
+            btn.addEventListener('click', function(){
+              var expanded = btn.getAttribute('aria-expanded') === 'true';
+              if (expanded) {
+                p.classList.add(clampClass);
+                if (parent) parent.classList.add('fade-after');
+                btn.setAttribute('aria-expanded', 'false');
+                btn.textContent = 'Read more';
+              } else {
+                p.classList.remove(clampClass);
+                if (parent) parent.classList.remove('fade-after');
+                btn.setAttribute('aria-expanded', 'true');
+                btn.textContent = 'Show less';
+              }
+            });
+            // Insert button after paragraph
+            p.insertAdjacentElement('afterend', btn);
+            p.dataset.processed = 'true';
+          });
+        });
+      }
+      // Blog cards: clamp to ~3 lines / ~160 chars
+      clampify('.featured-posts-wrapper', '.entry-summary p', 'clamp-3', 160);
+      // Reviews: clamp to ~4 lines / ~240 chars
+      clampify('.resi-reviews--inner', '.resi-review--content p', 'clamp-4', 240);
+    } catch(e) { /* no-op */ }
   })();
 </script>
 
@@ -247,19 +439,19 @@
 </section>
 
 <section class="our-services">
-	<div class="content-wrapper container">
-		<div class="row">
-			<div class="col-sm-12 text-center">
-				<h2 class="section-title" style="color: var(--brand-red) !important;"><%= (homepage && homepage.servicesTitle) || 'Our Services' %></h2>
-			</div>
-		</div>
-		<div class="row justify-content-around">
-			<div class="col-sm-10">
+  	<div class="content-wrapper container">
+  		<div class="row">
+  			<div class="col-sm-12 text-center">
+  				<h2 class="section-title" style="color: var(--brand-red) !important;"><%= (homepage && homepage.servicesTitle) || 'Our Services' %></h2>
+  			</div>
+  		</div>
+  		<div class="row justify-content-around">
+			<div class="col-sm-12">
 				<div class="gy-4 text-center our-services--featured">
-					<a href="<%= (homepage && homepage.featuredService1Url) || '/' %>" target=""><img width="800" height="642" src="<%= (homepage && homepage.featuredService1Image) || '/wp-content/uploads/2025/04/92a2b1320fd849d05eee3af9c8e41e87-e1750264298595-1024x822.jpg' %>" class="img-fluid wp-image-21" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="21" /><h3><%= (homepage && homepage.featuredService1Title) || 'Weekly Pool Cleaning' %></h3></a>
-					<a href="<%= (homepage && homepage.featuredService2Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService2Image) || '/wp-content/uploads/2025/06/GU-website-photos-70-1024x819.png' %>" class="img-fluid wp-image-332" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="332" /><h3><%= (homepage && homepage.featuredService2Title) || 'Filter &amp; Pump Service' %></h3></a>
-					<a href="<%= (homepage && homepage.featuredService3Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService3Image) || '/wp-content/uploads/2025/05/GU-website-photos-69-1024x819.png' %>" class="img-fluid wp-image-328" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="328" /><h3><%= (homepage && homepage.featuredService3Title) || 'Chemical Balancing' %></h3></a>
-					<a href="<%= (homepage && homepage.featuredService4Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService4Image) || '/wp-content/uploads/2025/05/GU-website-photos-21-1024x819.png' %>" class="img-fluid wp-image-106" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="106" /><h3><%= (homepage && homepage.featuredService4Title) || 'Equipment Repairs' %></h3></a>
+					<a class="service-card" href="<%= (homepage && homepage.featuredService1Url) || '/' %>" target=""><img width="800" height="642" src="<%= (homepage && homepage.featuredService1Image) || '/wp-content/uploads/2025/04/92a2b1320fd849d05eee3af9c8e41e87-e1750264298595-1024x822.jpg' %>" class="img-fluid wp-image-21" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="21" /><h3><%= (homepage && homepage.featuredService1Title) || 'Weekly Pool Cleaning' %></h3></a>
+					<a class="service-card" href="<%= (homepage && homepage.featuredService2Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService2Image) || '/wp-content/uploads/2025/06/GU-website-photos-70-1024x819.png' %>" class="img-fluid wp-image-332" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="332" /><h3><%= (homepage && homepage.featuredService2Title) || 'Filter &amp; Pump Service' %></h3></a>
+					<a class="service-card" href="<%= (homepage && homepage.featuredService3Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService3Image) || '/wp-content/uploads/2025/05/GU-website-photos-69-1024x819.png' %>" class="img-fluid wp-image-328" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="328" /><h3><%= (homepage && homepage.featuredService3Title) || 'Chemical Balancing' %></h3></a>
+					<a class="service-card" href="<%= (homepage && homepage.featuredService4Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService4Image) || '/wp-content/uploads/2025/05/GU-website-photos-21-1024x819.png' %>" class="img-fluid wp-image-106" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="106" /><h3><%= (homepage && homepage.featuredService4Title) || 'Equipment Repairs' %></h3></a>
 				</div>
 				<div class="row mt-4 align-items-center our-services--services-cont">
 					<div class="col-sm-10 text-center our-services--services">
@@ -272,14 +464,103 @@
 						  }
 						%>
 						<% pills.forEach(function(p){ %>
-						  <a href="<%= p.url %>" class="btn btn-ash "><%= p.label %></a>
-						<% }) %>
+					  <a href="<%= p.url %>" class="btn btn-ash "><%= p.label %></a>
+					<% }) %>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<!-- Page-scoped styles: Our Services gallery art layout -->
+<style>
+  .our-services { padding: clamp(3rem, 6vw, 5rem) 0; }
+  .our-services .section-title {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    letter-spacing: 0.01em;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Gallery grid */
+  .our-services .our-services--featured {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: clamp(14px, 2vw, 24px);
+    text-align: left;
+  }
+  .our-services .our-services--featured .service-card {
+    position: relative;
+    display: block;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    transform: translateZ(0);
+  }
+  .our-services .our-services--featured .service-card img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .5s ease, filter .5s ease; filter: saturate(1.05);
+  }
+  .our-services .our-services--featured .service-card h3 {
+    position: absolute; left: 16px; bottom: 14px; right: 16px;
+    margin: 0; padding: .35rem .6rem; border-radius: 10px;
+    background: linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.55));
+    color: #fff; font-weight: 800; font-size: clamp(1rem, 1.6vw, 1.25rem);
+    text-shadow: 0 6px 14px rgba(0,0,0,.45);
+  }
+  .our-services .our-services--featured .service-card::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.35) 100%);
+    transition: opacity .35s ease, background .35s ease; opacity: .85;
+  }
+  .our-services .our-services--featured .service-card:hover img { transform: scale(1.06); filter: saturate(1.15) contrast(1.05); }
+  .our-services .our-services--featured .service-card:hover::after {
+    /* Brand-red tint overlay on hover */
+    background: linear-gradient(180deg, rgba(0,0,0,0) 25%, var(--brand-red) 100%);
+    opacity: .55;
+  }
+  .our-services .our-services--featured .service-card:hover h3 {
+    background: var(--brand-red);
+  }
+
+  /* Collage sizing (desktop) */
+  .our-services .our-services--featured .service-card:nth-child(1) { grid-column: span 7; min-height: 360px; }
+  .our-services .our-services--featured .service-card:nth-child(2) { grid-column: span 5; min-height: 360px; }
+  .our-services .our-services--featured .service-card:nth-child(3) { grid-column: span 5; min-height: 300px; }
+  .our-services .our-services--featured .service-card:nth-child(4) { grid-column: span 7; min-height: 300px; }
+
+  /* Pills row improvements */
+  .our-services .our-services--services { margin-top: .5rem; display: flex; flex-wrap: wrap; gap: .5rem .75rem; justify-content: center; }
+  .our-services .btn.btn-ash {
+    border-radius: 999px;
+    padding: .55rem 1rem;
+    background-color: var(--brand-red) !important;
+    border-color: var(--brand-red) !important;
+    color: #fff !important;
+    font-weight: 600;
+  }
+  .our-services .btn.btn-ash:hover,
+  .our-services .btn.btn-ash:focus {
+    filter: brightness(1.05);
+    color: #fff !important;
+  }
+
+  /* Responsive */
+  @media (max-width: 991.98px) {
+    .our-services .our-services--featured { grid-template-columns: repeat(6, 1fr); }
+    .our-services .our-services--featured .service-card:nth-child(1),
+    .our-services .our-services--featured .service-card:nth-child(2),
+    .our-services .our-services--featured .service-card:nth-child(3),
+    .our-services .our-services--featured .service-card:nth-child(4) { grid-column: span 6; min-height: 260px; }
+  }
+  @media (max-width: 576px) {
+    .our-services { padding: 2.25rem 0; }
+    .our-services .our-services--featured { gap: 12px; }
+    .our-services .our-services--featured .service-card h3 { left: 12px; right: 12px; bottom: 10px; font-size: 1rem; }
+    .our-services .our-services--services { gap: .5rem; }
+  }
+</style>
 
 <!-- Page-scoped styles: Quick Facts brand color overrides -->
 <style>
@@ -375,8 +656,8 @@
 		<h2 class="section-title"><%= (homepage && homepage.blogTitle) || 'SEE WHY WE’RE THE EXPERTS' %></h2>
 		<div class="blogContent blogContent-wrapper">
 			<div class="blogCards blogCards-wrapper col-sm-12">
-				<div class="container">
-						<div class="featured-posts-wrapper">
+				<div class="container blog-split justify-content-center">
+					            <div class="featured-posts-wrapper">
 							<% 
 							  const posts = [];
 							  for (let i = 1; i <= 3; i++) {
@@ -395,6 +676,20 @@
 							    	</article></a>
 							  <% }) %>
 						</div>
+						            <aside class="featured-post-detail" aria-live="polite" aria-atomic="true" hidden>
+              <div class="detail-card">
+                <div class="detail-thumb">
+                  <img src="" alt="" class="img-fluid" />
+                </div>
+                <div class="detail-body">
+                <h3 class="detail-title"></h3>
+                <p class="detail-excerpt clamp-4"></p>
+                <div class="detail-actions">
+                  <a class="btn btn-primary-dark detail-read" href="#" target="">Read full post</a>
+                </div>
+              </div>
+            </div>
+          </aside>
 				</div>
 			</div>
 			<div class="text-center">
@@ -403,6 +698,104 @@
 		</div>
 	</div>
 </section>
+
+<script>
+  // Blog detail panel interaction: populate right-side panel from clicked card
+  (function(){
+    try {
+      var split = document.querySelector('.blog-split');
+      if (!split) return;
+      var cards = split.querySelectorAll('.featured-posts-wrapper a.feat-post');
+      var panel = split.querySelector('.featured-post-detail');
+      if (!cards.length || !panel) return;
+
+      var imgEl = panel.querySelector('.detail-thumb img');
+      var titleEl = panel.querySelector('.detail-title');
+      var excerptEl = panel.querySelector('.detail-excerpt');
+      var linkEl = panel.querySelector('.detail-read');
+
+      function slugifyTitle(s) {
+        return String(s || '')
+          .toLowerCase()
+          .replace(/&/g, ' and ')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .substring(0, 120);
+      }
+
+      function activateFromCard(card) {
+        // Extract data
+        var img = card.querySelector('.post-thumbnail img');
+        var title = card.querySelector('.entry-title');
+        var excerpt = card.querySelector('.entry-summary p');
+        // Populate panel
+        if (img && imgEl) {
+          imgEl.src = img.getAttribute('src') || '';
+          imgEl.alt = (title && title.textContent) ? title.textContent : '';
+        }
+        if (titleEl) titleEl.textContent = title ? title.textContent : '';
+        if (excerptEl) {
+          excerptEl.textContent = excerpt ? excerpt.textContent : '';
+          excerptEl.classList.remove('clamp-4'); // Ensure expanded in panel
+          var parent = excerptEl.parentElement;
+          if (parent) parent.classList.remove('fade-after');
+        }
+        if (linkEl) {
+          var slug = slugifyTitle(title ? title.textContent : '');
+          linkEl.setAttribute('href', slug ? ('/blog/' + slug) : '/blog');
+        }
+
+        // Visual active state
+        cards.forEach(function(c){ c.classList.remove('is-active'); });
+        card.classList.add('is-active');
+        // Reveal panel and switch layout
+        panel.hidden = false;
+        split.classList.add('show-detail');
+      }
+
+      // Bind click handlers
+      cards.forEach(function(card){
+        card.addEventListener('click', function(e){
+          if (e.metaKey || e.ctrlKey) return; // allow open in new tab
+          e.preventDefault();
+          if (card.classList.contains('is-active')) {
+            // Toggle off if clicking the active card
+            card.classList.remove('is-active');
+            panel.hidden = true;
+            split.classList.remove('show-detail');
+            return;
+          }
+          activateFromCard(card);
+          // Scroll into view on small screens
+          if (window.matchMedia('(max-width: 768px)').matches) {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // Close when clicking outside the blog-split area
+      document.addEventListener('click', function(e){
+        try {
+          var within = split.contains(e.target);
+          if (!within) {
+            cards.forEach(function(c){ c.classList.remove('is-active'); });
+            panel.hidden = true;
+            split.classList.remove('show-detail');
+          }
+        } catch(_) {}
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') {
+          cards.forEach(function(c){ c.classList.remove('is-active'); });
+          panel.hidden = true;
+          split.classList.remove('show-detail');
+        }
+      });
+    } catch(e) { /* no-op */ }
+  })();
+</script>
 
 <section class="warranty banner bg-jade-geometric">
 	<div class="container text-center">

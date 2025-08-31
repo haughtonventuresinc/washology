@@ -291,6 +291,46 @@ app.get('/blog', (req, res) => {
 });
 // Blog and other nested pages will be served via the smart fallback + static
 
+// Blog post detail by slug (derived from title)
+app.get('/blog/:slug', (req, res) => {
+  const { slug } = req.params;
+  const blog = loadBlog();
+  const toSlug = (s) => String(s || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 120);
+
+  // Build posts array from blog.json keys post1..post12
+  const posts = [];
+  for (let i = 1; i <= 12; i++) {
+    const title = blog[`post${i}Title`];
+    const url = blog[`post${i}Url`];
+    const category = blog[`post${i}Category`];
+    const readMin = blog[`post${i}ReadMin`];
+    const image = blog[`post${i}Image`];
+    const excerpt = blog[`post${i}Excerpt`];
+    const body = blog[`post${i}Body`]; // optional full content
+    if (title && image) {
+      posts.push({
+        id: i,
+        title, url, category, readMin, image, excerpt, body,
+        slug: toSlug(title)
+      });
+    }
+  }
+
+  const post = posts.find(p => p.slug === slug);
+  if (!post) {
+    // Not found: redirect to blog archive
+    return res.redirect(302, '/blog');
+  }
+
+  const bodyClass = 'single single-post wp-theme-resi-franchise wp-child-theme-garageup';
+  return res.render('blog-post', { bodyClass, post });
+});
+
 // --- Admin Login page (SSR) ---
 app.get('/admin-login', (req, res) => {
   if (req.session && req.session.userId) {
