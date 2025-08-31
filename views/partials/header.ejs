@@ -72,9 +72,26 @@
 		  #navbar .navbar-nav .right-menu { display: flex; align-items: center; gap: 12px; }
 		  #navbar .navbar-nav .center-brand { display: flex !important; align-items: center; justify-content: center; padding: 0 8px; }
 		}
+
+		/* Site loader overlay */
+		#site-loader { position: fixed; inset: 0; background: var(--brand-yellow); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity .3s ease, visibility .3s ease; }
+		#site-loader img { width: 170px; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.15)); }
+		#site-loader.hidden { opacity: 0; visibility: hidden; }
 	</style>    
 </head>
 <body class="<%= typeof bodyClass !== 'undefined' && bodyClass ? bodyClass : 'home wp-singular page-template page-template-templates page-template-landing page-template-templateslanding-php page page-id-8 wp-theme-resi-franchise wp-child-theme-garageup' %>">
+	<!-- Site Loader -->
+	<div id="site-loader" aria-hidden="true" role="presentation">
+		<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
+	</div>
+	<script>
+		window.addEventListener('load', function () {
+			var el = document.getElementById('site-loader');
+			if (!el) return;
+			el.classList.add('hidden');
+			setTimeout(function(){ try { el.remove(); } catch(e) { if (el && el.parentNode) el.parentNode.removeChild(el); } }, 400);
+		});
+	</script>
 	<a href="#main" class="visually-hidden-focusable">Skip to main content</a>
 	<div id="wrapper">
 		<header>
@@ -96,6 +113,15 @@
 					<div id="navbar" class="collapse navbar-collapse">
 						<ul id="menu-main-menu-new" class="navbar-nav">
 							<ul id="menu-main-menu" class="navbar-nav left-menu">
+								<li class="menu-item menu-item-type-post_type menu-item-object-page nav-item"><a title="About Us" href="/about-us" class="nav-link">About Us</a></li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page nav-item"><a title="Contact Us" href="/contact-us" class="nav-link">Contact Us</a></li>
+							</ul>
+							<li class="center-brand d-none d-md-flex">
+								<a class="navbar-brand" href="/" title="Swim Studs" rel="home">
+									<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
+								</a>
+							</li>
+							<ul id="menu-main-menu-1" class="navbar-nav right-menu">
 								<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children nav-item dropdown">
 									<a title="Services" href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" aria-expanded="false">Services <span class="caret"></span></a>
 									<ul role="menu" class="dropdown-menu">
@@ -108,15 +134,6 @@
 									</ul>
 								</li>
 								<li class="menu-item menu-item-type-custom menu-item-object-custom nav-item"><a title="Blog" href="/blog" class="nav-link">Blog</a></li>
-							</ul>
-							<li class="center-brand d-none d-md-flex">
-								<a class="navbar-brand" href="/" title="Swim Studs" rel="home">
-									<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
-								</a>
-							</li>
-							<ul id="menu-main-menu-1" class="navbar-nav right-menu">
-								<li class="menu-item menu-item-type-post_type menu-item-object-page nav-item"><a title="About Us" href="/about-us" class="nav-link">About Us</a></li>
-								<li class="menu-item menu-item-type-post_type menu-item-object-page nav-item"><a title="Contact Us" href="/contact-us" class="nav-link">Contact Us</a></li>
 							</ul>
 						</ul>
 					</div><!-- /.navbar-collapse -->

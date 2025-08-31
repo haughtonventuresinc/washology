@@ -1,37 +1,148 @@
 <%- include('partials/header') %>
 
-<section class="hero hero-wrapper overlay-jade"
-         data-hero-bg='<%= (homepage && homepage.heroBg) || "https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg" %>'
-         style="background-image: url(<%- JSON.stringify((homepage && homepage.heroBg) || 'https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg') %>); background-repeat: no-repeat; background-size: cover; background-position: center;">
-	<div class="content-wrapper container">
-		<div class="row align-items-center justify-content-around">
-			<div class="col-lg-9 col-md-10 col-sm-12">
-				<h4 class="mb-4" style="color: white !important;"><%= (homepage && homepage.heroSubtitle) || 'Pool Cleaning, Chemical Balancing, Equipment Service, and More' %></h4>
-				<h1><%= (homepage && homepage.heroTitle) || 'Your Trusted Pool Care Experts' %></h1>
-				<div class="zip-code-search">
-					<form role="search" aria-label="Find franchise by ZIP code">
-						<label for="zip-search-input" class="visually-hidden">ZIP Code</label>
-						<div class="input-group">
-							<span class="input-group-text bg-white border-dark" aria-hidden="true">
-								<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-									<path d="M19.3115 21.1768L19.4883 21.3535L19.665 21.1768L21.1768 19.6651L21.3536 19.4883L21.1768 19.3116L16.6315 14.7665C17.7498 13.2602 18.3556 11.4325 18.3559 9.55253V9.55249C18.3559 4.69878 14.4069 0.75 9.55295 0.75C4.69901 0.75 0.75 4.69878 0.75 9.55249C0.75 14.4062 4.69901 18.355 9.55295 18.355C11.4325 18.3548 13.26 17.7494 14.7661 16.6317L19.3115 21.1768ZM9.55295 3.38812C12.9526 3.38812 15.7177 6.15305 15.7177 9.55249C15.7177 12.9519 12.9526 15.7169 9.55295 15.7169C6.15329 15.7169 3.38824 12.9519 3.38824 9.55249C3.38824 6.15305 6.15329 3.38812 9.55295 3.38812Z" fill="#05132D" stroke="#05132D" stroke-width="0.5" />
-								</svg>
-							</span>
-							<input type="text" id="zip-search-input" class="form-control border-dark" placeholder="ZIP CODE" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" aria-describedby="zip-search-help" autocomplete="postal-code" />
-							<button type="submit" class="btn btn-primary" aria-describedby="zip-search-input">SEARCH</button>
-						</div>
-						<div id="zip-search-help" class="visually-hidden">Enter a 5-digit ZIP code to find your local franchise</div>
-					</form>
-					<div class="zip-code-results" aria-live="polite" aria-atomic="true"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+<section class="hero hero-wrapper overlay-jade hero-aesthetic"
+         data-hero-bg='<%= (homepage && homepage.heroBg) || "https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg" %>'>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="content-wrapper container position-relative">
+    <div class="row align-items-center justify-content-around">
+      <div class="col-lg-9 col-md-10 col-sm-12 text-center">
+        <div class="zip-code-search mb-5">
+          <form role="search" aria-label="Find franchise by ZIP code" class="zip-card">
+            <label for="zip-search-input" class="visually-hidden">ZIP Code</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text bg-white border-0" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+                  <path d="M19.3115 21.1768L19.4883 21.3535L19.665 21.1768L21.1768 19.6651L21.3536 19.4883L21.1768 19.3116L16.6315 14.7665C17.7498 13.2602 18.3556 11.4325 18.3559 9.55253V9.55249C18.3559 4.69878 14.4069 0.75 9.55295 0.75C4.69901 0.75 0.75 4.69878 0.75 9.55249C0.75 14.4062 4.69901 18.355 9.55295 18.355C11.4325 18.3548 13.26 17.7494 14.7661 16.6317L19.3115 21.1768ZM9.55295 3.38812C12.9526 3.38812 15.7177 6.15305 15.7177 9.55249C15.7177 12.9519 12.9526 15.7169 9.55295 15.7169C6.15329 15.7169 3.38824 12.9519 3.38824 9.55249C3.38824 6.15305 6.15329 3.38812 9.55295 3.38812Z" fill="#05132D" stroke="#05132D" stroke-width="0.5"></path>
+                </svg>
+              </span>
+              <input
+                type="text"
+                id="zip-search-input"
+                class="form-control border-0"
+                placeholder="Enter ZIP code"
+                inputmode="numeric"
+                autocomplete="postal-code"
+                pattern="[0-9]{5}"
+                maxlength="5"
+                aria-describedby="zip-search-help"
+              />
+              <button type="submit" class="btn btn-primary-dark px-4">Search</button>
+            </div>
+            <div id="zip-search-help" class="visually-hidden">Enter a 5-digit ZIP code to find your local franchise</div>
+          </form>
+
+          <div class="zip-code-results mt-3" aria-live="polite" aria-atomic="true"></div>
+        </div>
+
+        <h4 class="hero-eyebrow mb-2"><%= (homepage && homepage.heroSubtitle) || 'Pool Cleaning, Chemical Balancing, Equipment Service, and More' %></h4>
+        <h1 class="hero-title mt-1 mb-0"><%= (homepage && homepage.heroTitle) || 'Your Trusted Pool Care Experts' %></h1>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- Page-scoped styles: Hero aesthetic -->
+<style>
+  .hero-aesthetic {
+    position: relative;
+    padding: clamp(5rem, 8vw, 9rem) 0 clamp(4rem, 6vw, 7rem) 0; /* extra top space to avoid crowding */
+    color: #fff;
+  }
+  .hero-aesthetic .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.25) 40%, rgba(0, 0, 0, 0.55) 100%);
+    pointer-events: none;
+  }
+  .hero-aesthetic .hero-eyebrow {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--brand-yellow, rgba(255, 255, 255, 0.9)) !important;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-aesthetic .hero-title {
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    text-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+    margin: 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-aesthetic .zip-card {
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(140%) blur(6px);
+    -webkit-backdrop-filter: saturate(140%) blur(6px);
+    border-radius: 16px;
+    padding: 0.75rem;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    width: min(100%, 560px);
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-aesthetic .hero-eyebrow {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-aesthetic .zip-card .form-control { border-radius: 12px 0 0 12px; box-shadow: none; }
+  .hero-aesthetic .zip-card .input-group-text { border-radius: 12px 0 0 12px; }
+  .hero-aesthetic .zip-card .btn {
+    border-radius: 0 12px 12px 0;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  /* Align button with site brand colors */
+  .hero-aesthetic .btn.btn-primary-dark {
+    background-color: var(--brand-red) !important;
+    border-color: var(--brand-red) !important;
+    color: #fff;
+  }
+  .hero-aesthetic .btn.btn-primary-dark:hover,
+  .hero-aesthetic .btn.btn-primary-dark:focus {
+    filter: brightness(1.05);
+  }
+  /* Ensure consistent spacing below the search card */
+  .hero-aesthetic .zip-code-search { margin-bottom: 3.5rem !important; }
+  @media (max-width: 576px) {
+    .hero-aesthetic .zip-card { padding: 0.5rem; }
+    .hero-aesthetic .zip-card .input-group.input-group-lg > .form-control,
+    .hero-aesthetic .zip-card .input-group.input-group-lg > .input-group-text,
+    .hero-aesthetic .zip-card .input-group.input-group-lg > .btn {
+      font-size: 1rem;
+      padding: 0.6rem 0.9rem;
+    }
+  }
+</style>
+
+<script>
+  (function(){
+    try {
+      var scroller = document.querySelector('.scroller');
+      if (!scroller) return;
+      var inner = scroller.querySelector('.scroller__inner');
+      if (!inner) return;
+      if (inner.dataset.duplicated === 'true') return;
+      // Duplicate children to enable seamless infinite scroll
+      inner.innerHTML = inner.innerHTML + inner.innerHTML;
+      inner.dataset.duplicated = 'true';
+    } catch (e) { /* no-op */ }
+  })();
+</script>
 
 <div class="scroller-wrapper">
 	<div class="content-wrapper">
-		<div class="scroller" data-speed="slow" style="color: var(--brand-red)!important; background-color: var(--brand-yellow)!important;">
+		<div class="scroller" data-speed="fast" style="color: var(--brand-red)!important; background-color: var(--brand-yellow)!important;">
 			<ul class="tag-list scroller__inner">
 				<li>
 					<div class="h1"><%= (homepage && homepage.scrollerText) || 'Cleaning, Balancing, Repairs, and more' %></div>
@@ -41,9 +152,50 @@
 	</div>
 </div>
 
+<!-- Page-scoped styles: Scroller marquee (left-to-right) -->
+<style>
+  .scroller-wrapper { overflow: hidden; }
+  .scroller {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    --scroll-duration: 20s;
+  }
+  .scroller[data-speed="slow"] { --scroll-duration: 28s; }
+  .scroller[data-speed="normal"] { --scroll-duration: 20s; }
+  .scroller[data-speed="fast"] { --scroll-duration: 12s; }
+  .scroller__inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    animation: marquee-rtl-infinite var(--scroll-duration) linear infinite;
+    animation-delay: calc(var(--scroll-duration) * -0.35);
+    animation-fill-mode: both;
+    will-change: transform;
+    padding: 0.5rem 0;
+  }
+  .scroller:hover .scroller__inner { animation-play-state: paused; }
+  .scroller .h1 { margin: 0; font-weight: 800; }
+  /* With duplicated content, move by 50% for a seamless loop */
+  @keyframes marquee-rtl-infinite {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroller__inner { animation: none; transform: none !important; }
+  }
+  /* Ensure the tag-list has no default margins/padding that could cause jumps */
+  .scroller .tag-list { list-style: none; padding: 0; margin: 0; }
+  .scroller .tag-list > li { display: inline-flex; }
+</style>
+
 <section class="who-we-are bg-primary bg-icon">
 	<div class="content-wrapper container">
-		<div class="row flex-wrap-reverse gap-4 gap-lg-0">
+		<div class="row gap-4 gap-lg-0">
+			<div class="col-sm-12 col-lg-6 text-center">
+				<img width="750" height="600" src="<%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" class="img-fluid wp-image-29" alt="" decoding="async" fetchpriority="high" srcset="<%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %> 750w, <%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %> 300w" sizes="(max-width: 750px) 100vw, 750px" data-mwl-img-id="29" />
+			</div>
+			<div class="col-lg-1 d-none d-lg-block"></div>
 			<div class="col-lg-5 col-sm-12">
 				<h2 class="section-title" style="color: white;"><%= (homepage && homepage.whoWeAreTitle) || 'Who We Are' %></h2>
 				<% if (homepage && homepage.whoWeAreBody) { %>
@@ -70,10 +222,6 @@
 				  </div>
 				<% } %>
 				<a href="<%= (homepage && homepage.ctaUrl) || '#' %>" class="btn btn-primary-dark mt-4" target=""><%= (homepage && homepage.ctaLabel) || 'Learn More' %></a>
-			</div>
-			<div class="col-lg-1 d-none d-lg-block"></div>
-			<div class="col-sm-12 col-lg-6 text-center">
-				<img width="750" height="600" src="<%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" class="img-fluid wp-image-29" alt="" decoding="async" fetchpriority="high" srcset="<%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %> 750w, <%= (homepage && homepage.whoWeAreImage) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %> 300w" sizes="(max-width: 750px) 100vw, 750px" data-mwl-img-id="29" />
 			</div>
 		</div>
 	</div>
@@ -156,16 +304,70 @@
 				<h2 class="section-title">Pool Facts</h2>
 			</div>
 		</div>
-		<div class="row gy-4 our-stats--stats">
+		<div class="stats-scroller" data-speed="normal">
+			<div class="stats-scroller__inner our-stats--stats">
 			<div class="our-stats--stat locations"><div class="our-stats--stat--icon"><img width="48" height="62" src="<%= (homepage && homepage.quickLocationsIcon) || '/wp-content/uploads/2025/04/icon-location.svg' %>" class="img-fluid" alt="" decoding="async" /></div><h3 class="gradient"><%= (homepage && homepage.quickLocations) || '1' %></h3><p><%= (homepage && homepage.quickLocationsLabel) || 'LOCATIONS' %></p></div>
 			<div class="our-stats--stat jobs-completed"><div class="our-stats--stat--icon"><img width="67" height="62" src="<%= (homepage && homepage.quickJobsIcon) || '/wp-content/uploads/2025/04/icon-jobs.svg' %>" class="img-fluid" alt="" decoding="async" /></div><h3 class="gradient"><%= (homepage && homepage.quickJobs) || '100' %></h3><p><%= (homepage && homepage.quickJobsLabel) || 'JOBS COMPLETED' %></p></div>
 			<div class="our-stats--stat states-were-in"><div class="our-stats--stat--icon"><img width="72" height="68" src="<%= (homepage && homepage.quickStatesIcon) || '/wp-content/uploads/2025/04/icon-texas.svg' %>" class="img-fluid" alt="" decoding="async" /></div><h3 class="gradient"><%= (homepage && homepage.quickStates) || '1' %></h3><p><%= (homepage && homepage.quickStatesLabel) || "STATES WE'RE IN" %></p></div>
 			<div class="our-stats--stat 5-star-reviews"><div class="our-stats--stat--icon"><img width="213" height="35" src="<%= (homepage && homepage.quickReviewsIcon) || '/wp-content/uploads/2025/04/icon-stars.svg' %>" class="img-fluid" alt="" decoding="async" /></div><h3 class="gradient"><%= (homepage && homepage.quickReviews) || '50' %></h3><p><%= (homepage && homepage.quickReviewsLabel) || '5 STAR REVIEWS' %></p></div>
 			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="67" height="65" src="<%= (homepage && homepage.quickEstimatesIcon) || '/wp-content/uploads/2025/04/icon-availability.svg' %>" class="img-fluid" alt="" decoding="async" /></div><h3 class="gradient"><%= (homepage && homepage.quickEstimates) || '24/7' %></h3><p><%= (homepage && homepage.quickEstimatesLabel) || 'ESTIMATES AVAILABLE' %></p></div>
 			<div class="our-stats--stat possibilities"><div class="our-stats--stat--icon"><img width="72" height="72" src="<%= (homepage && homepage.quickPossibilitiesIcon) || '/wp-content/uploads/2025/04/icon-check-badge.svg' %>" class="img-fluid" alt="" decoding="async" /></div><h3 class="gradient"><%= (homepage && homepage.quickPossibilities) || 'ENDLESS' %></h3><p><%= (homepage && homepage.quickPossibilitiesLabel) || 'POSSIBILITIES' %></p></div>
+			</div>
 		</div>
 	</div>
 </section>
+
+<!-- Page-scoped styles: Pool Facts infinite marquee -->
+<style>
+  .our-stats .stats-scroller {
+    overflow: hidden;
+    position: relative;
+    --stats-duration: 24s;
+  }
+  .our-stats .stats-scroller[data-speed="slow"] { --stats-duration: 32s; }
+  .our-stats .stats-scroller[data-speed="normal"] { --stats-duration: 24s; }
+  .our-stats .stats-scroller[data-speed="fast"] { --stats-duration: 16s; }
+
+  .our-stats .stats-scroller__inner {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 2.5rem;
+    white-space: nowrap;
+    animation: stats-marquee-rtl var(--stats-duration) linear infinite;
+    animation-delay: calc(var(--stats-duration) * -0.35);
+    will-change: transform;
+  }
+  .our-stats .stats-scroller:hover .stats-scroller__inner { animation-play-state: paused; }
+
+  /* Ensure each stat lays out horizontally without wrapping weird bootstrap row margins */
+  .our-stats .our-stats--stats { margin-left: 0; margin-right: 0; }
+  .our-stats .our-stats--stat { display: inline-flex; flex-direction: column; align-items: center; padding: 0 0.25rem; flex: 0 0 auto; }
+
+  /* Seamless loop: translate by half after duplication */
+  @keyframes stats-marquee-rtl {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .our-stats .stats-scroller__inner { animation: none; transform: none !important; }
+  }
+</style>
+
+<script>
+  (function(){
+    try {
+      var wrap = document.querySelector('.our-stats .stats-scroller');
+      if (!wrap) return;
+      var inner = wrap.querySelector('.stats-scroller__inner');
+      if (!inner) return;
+      if (inner.dataset.duplicated === 'true') return;
+      inner.innerHTML = inner.innerHTML + inner.innerHTML;
+      inner.dataset.duplicated = 'true';
+    } catch (e) { /* no-op */ }
+  })();
+</script>
 
 <section class="blogFeat blogFeat-wrapper col-sm-12">
 	<div class="content-wrapper container">
