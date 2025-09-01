@@ -16,7 +16,12 @@
         </div>
       </div>
 
-      <div class="cards-inner-wrapper">
+      <div class="blog-cards-nav">
+        <button class="blog-cards-prev" type="button" aria-label="Previous posts">‹</button>
+        <button class="blog-cards-next" type="button" aria-label="Next posts">›</button>
+      </div>
+
+      <div class="cards-inner-wrapper" role="region" aria-label="Blog posts slider">
         <% 
           const posts = [];
           if (blog) {
@@ -55,7 +60,6 @@
                       <% if (p.ex) { %>
                         <div class="excerpt-wrapper"><p><%- p.ex %></p></div>
                       <% } %>
-                      <a href="<%- p.u %>" class="btn btn-outline-secondary">READ MORE <span class="blog-read-more dashicons dashicons-arrow-up-alt"></span></a>
                     </div>
                   </div>
                 </a>
@@ -82,7 +86,6 @@
                   <div class="excerpt-wrapper">
                     <p>Swim Studs provides reliable weekly pool service—skimming, brushing, vacuuming, and balancing—to keep your water crystal clear all season.</p>
                   </div>
-                  <a href="/" class="btn btn-outline-secondary">READ MORE <span class="blog-read-more dashicons dashicons-arrow-up-alt"></span></a>
                 </div>
               </div>
             </a>
@@ -100,7 +103,6 @@
                   </div>
                   <div class="title-wrapper"><h5>Garage Motor Installation in Austin (2025): Get It Done Right the First Time</h5></div>
                   <div class="excerpt-wrapper"><p>Whether you're upgrading an old unit or setting up a brand-new opener, proper garage motor installation is key to safety, performance, and peace of mind.</p></div>
-                  <a href="/" class="btn btn-outline-secondary">READ MORE <span class="blog-read-more dashicons dashicons-arrow-up-alt"></span></a>
                 </div>
               </div>
             </a>
@@ -118,7 +120,6 @@
                   </div>
                   <div class="title-wrapper"><h5>Garage Opener Installation &amp; Repair in Austin (2025): Fast, Smart, and Reliable Solutions</h5></div>
                   <div class="excerpt-wrapper"><p>Over 60% of homeowners in Austin have upgraded to smart garage openers for better convenience and security.</p></div>
-                  <a href="/" class="btn btn-outline-secondary">READ MORE <span class="blog-read-more dashicons dashicons-arrow-up-alt"></span></a>
                 </div>
               </div>
             </a>
@@ -136,7 +137,6 @@
                   </div>
                   <div class="title-wrapper"><h5>Top 5 Garage Organization Tips for Busy Homeowners</h5></div>
                   <div class="excerpt-wrapper"><p>Quick wins to declutter and maximize your garage space with simple storage upgrades.</p></div>
-                  <a href="/" class="btn btn-outline-secondary">READ MORE <span class="blog-read-more dashicons dashicons-arrow-up-alt"></span></a>
                 </div>
               </div>
             </a>
@@ -154,7 +154,6 @@
                   </div>
                   <div class="title-wrapper"><h5>DIY Garage Door Maintenance: What You Can Safely Do</h5></div>
                   <div class="excerpt-wrapper"><p>Simple steps to keep your garage door running smoothly between professional services.</p></div>
-                  <a href="/" class="btn btn-outline-secondary">READ MORE <span class="blog-read-more dashicons dashicons-arrow-up-alt"></span></a>
                 </div>
               </div>
             </a>
@@ -172,7 +171,6 @@
                   </div>
                   <div class="title-wrapper"><h5>Is a Smart Garage Opener Worth It in 2025?</h5></div>
                   <div class="excerpt-wrapper"><p>We break down features, costs, and how smart openers improve daily convenience.</p></div>
-                  <a href="/" class="btn btn-outline-secondary">READ MORE <span class="blog-read-more dashicons dashicons-arrow-up-alt"></span></a>
                 </div>
               </div>
             </a>
@@ -183,29 +181,83 @@
     </div>
   </section>
 
-  <div class="container mb-5">
-    <section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
-      <div class="estimate-prompt">
-        <h2 class="section-title"><%= (blog && blog.ctaTitle) || 'Ready to get started?' %></h2>
-        <p><%= (blog && blog.ctaBody) || 'Contact us for a free onsite estimate within 24 hours.' %></p>
-        <div class="btn-wrapper ">
-          <a href="<%= (blog && blog.ctaUrl) || '/contact-us' %>" class="btn btn-primary-dark"><%= (blog && blog.ctaLabel) || 'Contact Us' %></a>
-        </div>
-      </div>
-    </section>
-  </div>
+  <%- include('partials/get-started', {
+    title: (blog && blog.ctaTitle) || 'Ready to get started?',
+    body: (blog && blog.ctaBody) || 'Contact us for a free onsite estimate within 24 hours.',
+    url: (blog && blog.ctaUrl) || '/contact-us',
+    label: (blog && blog.ctaLabel) || 'Contact Us'
+  }) %>
 
   </div>
 
   <style>
     /* Page-scoped blog styles and centered form rules if any forms are added here */
     .blog-archive-wrapper .cards-inner-wrapper {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex;
       gap: 24px;
+      overflow: hidden;
+      scroll-behavior: smooth;
+      padding: 6px 4px;
     }
+    .blog-archive-wrapper .archive-post-card { flex: 0 0 auto; width: clamp(320px, 34vw, 420px); }
     .blog-archive-wrapper .archive-post-card .card { height: 100%; }
     .blog-archive-wrapper .archive-post-card img { width: 100%; height: auto; display: block; }
+
+    /* Nav buttons */
+    .blog-cards-nav { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 8px; }
+    .blog-cards-prev, .blog-cards-next {
+      width: 42px; height: 42px; border-radius: 50%; border: none;
+      background: var(--brand-red); color: #fff; font-size: 1.5rem; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,.18); cursor: pointer;
+    }
+    .blog-cards-prev:hover, .blog-cards-next:hover { filter: brightness(1.05); }
+
+    /* Center cards and apply brand red background with white text */
+    .blog-archive-wrapper .archive-post-card .card {
+      background: var(--brand-red) !important;
+      color: #fff !important;
+      border: none;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .blog-archive-wrapper .archive-post-card .card-body,
+    .blog-archive-wrapper .archive-post-card .card-text.entry-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .blog-archive-wrapper .archive-post-card .title-wrapper h5,
+    .blog-archive-wrapper .archive-post-card .excerpt-wrapper p,
+    .blog-archive-wrapper .archive-post-card .floating-cat p,
+    .blog-archive-wrapper .archive-post-card a,
+    .blog-archive-wrapper .archive-post-card p { color: #fff !important; }
+
+    /* Category/read-time strip centered */
+    .blog-archive-wrapper .archive-post-card .floating-cat {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    /* Keep thumbnails full width within red card */
+    .blog-archive-wrapper .archive-post-card .post-thumbnail img { display: block; width: 100%; height: auto; }
+
+    /* Button overrides for white outline on brand red */
+    .blog-archive-wrapper .archive-post-card .btn.btn-outline-secondary {
+      border-color: #fff !important;
+      color: #fff !important;
+    }
+    .blog-archive-wrapper .archive-post-card .btn.btn-outline-secondary:hover,
+    .blog-archive-wrapper .archive-post-card .btn.btn-outline-secondary:focus {
+      background: #fff !important;
+      color: var(--brand-red) !important;
+      border-color: #fff !important;
+    }
 
     /* Form styles: consistent centered, full-width controls */
     .blog-archive-wrapper form.wpforms-form,
@@ -223,5 +275,22 @@
     .blog-archive-wrapper .btn[type="submit"],
     .blog-archive-wrapper .wpforms-submit { display: inline-block; margin: 16px auto 0; }
   </style>
+
+  <script>
+    (function(){
+      try {
+        var track = document.querySelector('.blog-archive-wrapper .cards-inner-wrapper');
+        var prev = document.querySelector('.blog-cards-prev');
+        var next = document.querySelector('.blog-cards-next');
+        if (!track || !prev || !next) return;
+        function scrollByAmount(dir){
+          var amount = Math.max(320, Math.floor(track.clientWidth * 0.9));
+          track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+        }
+        prev.addEventListener('click', function(){ scrollByAmount(-1); });
+        next.addEventListener('click', function(){ scrollByAmount(1); });
+      } catch(e) {}
+    })();
+  </script>
 
 <%- include('partials/footer') %>

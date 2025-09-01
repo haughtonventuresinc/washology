@@ -4,7 +4,7 @@
 <style>
   /* Limit scope to contact page wrappers to avoid site-wide impact */
   .contact-page-v2 .wpforms-container .wpforms-field-label,
-  .contact-page-v2 .wpforms-container legend.wpforms-field-label { color: var(--brand-dark); }
+  .contact-page-v2 .wpforms-container legend.wpforms-field-label { color: var(--bs-white); }
 
   .contact-page-v2 .wpforms-container input[type="text"],
   .contact-page-v2 .wpforms-container input[type="email"],
@@ -43,7 +43,7 @@
   .contact-page-v2 .wpforms-submit,
   .contact-page-v2 button[type="submit"],
   .contact-page-v2 .wpforms-page-button {
-    background-color: var(--brand-red) !important;
+    background-color: var(--brand-orange) !important;
     border-color: var(--brand-red) !important;
     color: #fff !important;
     border-radius: 8px;
@@ -52,8 +52,9 @@
   .contact-page-v2 .wpforms-submit:hover,
   .contact-page-v2 button[type="submit"]:hover,
   .contact-page-v2 .wpforms-page-button:hover {
-    background-color: #d7341b !important;
+    background-color: white !important;
     border-color: #d7341b !important;
+    color: var(--brand-orange) !important;
   }
 
   /* Layout and spacing */
@@ -86,6 +87,12 @@
   }
   .contact-page-v2 .wpforms-container input::placeholder,
   .contact-page-v2 .wpforms-container textarea::placeholder { color: #9aa3ad; opacity: 1; }
+
+  /* Ensure overlay doesn't fully obscure background images on this page */
+  .contact-page-v2 .content-wrapper-left.overlay-jade:before,
+  .contact-page-v2 .content-wrapper-right.overlay-jade:before {
+    background-color: rgba(211, 47, 47, 0.65) !important; /* semi-transparent red */
+  }
 
   /* Error states (compatible with WPForms modern) */
   .contact-page-v2 .wpforms-container .wpforms-error, 
@@ -135,13 +142,13 @@
           <h1 style="color: var(--brand-red) !important;"><%= (contact && contact.heroTitle) || 'Book Now' %></h1>
           <div class="subtitle-wrapper">
             <h2 style="color: var(--brand-red) !important;"><%= (contact && contact.heroSubtitle) || 'Free estimates within 24 hours' %></h2>
-            <h4>All services come with a 3 year warranty</h4>
+            <span style="color: var(--brand-red) !important;">All services come with a 3 year warranty</span>
           </div>
         </div>
       </div>
 
       <div class="content-bottom-wrapper col-sm-12">
-        <section class="content-wrapper-left col-sm-12 col-md-6 overlay-jade" style="background-image: url(<%= (contact && contact.leftBg) || 'https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg' %>);">
+        <section class="content-wrapper-left col-sm-12 col-md-6 overlay-jade order-md-2" style="background: url(<%- (function(){ var src=(contact && contact.leftBg) || 'https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg'; if (src && !/^https?:\/\//.test(src) && src.charAt(0) !== '/') src='/' + src; return src; })() %>) center/cover no-repeat;">
           <h3 style="color: white !important;"><%= (contact && contact.leftTitle) || 'Start Your Pool Service' %></h3>
           <h4 style="color: white !important;"><b><%= (contact && contact.leftSubtitle) || 'Crystal-clear water. Stress-free maintenance.' %></b></h4>
           <ul>
@@ -154,14 +161,14 @@
           </ul>
         </section>
 
-        <div class="content-wrapper-right col-sm-12 col-md-6 col-lg-6" style="background-color: var(--brand-red) !important;">
+        <div class="content-wrapper-right col-sm-12 col-md-6 col-lg-6 order-md-1" style="background: linear-gradient(rgba(211, 47, 47, 0.85), rgba(211, 47, 47, 0.85)), url(<%- (function(){ var src=(contact && contact.rightBg) || 'https://images.pexels.com/photos/261045/pexels-photo-261045.jpeg'; if (src && !/^https?:\/\//.test(src) && src.charAt(0) !== '/') src='/' + src; return src; })() %>) center/cover no-repeat;">
           <div class="title-wrapper col-sm-12">
             <h2 style="color: white !important;"><%= (contact && contact.rightTitle) || 'Estimates in 24 Hours or Less' %></h2>
           </div>
 
           <!-- Accessible contact form preserving original look and CSS targets -->
           <div class="wpforms-container wpforms-container-full">
-            <form class="wpforms-form" method="post" action="/api/contact" novalidate>
+            <form class="wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain" novalidate>
               <div class="wpforms-field-container">
                 <div class="wpforms-field">
                   <label class="wpforms-field-label" for="contact-name" style="color: white !important;">Name <span aria-hidden="true" class="wpforms-required-label">*</span></label>
@@ -230,7 +237,7 @@
           <h2><%= (contact && contact.bottomTitle) || 'Get An Estimate' %></h2>
         </div>
         <div class="wpforms-container wpforms-container-full wpforms-render-modern">
-          <form class="wpforms-validate wpforms-form" method="post" action="/api/contact" novalidate>
+          <form class="wpforms-validate wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain" novalidate>
             <div class="wpforms-field-container">
               <div class="wpforms-field wpforms-field-name">
                 <fieldset>
@@ -279,22 +286,14 @@
   </div>
 
   <!-- CTA -->
-  <div class="container mb-5">
-    <section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
-      <div class="estimate-prompt">
-        <h2 class="section-title"><%= (contact && contact.ctaTitle) || 'Ready to get started?' %></h2>
-        <p><%= (contact && contact.ctaBody) || 'Contact us for a free onsite estimate within 24 hours.' %></p>
-        <div class="btn-wrapper "><a href="<%= (contact && contact.ctaUrl) || '/contact-us' %>" class="btn btn-primary-dark"><%= (contact && contact.ctaLabel) || 'Contact Us' %></a></div>
-      </div>
-    </section>
-  </div>
+  <%- include('partials/get-started', {
+    title: (contact && contact.ctaTitle) || 'Ready to get started?',
+    body: (contact && contact.ctaBody) || 'Contact us for a free onsite estimate within 24 hours.',
+    url: (contact && contact.ctaUrl) || '/contact-us',
+    label: (contact && contact.ctaLabel) || 'Contact Us'
+  }) %>
 </div>
 
-<!-- WPForms CSS assets for modern layout to preserve original styling (scoped to this page) -->
-<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/fields/layout.min.css' media='all' />
-<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/fields/layout-screen-big.min.css' media='(min-width: 601px)' />
-<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/fields/layout-screen-small.min.css' media='(max-width: 600px)' />
-<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/css/frontend/modern/wpforms-full.min.css' media='all' />
-<link rel='stylesheet' href='/wp-content/plugins/wpforms/assets/pro/css/frontend/modern/wpforms-full.min.css' media='all' />
+<!-- Removed broken WPForms CSS includes (404s); page uses scoped styles above -->
 
 <%- include('partials/footer') %>

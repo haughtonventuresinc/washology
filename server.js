@@ -106,6 +106,7 @@ app.set('view engine', 'ejs');
 // Body & cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 
 // Sessions (in-memory store; replace with Redis for production)
@@ -205,6 +206,7 @@ app.get('/contact-us', (req, res) => {
   const contact = loadContact();
   return res.render('contact-us', { bodyClass, contact });
 });
+
 
 // Redirect shorthand /contact -> /contact-us
 app.get('/contact', (req, res) => {
@@ -445,15 +447,6 @@ app.post('/api/contact-page', requireAuth, (req, res) => {
   }
 });
 
-// --- Public Contact form submission endpoint ---
-app.post('/api/contact', (req, res) => {
-  try {
-    const { firstName, lastName, phone, email, zip, message } = req.body || {};
-    console.log('[contact] submission', { firstName, lastName, phone, email, zip, hasMessage: !!(message && String(message).trim()) });
-  } catch(_) {}
-  // For now, just acknowledge. Hook to email/CRM later.
-  return res.json({ ok: true });
-});
 
 // --- About Page Editor API (protected) ---
 app.get('/api/about', requireAuth, (req, res) => {

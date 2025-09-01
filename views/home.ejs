@@ -191,44 +191,30 @@
     letter-spacing: .12em; font-weight: 800; color: var(--brand-red); opacity: .9; margin-bottom: .25rem;
   }
   .blogFeat .content-wrapper > .section-title { margin-bottom: 1.5rem; }
-  .featured-posts-wrapper { display: grid; gap: 1rem; grid-template-columns: repeat(12, 1fr); }
-  /* Use existing bootstrap col classes as fallbacks; enhance with CSS grid spans */
-  .featured-posts-wrapper > a.feat-post { grid-column: span 4; position: relative; border-radius: 16px; overflow: hidden; display: block; background: var(--brand-yellow); box-shadow: 0 14px 28px rgba(0,0,0,.16); transition: transform .18s ease, box-shadow .18s ease; }
+  /* Blog slider */
+  .blog-slider { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .5rem; }
+  .blog-slider .blog-nav { background: var(--brand-red); color: #fff; border: none; width: 42px; height: 42px; border-radius: 50%; font-size: 1.5rem; line-height: 1; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+  .blog-slider .blog-nav:hover { filter: brightness(1.05); }
+  .blog-slider .blog-nav:disabled { opacity: .45; cursor: default; }
+  .featured-posts-wrapper { display: flex; flex-wrap: nowrap; gap: 1rem; overflow: hidden; scroll-behavior: smooth; scroll-snap-type: x mandatory; }
+  .featured-posts-wrapper > a.feat-post { flex: 0 0 auto; width: clamp(260px, 28vw, 320px); border-radius: 16px; overflow: hidden; box-shadow: 0 12px 28px rgba(0,0,0,.12); background: #fff; scroll-snap-align: start; }
   .featured-posts-wrapper > a.feat-post:hover { transform: translateY(-4px); box-shadow: 0 18px 36px rgba(0,0,0,.22); }
   .featured-posts-wrapper .post { height: 100%; display: grid; grid-template-rows: auto 1fr; }
   .featured-posts-wrapper .post-thumbnail { position: relative; aspect-ratio: 4/3; overflow: hidden; }
   .featured-posts-wrapper .post-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.02); transition: transform .4s ease; }
   .featured-posts-wrapper a.feat-post:hover .post-thumbnail img { transform: scale(1.06); }
-  .featured-posts-wrapper .entry-summary { position: relative; padding: 1rem; background: transparent; color: var(--brand-red); }
-  .featured-posts-wrapper .entry-summary .entry-title { font-size: 1.05rem; line-height: 1.35; font-weight: 800; margin: 0 0 .35rem; }
-  .featured-posts-wrapper .entry-summary p { margin: 0; opacity: .9; font-size: .95rem; max-height: 3.4em; overflow: hidden; }
-  /* Split layout */
-  .blog-split { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
-  .blog-split.show-detail { grid-template-columns: 7fr 5fr; }
-  .featured-post-detail[hidden] { display: none !important; }
-  .featured-post-detail { min-height: 320px; display: block; }
-  .featured-post-detail .detail-card { background: var(--brand-yellow); color: var(--brand-red); border-radius: 16px; overflow: hidden; box-shadow: 0 14px 28px rgba(0,0,0,.16); border: 1px solid rgba(0,0,0,0.06); position: sticky; top: 1rem; width: 100%; }
-  .featured-post-detail .detail-thumb img { width: 100%; height: auto; display:   block; }
-  .featured-post-detail .detail-body { padding: 1rem; }
-  .featured-post-detail .detail-title { margin: 0 0 .5rem; font-weight: 900; }
-  .featured-post-detail .detail-excerpt { margin: 0 0 .75rem; }
   .featured-post-detail .detail-actions .btn { border-radius: 999px; }
-  /* Center the posts grid on the page */
-  .featured-posts-wrapper { max-width: 980px; margin: 0 auto; }
+  /* Slider track should span available width */
+  .featured-posts-wrapper { width: 100%; }
   /* Active card outline */
   .featured-posts-wrapper a.feat-post.is-active { outline: 3px solid var(--brand-red); outline-offset: 2px; }
-  @media (max-width: 991.98px) { .featured-posts-wrapper { grid-template-columns: repeat(6, 1fr); } .featured-posts-wrapper > a.feat-post { grid-column: span 6; } }
+  @media (max-width: 991.98px) { .featured-posts-wrapper > a.feat-post { width: clamp(240px, 60vw, 300px); } }
   @media (max-width: 768px) {
     .blog-split { grid-template-columns: 1fr; }
     .featured-post-detail { order: -1; }
     .featured-post-detail .detail-card { position: static; }
   }
-  @media (max-width: 576px) { .featured-posts-wrapper { grid-template-columns: repeat(4, 1fr); gap: .75rem; } .featured-posts-wrapper > a.feat-post { grid-column: span 4; border-radius: 12px; } }
-
-  /* Warranty Banner */
-  .warranty.banner { position: relative; padding: 3.25rem 0; border-radius: 20px; overflow: hidden; margin: 2rem auto; }
-  .warranty.banner::before { content: ""; position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 0%, rgba(255,255,255,.12), rgba(255,255,255,0)); opacity: .35; pointer-events: none; }
-  .warranty .section-title { font-weight: 900; letter-spacing: .02em; text-transform: uppercase; }
+  @media (max-width: 576px) { .featured-posts-wrapper { gap: .75rem; } .featured-posts-wrapper > a.feat-post { border-radius: 12px; width: 82%; } }
   .warranty p { color: #fff; max-width: 900px; margin-left: auto; margin-right: auto; opacity: .95; }
   .warranty .section-title + p { margin-top: .5rem; }
 
@@ -360,26 +346,20 @@
     display: inline-flex;
     align-items: center;
     gap: 2rem;
-    animation: marquee-rtl-infinite var(--scroll-duration) linear infinite;
-    animation-delay: calc(var(--scroll-duration) * -0.35);
-    animation-fill-mode: both;
     will-change: transform;
     padding: 0.5rem 0;
   }
-  .scroller:hover .scroller__inner { animation-play-state: paused; }
   .scroller .h1 { margin: 0; font-weight: 800; }
   /* With duplicated content, move by 50% for a seamless loop */
   @keyframes marquee-rtl-infinite {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .scroller__inner { animation: none; transform: none !important; }
-  }
   /* Ensure the tag-list has no default margins/padding that could cause jumps */
   .scroller .tag-list { list-style: none; padding: 0; margin: 0; }
   .scroller .tag-list > li { display: inline-flex; }
 </style>
+
 
 <section class="who-we-are bg-primary bg-icon">
 	<div class="content-wrapper container">
@@ -438,6 +418,7 @@
 </style>
 </section>
 
+
 <section class="our-services">
   	<div class="content-wrapper container">
   		<div class="row">
@@ -447,11 +428,15 @@
   		</div>
   		<div class="row justify-content-around">
 			<div class="col-sm-12">
-				<div class="gy-4 text-center our-services--featured">
-					<a class="service-card" href="<%= (homepage && homepage.featuredService1Url) || '/' %>" target=""><img width="800" height="642" src="<%= (homepage && homepage.featuredService1Image) || '/wp-content/uploads/2025/04/92a2b1320fd849d05eee3af9c8e41e87-e1750264298595-1024x822.jpg' %>" class="img-fluid wp-image-21" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="21" /><h3><%= (homepage && homepage.featuredService1Title) || 'Weekly Pool Cleaning' %></h3></a>
-					<a class="service-card" href="<%= (homepage && homepage.featuredService2Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService2Image) || '/wp-content/uploads/2025/06/GU-website-photos-70-1024x819.png' %>" class="img-fluid wp-image-332" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="332" /><h3><%= (homepage && homepage.featuredService2Title) || 'Filter &amp; Pump Service' %></h3></a>
-					<a class="service-card" href="<%= (homepage && homepage.featuredService3Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService3Image) || '/wp-content/uploads/2025/05/GU-website-photos-69-1024x819.png' %>" class="img-fluid wp-image-328" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="328" /><h3><%= (homepage && homepage.featuredService3Title) || 'Chemical Balancing' %></h3></a>
-					<a class="service-card" href="<%= (homepage && homepage.featuredService4Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService4Image) || '/wp-content/uploads/2025/05/GU-website-photos-21-1024x819.png' %>" class="img-fluid wp-image-106" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="106" /><h3><%= (homepage && homepage.featuredService4Title) || 'Equipment Repairs' %></h3></a>
+				<div class="our-services--slider">
+				  <button class="services-nav services-nav--prev" type="button" aria-label="Previous services">‹</button>
+				  <div class="gy-4 text-center our-services--featured" role="region" aria-label="Our services slider">
+						<a class="service-card" href="<%= (homepage && homepage.featuredService1Url) || '/' %>" target=""><img width="800" height="642" src="<%= (homepage && homepage.featuredService1Image) || '/wp-content/uploads/2025/04/92a2b1320fd849d05eee3af9c8e41e87-e1750264298595-1024x822.jpg' %>" class="img-fluid wp-image-21" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="21" /><h3><%= (homepage && homepage.featuredService1Title) || 'Weekly Pool Cleaning' %></h3></a>
+						<a class="service-card" href="<%= (homepage && homepage.featuredService2Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService2Image) || '/wp-content/uploads/2025/06/GU-website-photos-70-1024x819.png' %>" class="img-fluid wp-image-332" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="332" /><h3><%= (homepage && homepage.featuredService2Title) || 'Filter &amp; Pump Service' %></h3></a>
+						<a class="service-card" href="<%= (homepage && homepage.featuredService3Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService3Image) || '/wp-content/uploads/2025/05/GU-website-photos-69-1024x819.png' %>" class="img-fluid wp-image-328" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="328" /><h3><%= (homepage && homepage.featuredService3Title) || 'Chemical Balancing' %></h3></a>
+						<a class="service-card" href="<%= (homepage && homepage.featuredService4Url) || '/' %>" target=""><img width="800" height="640" src="<%= (homepage && homepage.featuredService4Image) || '/wp-content/uploads/2025/05/GU-website-photos-21-1024x819.png' %>" class="img-fluid wp-image-106" alt="" decoding="async" sizes="(max-width: 800px) 100vw, 800px" data-mwl-img-id="106" /><h3><%= (homepage && homepage.featuredService4Title) || 'Equipment Repairs' %></h3></a>
+					</div>
+				  <button class="services-nav services-nav--next" type="button" aria-label="Next services">›</button>
 				</div>
 				<div class="row mt-4 align-items-center our-services--services-cont">
 					<div class="col-sm-10 text-center our-services--services">
@@ -482,13 +467,21 @@
     margin-bottom: 1.75rem;
   }
 
-  /* Gallery grid */
+  /* Slider wrapper */
+  .our-services .our-services--slider { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .5rem; }
+  .our-services .services-nav { background: var(--brand-red); color: #fff; border: none; width: 42px; height: 42px; border-radius: 50%; font-size: 1.5rem; line-height: 1; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+  .our-services .services-nav:hover { filter: brightness(1.05); }
+  .our-services .services-nav:disabled { opacity: .45; cursor: default; }
+
+  /* Slider track */
   .our-services .our-services--featured {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    display: flex;
     gap: clamp(14px, 2vw, 24px);
     text-align: left;
+    overflow: hidden;
+    scroll-behavior: smooth;
   }
+  .our-services .our-services--featured .service-card { flex: 0 0 auto; width: clamp(240px, 24vw, 320px); }
   .our-services .our-services--featured .service-card {
     position: relative;
     display: block;
@@ -524,11 +517,9 @@
     background: var(--brand-red);
   }
 
-  /* Collage sizing (desktop) */
-  .our-services .our-services--featured .service-card:nth-child(1) { grid-column: span 7; min-height: 360px; }
-  .our-services .our-services--featured .service-card:nth-child(2) { grid-column: span 5; min-height: 360px; }
-  .our-services .our-services--featured .service-card:nth-child(3) { grid-column: span 5; min-height: 300px; }
-  .our-services .our-services--featured .service-card:nth-child(4) { grid-column: span 7; min-height: 300px; }
+  /* Card heights for consistency */
+  .our-services .our-services--featured .service-card { min-height: 300px; }
+  @media (min-width: 992px) { .our-services .our-services--featured .service-card { min-height: 360px; } }
 
   /* Pills row improvements */
   .our-services .our-services--services { margin-top: .5rem; display: flex; flex-wrap: wrap; gap: .5rem .75rem; justify-content: center; }
@@ -548,11 +539,7 @@
 
   /* Responsive */
   @media (max-width: 991.98px) {
-    .our-services .our-services--featured { grid-template-columns: repeat(6, 1fr); }
-    .our-services .our-services--featured .service-card:nth-child(1),
-    .our-services .our-services--featured .service-card:nth-child(2),
-    .our-services .our-services--featured .service-card:nth-child(3),
-    .our-services .our-services--featured .service-card:nth-child(4) { grid-column: span 6; min-height: 260px; }
+    .our-services .our-services--featured .service-card { width: clamp(220px, 42vw, 300px); min-height: 260px; }
   }
   @media (max-width: 576px) {
     .our-services { padding: 2.25rem 0; }
@@ -561,6 +548,37 @@
     .our-services .our-services--services { gap: .5rem; }
   }
 </style>
+
+<script>
+  // Simple button-controlled scrolling for services slider
+  (function(){
+    try {
+      var slider = document.querySelector('.our-services .our-services--slider');
+      if (!slider) return;
+      var track = slider.querySelector('.our-services--featured');
+      var prev = slider.querySelector('.services-nav--prev');
+      var next = slider.querySelector('.services-nav--next');
+      if (!track || !prev || !next) return;
+
+      function scrollByDir(dir){
+        var amount = Math.max(240, Math.min(track.clientWidth * 0.9, 600));
+        track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+      }
+      prev.addEventListener('click', function(){ scrollByDir(-1); });
+      next.addEventListener('click', function(){ scrollByDir(1); });
+
+      // Optional: disable buttons at ends (for non-infinite)
+      function updateDisabled(){
+        var maxScroll = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= maxScroll;
+      }
+      track.addEventListener('scroll', updateDisabled);
+      window.addEventListener('resize', updateDisabled);
+      updateDisabled();
+    } catch(e) { /* no-op */ }
+  })();
+</script>
 
 <!-- Page-scoped styles: Quick Facts brand color overrides -->
 <style>
@@ -615,11 +633,9 @@
     align-items: stretch;
     gap: 2.5rem;
     white-space: nowrap;
-    animation: stats-marquee-rtl var(--stats-duration) linear infinite;
-    animation-delay: calc(var(--stats-duration) * -0.35);
     will-change: transform;
   }
-  .our-stats .stats-scroller:hover .stats-scroller__inner { animation-play-state: paused; }
+
 
   /* Ensure each stat lays out horizontally without wrapping weird bootstrap row margins */
   .our-stats .our-stats--stats { margin-left: 0; margin-right: 0; }
@@ -631,9 +647,6 @@
     100% { transform: translateX(-50%); }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .our-stats .stats-scroller__inner { animation: none; transform: none !important; }
-  }
 </style>
 
 <script>
@@ -657,7 +670,9 @@
 		<div class="blogContent blogContent-wrapper">
 			<div class="blogCards blogCards-wrapper col-sm-12">
 				<div class="container blog-split justify-content-center">
-					            <div class="featured-posts-wrapper">
+					<div class="blog-slider">
+					  <button class="blog-nav blog-nav--prev" type="button" aria-label="Previous posts">‹</button>
+					  <div class="featured-posts-wrapper" role="region" aria-label="Featured blog posts slider">
 							<% 
 							  const posts = [];
 							  for (let i = 1; i <= 3; i++) {
@@ -669,14 +684,16 @@
 							  }
 							%>
 							  <% posts.forEach(function(p){ %>
-							    <a href="<%= p.url %>" class="feat-post col-sm-12 col-md-4 col-lg-4">
+							    <a href="<%= p.url %>" class="feat-post">
 							    	<article class="post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
 							    		<div class="post-thumbnail"><img width="800" height="600" src="<%= p.image %>" class="attachment-post-thumbnail size-post-thumbnail" alt="" decoding="async" /></div>
 							    		<div class="entry-summary"><h6 class="entry-title"><%= p.title %></h6><% if (p.excerpt) { %><p><%= p.excerpt %></p><% } %></div>
 							    	</article></a>
 							  <% }) %>
 						</div>
-						            <aside class="featured-post-detail" aria-live="polite" aria-atomic="true" hidden>
+					  <button class="blog-nav blog-nav--next" type="button" aria-label="Next posts">›</button>
+					</div>
+					            <aside class="featured-post-detail" aria-live="polite" aria-atomic="true" hidden>
               <div class="detail-card">
                 <div class="detail-thumb">
                   <img src="" alt="" class="img-fluid" />
@@ -697,9 +714,9 @@
 			</div>
 		</div>
 	</div>
-</section>
+  </section>
 
-<script>
+  <script>
   // Blog detail panel interaction: populate right-side panel from clicked card
   (function(){
     try {
@@ -797,11 +814,7 @@
   })();
 </script>
 
-<section class="warranty banner bg-jade-geometric">
-	<div class="container text-center">
-		<div class="row"><div class="col-lg-8 justify-content-center mx-auto"><h2 class="section-title" style="color: white;"><%= (homepage && homepage.warrantyTitle) || 'OUR Warranty' %></h2><p><%= (homepage && homepage.warrantyBody) || 'Known across the U.S. for exceptional garage door services, Swim Studs is dedicated to providing great value through transparent estimates, expert advice, and amazing deals on every booking. Our services are backed by manufacturer warranties, including lifetime warranties on select components, ensuring you have peace of mind with every repair or installation.' %></p></div></div>
-	</div>
-</section>
+
 
 <!-- Page-scoped styles: Review cards brand styling -->
 <style>
@@ -823,7 +836,25 @@
     color: #fff !important;
     border-color: rgba(255,255,255,0.5) !important;
   }
+  /* Make stars bigger, brand-yellow, and position them at the bottom */
+  #reviews .resi-review .resi-review--inner { display: flex; flex-direction: column; gap: 0.5rem; }
+  #reviews .resi-review .resi-review--inner .resi-review--stars {
+    order: 3;
+    color: var(--brand-yellow) !important;
+    font-size: 1.75rem !important;
+    letter-spacing: 0.08em;
+    margin-top: 0.25rem;
+  }
+  #reviews .resi-review .resi-review--inner .resi-review--content { order: 1; }
+  #reviews .resi-review .resi-review--inner .resi-review--meta { order: 2; }
 </style>
+
+<%- include('partials/get-started', {
+  title: (homepage && homepage.getStartedTitle) || 'Ready to get started?',
+  body: (homepage && homepage.getStartedBody) || 'Contact us for a free onsite estimate within 24 hours.',
+  url: (homepage && homepage.getStartedCtaUrl) || '/contact',
+  label: (homepage && homepage.getStartedCtaLabel) || 'Contact Us'
+}) %>
 
 <section id="reviews" class="reviews reviews-wrapper">
 	<div class="container">
@@ -839,25 +870,13 @@
 					  }
 					%>
 					<% reviews.forEach(function(r){ %>
-					  <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p><%= r.text %></p></div></div><div class="resi-review--meta"><h5 class="resi-review--author"><%= r.author %></h5></div></div></div>
+					  <div class="resi-review"><div class="resi-review--inner"><div class="resi-review--stars">★★★★★</div><div class="resi-review--content check-overflow"><div class="resi-review--content--inner"><p>“<%= r.text %>”</p></div></div><div class="resi-review--meta"><h5 class="resi-review--author"><%= r.author %></h5></div></div></div>
 					<% }); %>
 				</div>
 			</div>
 		</section>
 	</div>
 </section>
-
-<div class="container mb-5">
-	<section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
-		<div class="estimate-prompt">
-			<h2 class="section-title"><%= (homepage && homepage.getStartedTitle) || 'Ready to get started?' %></h2>
-			<p><%= (homepage && homepage.getStartedBody) || 'Contact us for a free onsite estimate within 24 hours.' %></p>
-			<div class="btn-wrapper ">
-				<a href="<%= (homepage && homepage.getStartedCtaUrl) || '/contact' %>" class="btn btn-primary-dark" target=""><%= (homepage && homepage.getStartedCtaLabel) || 'Contact Us' %></a>
-			</div>
-		</div>
-	</section>
-</div>
 
 <script>
   (function () {
@@ -873,6 +892,36 @@
         }
       }
     } catch (e) { /* no-op */ }
+  })();
+  </script>
+
+<script>
+  // Simple button-controlled scrolling for blog slider
+  (function(){
+    try {
+      var slider = document.querySelector('.blogFeat .blog-slider');
+      if (!slider) return;
+      var track = slider.querySelector('.featured-posts-wrapper');
+      var prev = slider.querySelector('.blog-nav--prev');
+      var next = slider.querySelector('.blog-nav--next');
+      if (!track || !prev || !next) return;
+
+      function scrollByDir(dir){
+        var amount = Math.max(240, Math.min(track.clientWidth * 0.9, 600));
+        track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+      }
+      prev.addEventListener('click', function(){ scrollByDir(-1); });
+      next.addEventListener('click', function(){ scrollByDir(1); });
+
+      function updateDisabled(){
+        var maxScroll = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= maxScroll;
+      }
+      track.addEventListener('scroll', updateDisabled);
+      window.addEventListener('resize', updateDisabled);
+      updateDisabled();
+    } catch(e) { /* no-op */ }
   })();
   </script>
 <%- include('partials/footer') %>

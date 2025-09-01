@@ -553,7 +553,7 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--bs-heading-color);
+    color: white;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: .5rem;
@@ -17955,9 +17955,9 @@ h4 {
 }
 
 .contact-page-v2-template .bottom-form-wrapper .inner-wrapper {
-    background-color: var(--garageup-ash-light);
+    background-color: var(--brand-red);
     border-radius: min(1.5rem, 2vw);
-    color: var(--garageup-carbon);
+    color: var(--bs-white);
     padding: min(4rem, 5vw)
 }
 
@@ -20063,19 +20063,6 @@ section.stripes-triple-top {
     --garageup-stripe-base-size: 10px;
     padding-top: calc(var(--garageup-section-padding-vertical) + var(--garageup-stripe-base-size)*8);
     position: relative
-}
-
-section.stripes-triple-top:before {
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(transparent), color-stop(var(--garageup-stripe-2)), color-stop(var(--garageup-stripe-2)), color-stop(transparent), to(transparent));
-    background: linear-gradient(to bottom, transparent 0, transparent var(--garageup-stripe-base-size), var(--garageup-stripe-2) var(--garageup-stripe-base-size), var(--garageup-stripe-2) calc(var(--garageup-stripe-base-size)*3), transparent calc(var(--garageup-stripe-base-size)*3), transparent calc(var(--garageup-stripe-base-size)*4));
-    border-bottom: var(--garageup-stripe-base-size) solid var(--garageup-stripe-3);
-    border-top: calc(var(--garageup-stripe-base-size)*3) solid var(--garageup-stripe-1);
-    content: "";
-    height: calc(var(--garageup-stripe-base-size)*8);
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%
 }
 
 section.stripes-triple-bottom {

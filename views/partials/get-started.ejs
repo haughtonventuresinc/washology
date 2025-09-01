@@ -1,0 +1,11 @@
+<div class="container-fluid mb-5 px-0">
+  <section class="get-started bg-garageup-primary bg-icon bg-icon-reverse bg-icon--light bg-icon-reverse--light">
+    <div class="estimate-prompt">
+      <h2 class="section-title"><%= typeof title !== 'undefined' ? title : 'Ready to get started?' %></h2>
+      <p><%= typeof body !== 'undefined' ? body : 'Contact us for a free onsite estimate within 24 hours.' %></p>
+      <div class="btn-wrapper ">
+        <a href="<%= typeof url !== 'undefined' ? url : '/contact-us' %>" class="btn btn-primary-dark"><%= typeof label !== 'undefined' ? label : 'Contact Us' %></a>
+      </div>
+    </div>
+  </section>
+</div>
