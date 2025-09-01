@@ -759,7 +759,11 @@ app.use(express.static(siteRoot, {
 
 // 404 for anything not found
 app.use((req, res) => {
-  res.status(404).send('Not Found');
+  const view404 = path.join(app.get('views'), '404.ejs');
+  if (fs.existsSync(view404)) {
+    return res.status(404).render('404');
+  }
+  return res.status(404).send('Not Found');
 });
 
 app.listen(PORT, () => {
