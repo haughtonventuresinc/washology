@@ -106,9 +106,18 @@
   </style>
 
     
+      <% 
+        // Compute a safe hero background URL
+        const _rawHero = (about && about.heroBg) || '';
+        const _trimHero = (typeof _rawHero === 'string') ? _rawHero.trim() : '';
+        const _isAbs = /^https?:\/\//i.test(_trimHero);
+        const _safeHero = _trimHero
+          ? (_isAbs ? _trimHero : ('/' + _trimHero.replace(/^\/+/, '')))
+          : 'https://images.ctfassets.net/ftcnv5up9dxv/7dX53kEhONSiR3WxVDA347/4e95c833c6b566b450951f3100d6f56f/What_You_ll_Need_to_Clean_Your_Pool.jpg';
+      %>
       <!-- Hero -->
       <section class="hero hero-wrapper gradient-overlay"
-        style="background-image: url(\"<%= (about && about.heroBg) || 'https://images.ctfassets.net/ftcnv5up9dxv/7dX53kEhONSiR3WxVDA347/4e95c833c6b566b450951f3100d6f56f/What_You_ll_Need_to_Clean_Your_Pool.jpg' %>\");">
+        style="background-image: url('<%= _safeHero %>');">
         <h1><%= (about && about.heroTitle) || 'Pool Care Above and Beyond' %></h1>
       </section>
 
