@@ -16540,7 +16540,6 @@ fieldset:disabled .wp-block-button .wp-block-button__link {
     --garageup-ash: #cacaca;
     --garageup-ash-light: #ededed;
     --garageup-carbon: #000;
-    --garageup-acid-green: #dbfc54;
     --garageup-stripe: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%271920%27 height=%27204%27 fill=%27none%27%3E%3Cpath fill=%27%23F3B744%27 fill-rule=%27evenodd%27 d=%27M-74 75.841 50.935 203.954H1920v-10.039H54.99L-67.078 68.743z%27 clip-rule=%27evenodd%27/%3E%3Cpath fill=%27%23BD4646%27 fill-rule=%27evenodd%27 d=%27M-65.855 55.132 60.073 184.263H1920v-16.989H66.935L-54.14 43.119z%27 clip-rule=%27evenodd%27/%3E%3Cpath fill=%27%233E0909%27 fill-rule=%27evenodd%27 d=%27M-56.32 25.664 72.366 157.62H1920v-36.294H87.026L-31.292 0z%27 clip-rule=%27evenodd%27/%3E%3C/svg%3E");
     --garageup-body-font-family: "Futura Now";
     --garageup-headline-font-family: "Futura Now Headline";
@@ -16584,7 +16583,6 @@ body {
     --wpforms-button-border-radius: 8px;
     --wpforms-button-border-style: none;
     --wpforms-button-border-size: 1px;
-    --wpforms-button-background-color: var(--garageup-acid-green);
     --wpforms-button-border-color: transparent;
     --wpforms-button-text-color: var(--garageup-carbon);
     --wpforms-page-break-color: var(--brand-yellow);
@@ -16676,11 +16674,6 @@ h2 {
 h4 {
     --bs-heading-color: var(--garageup-accent-color);
     font-weight: 400
-}
-
-.emphasis,
-.gold {
-    color: var(--garageup-acid-green) !important
 }
 
 .process-step {
@@ -16840,15 +16833,6 @@ h4 {
     text-decoration: none
 }
 
-.btn-primary,
-.wp-block-button,
-.wp-block-button .wp-block-button__link,
-.wp-block-button__link {
-    --bs-btn-color: var(--garageup-carbon);
-    --bs-btn-bg: var(--garageup-acid-green);
-    --bs-btn-hover-color: var(--garageup-carbon);
-    --bs-btn-hover-bg: var(--brand-yellow)
-}
 
 .btn-primary-dark {
     --bs-btn-color: var(--garageup-snow);
@@ -17317,8 +17301,7 @@ h4 {
 
 @media(min-width:768px) {
     .page-template-landing .our-services--services {
-        -ms-grid-columns: (1fr)[3];
-        grid-template-columns: repeat(3, 1fr)
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -17529,12 +17512,6 @@ h4 {
     text-align: left
 }
 
-.page-template-landing-franchise .hero .h3,
-.page-template-landing-franchise .hero h3 {
-    color: var(--garageup-acid-green);
-    text-transform: uppercase
-}
-
 .page-template-landing-franchise .hero .h1,
 .page-template-landing-franchise .hero h1 {
     font-size: clamp(46px, 8vw, 120px);
@@ -17600,13 +17577,6 @@ h4 {
     padding: 0
 }
 
-.page-template-landing-franchise .hero .wpforms-form .wpforms-submit {
-    --wpforms-button-background-color: var(--garageup-acid-green);
-    --wpforms-button-text-color: var(--brand-orange);
-    font-weight: 700;
-    width: 100%
-}
-
 .page-template-landing-franchise .scroller {
     --background-color: var(--garageup-ash-light);
     --icon-fill: var(--brand-orange)
@@ -17670,15 +17640,6 @@ h4 {
     position: relative
 }
 
-.about-us-page .core-values:before {
-    background: var(--garageup-acid-green);
-    content: "";
-    height: 8px;
-    left: 0;
-    position: absolute;
-    top: -8px;
-    width: 60%
-}
 
 .about-us-page .core-values--values {
     display: -webkit-box;
@@ -17689,14 +17650,6 @@ h4 {
     -webkit-box-direction: normal;
     -ms-flex-flow: column;
     flex-flow: column;
-    gap: 2rem
-}
-
-.about-us-page .core-values--value {
-    --bs-heading-color: var(--garageup-acid-green);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
     gap: 2rem
 }
 
@@ -17768,16 +17721,6 @@ h4 {
     border-bottom: var(--border-size) solid var(--brand-orange);
     margin-bottom: calc(var(--border-size)*3);
     position: relative
-}
-
-.contact-page-v2-template .contact-us--hero:after {
-    background-color: var(--garageup-acid-green);
-    bottom: calc(var(--border-size)*-3);
-    content: "";
-    height: var(--border-size);
-    left: 0;
-    position: absolute;
-    width: 100%
 }
 
 .contact-page-v2-template .content-upper-wrapper .title-wrapper {
@@ -17874,12 +17817,6 @@ h4 {
 .contact-page-v2-template .content-bottom-wrapper .content-wrapper-left h4,
 .contact-page-v2-template .content-bottom-wrapper .content-wrapper-left h5,
 .contact-page-v2-template .content-bottom-wrapper .content-wrapper-left h6,
-.our-stats--stat .contact-page-v2-template .content-bottom-wrapper .content-wrapper-left p {
-    color: var(--garageup-acid-green);
-    margin: 1em 0 1.5em;
-    max-width: 10em;
-    text-transform: uppercase
-}
 
 .contact-page-v2-template .content-bottom-wrapper .content-wrapper-left p {
     font-size: 1.25rem;
@@ -17931,12 +17868,6 @@ h4 {
 
 .contact-page-v2-template .content-bottom-wrapper .content-wrapper-right {
     color: var(--garageup-snow)
-}
-
-.contact-page-v2-template .content-bottom-wrapper .content-wrapper-right .title-wrapper .h2,
-.contact-page-v2-template .content-bottom-wrapper .content-wrapper-right .title-wrapper h2 {
-    color: var(--garageup-acid-green);
-    font-size: clamp(1.75rem, 2.5vw, 2.5rem)
 }
 
 .contact-page-v2-template .content-bottom-wrapper .content-wrapper-right .wpforms-field-label,
@@ -18023,12 +17954,6 @@ h4 {
     background-size: cover
 }
 
-.page-template-squeeze .our-process .h2,
-.page-template-squeeze .our-process h2,
-.page-template-squeeze-2 .our-process .h2,
-.page-template-squeeze-2 .our-process h2 {
-    --bs-heading-color: var(--garageup-acid-green)
-}
 
 .page-template-squeeze .our-process .h3,
 .page-template-squeeze .our-process h3,
@@ -18059,15 +17984,6 @@ h4 {
 }
 
 .page-template-squeeze .about-container:after,
-.page-template-squeeze-2 .about-container:after {
-    background-color: var(--garageup-acid-green);
-    bottom: calc(var(--border-size)*-3);
-    content: "";
-    height: var(--border-size);
-    left: 0;
-    position: absolute;
-    width: 100%
-}
 
 .page-template-squeeze .about-container img,
 .page-template-squeeze-2 .about-container img {
@@ -18149,11 +18065,6 @@ h4 {
 .page-template-squeeze .warranty-container,
 .page-template-squeeze-2 .warranty-container {
     font-size: 1.25rem
-}
-
-.page-template-squeeze .warranty-container .section-title,
-.page-template-squeeze-2 .warranty-container .section-title {
-    color: var(--garageup-acid-green)
 }
 
 .page-template-squeeze .warranty-container .gallery,
@@ -18692,12 +18603,6 @@ h4 {
     gap: 2rem
 }
 
-.service-page-template .process-wrapper .process-step .step-number {
-    color: var(--garageup-acid-green);
-    font-size: 3rem;
-    line-height: 1;
-    margin-bottom: 1rem
-}
 
 @media screen and (max-width:767.98px) {
     .service-page-template .process-wrapper .process-step {
@@ -19908,11 +19813,6 @@ h4 {
     z-index: -1
 }
 
-.callout.bg-garageup-acid-green:before {
-    -webkit-filter: invert(1) brightness(1);
-    filter: invert(1) brightness(1);
-    opacity: .3
-}
 
 .callout--speed-bump {
     padding-bottom: 5rem
@@ -19936,14 +19836,6 @@ section.bg-jade-squares,
 section.bg-primary,
 section.bg-primary-black,
 section.bg-primary-dark,
-section.overlay-jade {
-    --bs-heading-color: var(--garageup-snow);
-    --bs-body-color: var(--garageup-snow);
-    --garageup-accent-color: var(--garageup-acid-green);
-    --bs-link-color-rgb: 255, 255, 255;
-    --bs-link-hover-color-rgb: 255, 255, 255
-}
-
 section.bg-garageup-black a:hover,
 section.bg-garageup-primary a:hover,
 section.bg-garageup-primary-dark a:hover,
@@ -19993,12 +19885,6 @@ section.bg-primary {
 section.bg-garageup-primary-dark,
 section.bg-primary-dark {
     background-color: var(--brand-orange)
-}
-
-section.bg-garageup-acid-green {
-    --bs-heading-color: var(--garageup-carbon);
-    --bs-body-color: var(--garageup-carbon);
-    background-color: var(--garageup-acid-green)
 }
 
 section.bg-garageup-black,
@@ -20056,24 +19942,6 @@ section.stripes-single-bottom:before {
     width: 100%
 }
 
-section.stripes-triple-top {
-    --garageup-stripe-1: var(--garageup-carbon);
-    --garageup-stripe-2: var(--brand-yellow);
-    --garageup-stripe-3: var(--garageup-acid-green);
-    --garageup-stripe-base-size: 10px;
-    padding-top: calc(var(--garageup-section-padding-vertical) + var(--garageup-stripe-base-size)*8);
-    position: relative
-}
-
-section.stripes-triple-bottom {
-    --garageup-stripe-1: var(--garageup-carbon);
-    --garageup-stripe-2: var(--brand-yellow);
-    --garageup-stripe-3: var(--garageup-acid-green);
-    --garageup-stripe-base-size: 10px;
-    padding-bottom: calc(var(--garageup-section-padding-vertical) + var(--garageup-stripe-base-size)*8);
-    position: relative
-}
-
 section.stripes-triple-bottom:before {
     background: -webkit-gradient(linear, left bottom, left top, color-stop(0, transparent), color-stop(transparent), color-stop(var(--garageup-stripe-2)), color-stop(var(--garageup-stripe-2)), color-stop(transparent), to(transparent));
     background: linear-gradient(to top, transparent 0, transparent var(--garageup-stripe-base-size), var(--garageup-stripe-2) var(--garageup-stripe-base-size), var(--garageup-stripe-2) calc(var(--garageup-stripe-base-size)*3), transparent calc(var(--garageup-stripe-base-size)*3), transparent calc(var(--garageup-stripe-base-size)*4));
@@ -20087,32 +19955,7 @@ section.stripes-triple-bottom:before {
     width: 100%
 }
 
-section.stripes-double-top {
-    --garageup-stripe-1: var(--garageup-acid-green);
-    --garageup-stripe-2: var(--brand-orange);
-    --garageup-stripe-base-size: 5px;
-    padding-top: calc(var(--garageup-section-padding-vertical) + var(--garageup-stripe-base-size)*4);
-    position: relative
-}
 
-section.stripes-double-top:before {
-    border-bottom: calc(var(--garageup-stripe-base-size)*2) solid var(--garageup-stripe-2);
-    border-top: var(--garageup-stripe-base-size) solid var(--garageup-stripe-1);
-    content: "";
-    height: calc(var(--garageup-stripe-base-size)*4);
-    left: 0;
-    position: absolute;
-    top: var(--garageup-stripe-base-size);
-    width: 100%
-}
-
-section.stripes-double-bottom {
-    --garageup-stripe-1: var(--garageup-acid-green);
-    --garageup-stripe-2: var(--brand-orange);
-    --garageup-stripe-base-size: 10px;
-    padding-bottom: calc(var(--garageup-section-padding-vertical) + var(--garageup-stripe-base-size)*4);
-    position: relative
-}
 
 section.stripes-double-bottom:before {
     border-bottom: var(--garageup-stripe-base-size) solid var(--garageup-stripe-2);
@@ -20125,13 +19968,7 @@ section.stripes-double-bottom:before {
     width: 100%
 }
 
-section.stripes-triple-vertical:has(>.content-wrapper) {
-    --garageup-stripe-1: var(--brand-yellow);
-    --garageup-stripe-2: var(--garageup-acid-green);
-    --garageup-stripe-3: var(--garageup-snow);
-    --garageup-stripe-base-size: 7.5px;
-    padding: 0
-}
+
 
 @media screen and (max-width:575.98px) {
     section.stripes-triple-vertical:has(>.content-wrapper) {
@@ -20295,23 +20132,6 @@ section img {
     text-decoration: underline
 }
 
-.area-served .content-wrapper .content-right .content-wrapper {
-    background: var(--garageup-acid-green);
-    padding: 2rem;
-    position: relative
-}
-
-.area-served .content-wrapper .content-right .content-wrapper:before {
-    background: var(--garageup-acid-green);
-    content: "";
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 50vw;
-    z-index: -1
-}
-
 .area-served .content-wrapper .content-right .content-wrapper .title-row {
     margin-bottom: 1rem;
     width: 100%
@@ -20438,7 +20258,6 @@ section img {
     --bs-heading-color: var(--garageup-snow);
     --hero-overlay: linear-gradient(180deg, transparent 0%, var(--garageup-carbon) 100%);
     --hero-overlay-opacity: 1;
-    --garageup-accent-color: var(--garageup-acid-green);
     background-position-x: center;
     background-position-y: bottom;
     background-repeat: no-repeat;
@@ -20815,7 +20634,6 @@ section img {
 
 @media(min-width:768px) {
     .our-stats--stats {
-        -ms-grid-columns: (1fr)[3];
         grid-template-columns: repeat(3, 1fr)
     }
 }
@@ -21664,10 +21482,6 @@ section img {
     -ms-flex-align: start;
     align-items: flex-start;
     gap: 1rem
-}
-
-.footer .menu-item a[aria-current=page] {
-    color: var(--garageup-acid-green)
 }
 
 .teal {
