@@ -142,7 +142,6 @@
           <h1 style="color: var(--brand-red) !important;"><%= (contact && contact.heroTitle) || 'Book Now' %></h1>
           <div class="subtitle-wrapper">
             <h2 style="color: var(--brand-red) !important;"><%= (contact && contact.heroSubtitle) || 'Free estimates within 24 hours' %></h2>
-            <span style="color: var(--brand-red) !important;">All services come with a 3 year warranty</span>
           </div>
         </div>
       </div>
@@ -195,6 +194,8 @@
                 <div class="wpforms-field">
                   <label class="wpforms-field-label" for="contact-zip" style="color: white !important;">ZIP Code</label>
                   <input type="text" id="contact-zip" name="zip" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" placeholder="12345" />
+                  <input type="hidden" id="contact-city" name="city" />
+                  <input type="hidden" id="contact-state" name="state" />
                 </div>
 
                 <div class="wpforms-field">
@@ -268,6 +269,8 @@
               <div class="wpforms-field">
                 <label class="wpforms-field-label" for="estimate-zip">ZIP Code</label>
                 <input id="estimate-zip" type="text" name="zip" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" />
+                <input type="hidden" id="estimate-city" name="city" />
+                <input type="hidden" id="estimate-state" name="state" />
               </div>
 
               <div class="wpforms-field">
@@ -295,5 +298,32 @@
 </div>
 
 <!-- Removed broken WPForms CSS includes (404s); page uses scoped styles above -->
+
+<script>
+  (function(){
+    try {
+      var params = new URLSearchParams(window.location.search || '');
+      var zip = (params.get('zip') || '').replace(/\D/g,'').substring(0,5);
+      var city = params.get('city') || '';
+      var state = params.get('state') || '';
+
+      var contactZip = document.getElementById('contact-zip');
+      var estimateZip = document.getElementById('estimate-zip');
+      var contactCity = document.getElementById('contact-city');
+      var contactState = document.getElementById('contact-state');
+      var estimateCity = document.getElementById('estimate-city');
+      var estimateState = document.getElementById('estimate-state');
+
+      if (zip) {
+        if (contactZip) contactZip.value = zip;
+        if (estimateZip) estimateZip.value = zip;
+      }
+      if (contactCity) contactCity.value = city;
+      if (contactState) contactState.value = state;
+      if (estimateCity) estimateCity.value = city;
+      if (estimateState) estimateState.value = state;
+    } catch(e) { /* no-op */ }
+  })();
+</script>
 
 <%- include('partials/footer') %>

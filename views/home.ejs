@@ -4,9 +4,9 @@
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <div class="content-wrapper container position-relative">
-    <div class="row align-items-center justify-content-between">
+    <div class="row align-items-center justify-content-center">
       <!-- Left side: Main content -->
-      <div class="col-lg-6 col-md-6 col-sm-12 text-left hero-main-content">
+      <div class="col-lg-6 col-md-6 col-sm-12 hero-main-content text-center">
         <h1 class="hero-main-title mb-3"><%= (homepage && homepage.heroTitle) || 'Your Trusted Pool Care Experts' %></h1>
         <p class="hero-description mb-4"><%= (homepage && homepage.heroSubtitle) || 'Pool Cleaning, Chemical Balancing, Equipment Service, and More. We keep pools sparkling, safe, and swim‑ready all year long.' %></p>
         
@@ -17,7 +17,7 @@
       </div>
       
       <!-- Right side: ZIP search card -->
-      <div class="col-lg-5 col-md-6 col-sm-12">
+      <div class="col-lg-5 col-md-6 col-sm-12 zip-col">
         <div class="zip-code-search">
           <form role="search" aria-label="Find franchise by ZIP code" class="zip-card">
             <label for="zip-search-input" class="visually-hidden">ZIP Code</label>
@@ -43,23 +43,34 @@
             <div id="zip-search-help" class="visually-hidden">Enter a 5-digit ZIP code to find your local franchise</div>
           </form>
 
-          <div class="zip-code-results mt-3" aria-live="polite" aria-atomic="true"></div>
+          <div class="zip-map-container" style="display: none;">
+            <div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+
 <!-- Page-scoped styles: Hero aesthetic -->
 <style>
   .hero-aesthetic {
     position: relative;
-    padding: clamp(5rem, 8vw, 9rem) 0 clamp(4rem, 6vw, 7rem) 0;
+    /* extra bottom padding so bottom-anchored ZIP has room */
+    padding: clamp(5rem, 8vw, 9rem) 0 clamp(6rem, 8vw, 8rem) 0;
     color: #fff;
     min-height: 600px;
     display: flex;
     align-items: center;
+    overflow: visible; /* allow anchored ZIP to be visible */
   }
+  /* Ensure the absolute ZIP card anchors to the full hero, not the inner container */
+  .hero-aesthetic .content-wrapper { position: static !important; }
+  /* Center the row's content in the hero (desktop) */
+  .hero-aesthetic .content-wrapper .row.align-items-center { justify-content: center !important; }
+  /* Explicitly override Bootstrap's justify-content-between on the hero row */
+  .hero-aesthetic .content-wrapper .row.align-items-center.justify-content-between { justify-content: center !important; }
   .hero-aesthetic .hero-overlay {
     position: absolute;
     inset: 0;
@@ -71,7 +82,13 @@
   .hero-aesthetic .hero-main-content {
     z-index: 2;
     position: relative;
+    text-align: center; /* center heading, copy, and buttons */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 900px;
   }
+  /* Override Bootstrap's text-left utility if present */
+  .hero-aesthetic .hero-main-content.text-left { text-align: center !important; }
   .hero-aesthetic .hero-main-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
@@ -91,6 +108,7 @@
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center; /* center buttons under headline */
   }
   .hero-aesthetic .btn-brand-primary {
     background-color: var(--brand-red) !important;
@@ -195,6 +213,22 @@
     z-index: 1;
     transition: box-shadow .2s ease, border-color .2s ease;
   }
+  /* Place the ZIP search at bottom-right of hero on desktop (strong override) */
+  .hero.hero-aesthetic .zip-code-search {
+    position: absolute !important;
+    right: 2rem !important;
+    bottom: 2rem !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: 3 !important;
+    width: min(520px, 92vw) !important;
+    margin: 0 !important;
+    pointer-events: auto;
+  }
+  /* Remove layout footprint of the right column that only holds the ZIP card on desktop */
+  @media (min-width: 992px) {
+    .hero-aesthetic .zip-col { display: contents; }
+  }
   .hero-aesthetic .zip-card:focus-within {
     box-shadow: 0 0 0 3px var(--brand-red), 0 12px 30px rgba(0,0,0,.25);
     border-color: var(--brand-red);
@@ -236,16 +270,104 @@
   }
   .hero-aesthetic .zip-code-results.is-visible { display: block; }
   
+  /* ZIP result states styling */
+  .zip-success, .zip-unavailable, .zip-error, .zip-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+  
+  .zip-success {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .zip-location {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .zip-location svg {
+    color: var(--brand-red);
+    flex-shrink: 0;
+  }
+  
+  .franchise-info, .service-status {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.25rem;
+  }
+  
+  .zip-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .zip-actions .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 6px;
+  }
+  
+  .zip-error {
+    color: #dc3545;
+  }
+  
+  .zip-error svg {
+    color: #dc3545;
+    flex-shrink: 0;
+  }
+  
+  .zip-loading {
+    color: #666;
+  }
+  
+  .zip-loading svg {
+    color: var(--brand-red);
+    flex-shrink: 0;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* ZIP Map Container */
+  .zip-map-container {
+    margin-top: 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  
+  .zip-map-container.is-visible {
+    display: block !important;
+  }
+  
   /* Responsive adjustments */
   @media (max-width: 991.98px) {
     .hero-aesthetic .hero-main-content {
       text-align: center;
       margin-bottom: 3rem;
     }
-    .hero-aesthetic .hero-contact-card {
-      max-width: 500px;
-      margin: 0 auto;
+    /* On mobile: anchor ZIP card to bottom-center */
+    .hero.hero-aesthetic .zip-code-search {
+      position: absolute !important;
+      left: 50% !important;
+      transform: translateX(-50%);
+      right: auto !important;
+      top: auto !important;
+      bottom: 1rem !important;
+      width: min(92vw, 560px) !important;
+      margin: 0 !important;
     }
+    /* On mobile, column flows normally (no display: contents) */
+    .hero-aesthetic .zip-col { display: block; }
   }
   @media (max-width: 576px) {
     .hero-aesthetic {
@@ -348,18 +470,401 @@
 </style>
 
 <script>
+  // ZIP code lookup functionality
   (function(){
     try {
+      var form = document.querySelector('.zip-card');
+      var input = document.querySelector('#zip-search-input');
       var results = document.querySelector('.zip-code-results');
-      if (!results) return;
-      var update = function(){
-        var hasContent = (results.textContent || '').trim().length > 0 || results.children.length > 0;
-        results.classList.toggle('is-visible', !!hasContent);
+      var mapContainer = document.querySelector('.zip-map-container');
+      var lastZipResult = null; // store last successful lookup for redirect
+      if (!form || !input) return;
+      function setError(msg){
+        input.setCustomValidity(msg || '');
+        if (msg) { try { input.reportValidity(); } catch(_){} }
+      }
+
+      // Sample service areas data (replace with your actual data or API)
+      var serviceAreas = {
+        '78701': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Central' },
+        '78702': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin East' },
+        '78703': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin West' },
+        '78704': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin South' },
+        '78705': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Central' },
+        '78731': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin West' },
+        '78732': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin West' },
+        '78733': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin West' },
+        '78734': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin West' },
+        '78735': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Southwest' },
+        '78736': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Southwest' },
+        '78737': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Southwest' },
+        '78738': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin West' },
+        '78739': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Southwest' },
+        '78741': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin East' },
+        '78742': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Southeast' },
+        '78744': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin South' },
+        '78745': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin South' },
+        '78746': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin West' },
+        '78747': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Southwest' },
+        '78748': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin South' },
+        '78749': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Southwest' },
+        '78750': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Northwest' },
+        '78751': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Central' },
+        '78752': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Northeast' },
+        '78753': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Northeast' },
+        '78754': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Northeast' },
+        '78756': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Central' },
+        '78757': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Northwest' },
+        '78758': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin North' },
+        '78759': { city: 'Austin', state: 'TX', available: true, franchise: 'Austin Northwest' },
+        '75001': { city: 'Addison', state: 'TX', available: true, franchise: 'Dallas North' },
+        '75002': { city: 'Allen', state: 'TX', available: true, franchise: 'Dallas North' },
+        '75201': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Downtown' },
+        '75202': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Downtown' },
+        '75203': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75204': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Central' },
+        '75205': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Central' },
+        '75206': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75207': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas West' },
+        '75208': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Southwest' },
+        '75209': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Central' },
+        '75210': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75211': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas West' },
+        '75212': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northwest' },
+        '75214': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75215': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Southeast' },
+        '75216': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas South' },
+        '75217': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Southeast' },
+        '75218': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northeast' },
+        '75219': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Central' },
+        '75220': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northwest' },
+        '75221': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75222': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75223': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75224': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Southwest' },
+        '75225': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Central' },
+        '75226': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75227': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Southeast' },
+        '75228': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northeast' },
+        '75229': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northwest' },
+        '75230': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas North' },
+        '75231': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northeast' },
+        '75232': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas South' },
+        '75233': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas South' },
+        '75234': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas North' },
+        '75235': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas West' },
+        '75236': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Southeast' },
+        '75237': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas South' },
+        '75238': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northeast' },
+        '75240': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas North' },
+        '75241': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Southeast' },
+        '75243': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas Northeast' },
+        '75244': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas North' },
+        '75246': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas East' },
+        '75247': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas West' },
+        '75248': { city: 'Dallas', state: 'TX', available: true, franchise: 'Dallas North' },
+        '77001': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Downtown' },
+        '77002': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Downtown' },
+        '77003': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston East' },
+        '77004': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77005': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77006': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77007': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77008': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77009': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77010': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77011': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston East' },
+        '77012': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southeast' },
+        '77013': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston East' },
+        '77014': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77015': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston East' },
+        '77016': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77017': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77018': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77019': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77020': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston East' },
+        '77021': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77022': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77023': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston East' },
+        '77024': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77025': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77026': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77027': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77028': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northeast' },
+        '77029': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston East' },
+        '77030': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77031': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77032': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77033': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77034': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77035': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77036': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77037': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77038': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77039': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northeast' },
+        '77040': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77041': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77042': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77043': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77044': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northeast' },
+        '77045': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77046': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77047': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southeast' },
+        '77048': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77049': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northeast' },
+        '77050': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southeast' },
+        '77051': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77052': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77053': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77054': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77055': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77056': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77057': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77058': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southeast' },
+        '77059': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southeast' },
+        '77060': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77061': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77062': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southeast' },
+        '77063': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77064': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77065': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77066': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77067': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77068': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77069': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77070': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77071': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77072': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77073': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77074': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77075': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77076': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northeast' },
+        '77077': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77078': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northeast' },
+        '77079': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77080': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77081': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77082': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77083': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77084': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77085': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77086': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77087': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston South' },
+        '77088': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77089': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southeast' },
+        '77090': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77091': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77092': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77093': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston North' },
+        '77094': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston West' },
+        '77095': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77096': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' },
+        '77097': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Northwest' },
+        '77098': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Central' },
+        '77099': { city: 'Houston', state: 'TX', available: true, franchise: 'Houston Southwest' }
       };
-      update();
-      var mo = new MutationObserver(update);
-      mo.observe(results, { childList: true, subtree: true, characterData: true });
-    } catch(e) { /* no-op */ }
+
+      function lookupZip(zipCode) {
+        // Clean the input
+        var cleanZip = zipCode.replace(/\D/g, '').substring(0, 5);
+        
+        if (cleanZip.length !== 5) {
+          return { error: 'Please enter a valid 5-digit ZIP code' };
+        }
+
+        var area = serviceAreas[cleanZip];
+        if (area) {
+          return {
+            success: true,
+            zipCode: cleanZip,
+            city: area.city,
+            state: area.state,
+            available: area.available,
+            franchise: area.franchise
+          };
+        } else {
+          // For demonstration, use a geocoding API fallback
+          return lookupZipWithAPI(cleanZip);
+        }
+      }
+
+      function lookupZipWithAPI(zipCode) {
+        // Using a free geocoding service (no API key required)
+        // In production, you might want to use Google Maps API, MapBox, or similar
+        return fetch(`https://api.zippopotam.us/us/${zipCode}`)
+          .then(response => {
+            if (!response.ok) throw new Error('ZIP code not found');
+            return response.json();
+          })
+          .then(data => {
+            var city = data.places && data.places[0] ? data.places[0]['place name'] : 'Unknown';
+            var state = data.places && data.places[0] ? data.places[0]['state abbreviation'] : 'Unknown';
+            
+            return {
+              success: true,
+              zipCode: zipCode,
+              city: city,
+              state: state,
+              available: false, // Not in our service area
+              franchise: null
+            };
+          })
+          .catch(() => {
+            return { error: 'ZIP code not found. Please check and try again.' };
+          });
+      }
+
+      function displayResults(result) {
+        if (result.error) {
+          if (results) {
+            results.innerHTML = `
+              <div class="zip-error">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
+                  <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>${result.error}</span>
+              </div>
+            `;
+          }
+          lastZipResult = null;
+          setError(result.error);
+          if (mapContainer) { 
+            mapContainer.classList.remove('is-visible'); 
+            mapContainer.style.display = 'none';
+            mapContainer.innerHTML = '<div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>'; 
+          }
+        } else if (result.success) {
+          lastZipResult = result;
+          setError('');
+          // We no longer render a results card; the map will be shown.
+          
+          // Show map for successful lookups
+          if (mapContainer) {
+            mapContainer.classList.add('is-visible');
+            mapContainer.style.display = 'block';
+            showMapForLocation(result.city, result.state, result.zipCode);
+          }
+        }
+        
+        // Update visibility
+        if (results) {
+          var hasContent = (results.innerHTML || '').trim().length > 0;
+          results.classList.toggle('is-visible', hasContent);
+        }
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        var zipCode = input.value.trim();
+        
+        if (!zipCode) {
+          displayResults({ error: 'Please enter a ZIP code' });
+          return;
+        }
+
+        // Show loading state for auto-lookup (real-time display)
+        if (results) {
+          results.innerHTML = `
+            <div class="zip-loading">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2V6M12 18V22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12H6M18 12H22M4.93 19.07L7.76 16.24M16.24 7.76L19.07 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span>Looking up ZIP code...</span>
+            </div>
+          `;
+          results.classList.add('is-visible');
+        }
+
+        var result = lookupZip(zipCode);
+        
+        if (result.then) {
+          // Handle promise from API call
+          result.then(displayResults).catch(() => {
+            displayResults({ error: 'Unable to lookup ZIP code. Please try again.' });
+          });
+        } else {
+          // Handle immediate result
+          setTimeout(() => displayResults(result), 500); // Small delay for better UX
+        }
+      }
+
+      // Bind form submission
+      form.addEventListener('submit', handleSubmit);
+
+      // Redirect to contact when Search button is clicked, using last lookup if available
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.addEventListener('click', function(ev){
+          ev.preventDefault();
+          var value = (input.value || '').replace(/\D/g, '').substring(0, 5);
+          if (value.length !== 5) { displayResults({ error: 'Please enter a valid 5-digit ZIP code' }); return; }
+          var url = '/contact?zip=' + value;
+          if (lastZipResult && lastZipResult.city) {
+            url += '&city=' + encodeURIComponent(lastZipResult.city || '');
+            if (lastZipResult.state) url += '&state=' + encodeURIComponent(lastZipResult.state);
+          }
+          window.location.href = url;
+        });
+      }
+
+      // Also trigger on input change for better UX
+      var debounceTimer;
+      input.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        var value = input.value.replace(/\D/g, '').substring(0, 5);
+        input.value = value;
+        
+        if (value.length === 5) {
+          debounceTimer = setTimeout(() => {
+            handleSubmit({ preventDefault: () => {} });
+          }, 300);
+        } else if (results && results.classList.contains('is-visible')) {
+          results.innerHTML = '';
+          results.classList.remove('is-visible');
+          if (mapContainer) { mapContainer.classList.remove('is-visible'); mapContainer.innerHTML = '<div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>'; }
+          lastZipResult = null;
+        }
+      });
+
+      // Clear results when input is cleared
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' || (e.key === 'Backspace' && input.value.length <= 1)) {
+          if (results) { results.innerHTML = ''; results.classList.remove('is-visible'); }
+          if (mapContainer) { mapContainer.classList.remove('is-visible'); mapContainer.innerHTML = '<div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>'; }
+          lastZipResult = null;
+        }
+      });
+
+      // Google Maps Embed integration (simpler approach)
+      window.showMapForLocation = function(city, state, zipCode) {
+        var mapElement = document.getElementById('zip-map');
+        if (!mapElement) return;
+        
+        // Use Google Maps Embed API (no API key required for basic usage)
+        var query = encodeURIComponent(`${city}, ${state} ${zipCode}`);
+        var embedUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${query}&zoom=12`;
+        
+        // For demo purposes, use the basic embed without API key
+        var basicEmbedUrl = `https://maps.google.com/maps?q=${query}&t=&z=12&ie=UTF8&iwloc=&output=embed`;
+        
+        mapElement.innerHTML = `
+          <iframe
+            width="100%"
+            height="300"
+            style="border:0; border-radius: 12px;"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="${basicEmbedUrl}">
+          </iframe>
+        `;
+      };
+
+    } catch(e) { 
+      console.error('ZIP lookup error:', e);
+    }
   })();
 </script>
 
