@@ -353,33 +353,6 @@
                     <div class="col-md-6">
                       <label class="form-label">Intro Title</label>
                       <input type="text" name="introTitle" class="form-control" value="<%= (about && about.introTitle) || '' %>" />
-                    </div>
-                    <div class="col-12">
-                      <label class="form-label">Intro Body</label>
-                      <textarea name="introBody" class="form-control" rows="4"><%= (about && about.introBody) || '' %></textarea>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label">Intro Image 1 URL</label>
-                      <input type="text" name="introImage1" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.introImage1) || '' %>" />
-                      <div class="d-flex align-items-center gap-3 mt-2">
-                        <input type="file" id="introImage1File" accept="image/*" class="form-control" style="max-width: 320px;" />
-                        <span id="introImage1Status" class="text-muted"></span>
-                      </div>
-                      <div class="mt-2">
-                        <img id="introImage1Preview" src="<%= (about && about.introImage1) || '' %>" alt="Intro image 1 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.introImage1) ? '' : 'hidden' %> />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label">Intro Image 2 URL</label>
-                      <input type="text" name="introImage2" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.introImage2) || '' %>" />
-                      <div class="d-flex align-items-center gap-3 mt-2">
-                        <input type="file" id="introImage2File" accept="image/*" class="form-control" style="max-width: 320px;" />
-                        <span id="introImage2Status" class="text-muted"></span>
-                      </div>
-                      <div class="mt-2">
-                        <img id="introImage2Preview" src="<%= (about && about.introImage2) || '' %>" alt="Intro image 2 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.introImage2) ? '' : 'hidden' %> />
-                      </div>
-                    </div>
 
                     <div class="col-12 mt-4">
                       <h3 class="h6">Core Values</h3>
@@ -393,13 +366,18 @@
                         <h4 class="h6 mb-1">Core Value <%= i %></h4>
                       </div>
                       <div class="col-md-4">
-                        <label class="form-label">Icon URL</label>
-                        <input type="text" name="coreValue<%= i %>Icon" class="form-control" placeholder="/wp-content/uploads/..." value="<%= (about && about[`coreValue${i}Icon`]) || '' %>" />
+                        <label class="form-label">Icon URL (optional)</label>
+                        <input type="text" name="coreValue<%= i %>Icon" class="form-control" placeholder="/wp-content/uploads/... or leave blank for built‑in icon" value="<%= (about && about[`coreValue${i}Icon`]) || '' %>" />
                         <div class="d-flex align-items-center gap-3 mt-2">
                           <input type="file" id="coreValue<%= i %>IconFile" accept="image/*" class="form-control" style="max-width: 320px;" />
                           <span id="coreValue<%= i %>IconStatus" class="text-muted"></span>
                         </div>
+                        <div class="mt-2">
+                          <img id="coreValue<%= i %>IconPreview" src="<%= (about && about[`coreValue${i}Icon`]) || '' %>" alt="Icon preview" style="max-height: 60px; border-radius: 6px; background: #f8f9fa; padding: 6px;" <%= (about && about[`coreValue${i}Icon`]) ? '' : 'hidden' %> />
+                        </div>
+                        <small class="text-muted d-block mt-1">If left blank, a white inline SVG icon will be used.</small>
                       </div>
+
                       <div class="col-md-4">
                         <label class="form-label">Title</label>
                         <input type="text" name="coreValue<%= i %>Title" class="form-control" value="<%= (about && about[`coreValue${i}Title`]) || '' %>" />
@@ -410,8 +388,8 @@
                       </div>
                     <% } %>
 
-                    <div class="col-md-6">
-                      <label class="form-label">Right Image 1 URL</label>
+                    <div class="col-12">
+                      <label class="form-label">Right Image URL (single large image)</label>
                       <input type="text" name="coreRightImage1" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.coreRightImage1) || '' %>" />
                       <div class="d-flex align-items-center gap-3 mt-2">
                         <input type="file" id="coreRightImage1File" accept="image/*" class="form-control" style="max-width: 320px;" />
@@ -420,17 +398,7 @@
                       <div class="mt-2">
                         <img id="coreRightImage1Preview" src="<%= (about && about.coreRightImage1) || '' %>" alt="Right image 1 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.coreRightImage1) ? '' : 'hidden' %> />
                       </div>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label">Right Image 2 URL</label>
-                      <input type="text" name="coreRightImage2" class="form-control" placeholder="https://... or /wp-content/uploads/..." value="<%= (about && about.coreRightImage2) || '' %>" />
-                      <div class="d-flex align-items-center gap-3 mt-2">
-                        <input type="file" id="coreRightImage2File" accept="image/*" class="form-control" style="max-width: 320px;" />
-                        <span id="coreRightImage2Status" class="text-muted"></span>
-                      </div>
-                      <div class="mt-2">
-                        <img id="coreRightImage2Preview" src="<%= (about && about.coreRightImage2) || '' %>" alt="Right image 2 preview" style="max-height: 120px; border-radius: 6px;" <%= (about && about.coreRightImage2) ? '' : 'hidden' %> />
-                      </div>
+                      <small class="text-muted d-block mt-1">Only one image is used in this section.</small>
                     </div>
 
                     <div class="col-12 mt-4">

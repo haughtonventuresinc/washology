@@ -1,0 +1,202 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - heading "Get Free Estimate" [level=6] [ref=e7]:
+        - link "Get Free Estimate" [ref=e8] [cursor=pointer]:
+          - /url: "#"
+      - navigation [ref=e9]:
+        - list [ref=e12]:
+          - list [ref=e13]:
+            - listitem [ref=e14] [cursor=pointer]:
+              - link "About Us" [ref=e15] [cursor=pointer]:
+                - /url: /about-us
+            - listitem [ref=e16] [cursor=pointer]:
+              - link "Contact Us" [ref=e17] [cursor=pointer]:
+                - /url: /contact-us
+          - listitem [ref=e18] [cursor=pointer]:
+            - link "Swim Studs" [ref=e19] [cursor=pointer]:
+              - /url: /
+              - img "Swim Studs" [ref=e20] [cursor=pointer]
+          - list [ref=e21]:
+            - listitem [ref=e22] [cursor=pointer]:
+              - link "Services" [ref=e23] [cursor=pointer]:
+                - /url: "#"
+                - text: Services
+            - listitem [ref=e24] [cursor=pointer]:
+              - link "Blog" [ref=e25] [cursor=pointer]:
+                - /url: /blog
+    - main [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e29]:
+          - generic [ref=e31]:
+            - heading "Book Now" [level=1] [ref=e32]
+            - heading "Free estimates within 24 hours" [level=2] [ref=e34]
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - heading "Start Your Pool Service" [level=3] [ref=e37]
+              - heading "Crystal-clear water. Stress-free maintenance." [level=4] [ref=e38]:
+                - generic [ref=e39]: Crystal-clear water. Stress-free maintenance.
+              - list [ref=e40]:
+                - listitem [ref=e41]: WEEKLY SERVICE
+                - listitem [ref=e42]: CHEMICAL BALANCING
+                - listitem [ref=e43]: FILTER CLEANING
+                - listitem [ref=e44]: GREEN POOL CLEANUP
+                - listitem [ref=e45]: EQUIPMENT REPAIRS
+                - listitem [ref=e46]: PUMP & HEATER SERVICE
+            - generic [ref=e47]:
+              - heading "Estimates in 24 Hours or Less" [level=2] [ref=e49]
+              - generic [ref=e51]:
+                - generic [ref=e52]:
+                  - generic [ref=e53]:
+                    - generic [ref=e54]:
+                      - text: Name
+                      - generic [ref=e55]: "*"
+                    - generic [ref=e56]:
+                      - textbox "First" [ref=e58]
+                      - textbox "Last" [ref=e60]
+                  - generic [ref=e61]:
+                    - generic [ref=e62]:
+                      - text: Phone
+                      - generic [ref=e63]: "*"
+                    - textbox "Phone" [ref=e64]
+                  - generic [ref=e65]:
+                    - generic [ref=e66]:
+                      - text: Email
+                      - generic [ref=e67]: "*"
+                    - textbox "Email" [ref=e68]
+                  - generic [ref=e69]:
+                    - generic [ref=e70]: ZIP Code
+                    - textbox "ZIP Code" [ref=e71]
+                  - generic [ref=e72]:
+                    - generic [ref=e73]: How can we help?
+                    - textbox "How can we help?" [ref=e74]
+                - button "Get My Free Estimate" [ref=e76] [cursor=pointer]
+        - generic [ref=e78]:
+          - heading "Discover our 5 Star Reputation" [level=2] [ref=e79]
+          - generic [ref=e82]:
+            - generic [ref=e84]:
+              - generic [ref=e85]: ★★★★★
+              - paragraph [ref=e88]: Great company!!! Very reliable. Skilled workmanship. Love our garage!!!
+              - heading "Barry Kramer" [level=5] [ref=e90]
+            - generic [ref=e92]:
+              - generic [ref=e93]: ★★★★★
+              - paragraph [ref=e96]: The crew out of Lakeway did an amazing job. Very flexible with timing—overall very happy with the end result.
+              - heading "Paul Flavion" [level=5] [ref=e98]
+            - generic [ref=e100]:
+              - generic [ref=e101]: ★★★★★
+              - paragraph [ref=e104]: Swim Studs gave our system a full tune-up—now it works like new again. Professional and thorough. Highly recommend.
+              - heading "Michelle Morrison" [level=5] [ref=e106]
+        - text: "{{ ... }}"
+        - generic [ref=e109]:
+          - heading "Get An Estimate" [level=2] [ref=e111]
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - group "Name" [ref=e116]:
+                - generic [ref=e117]:
+                  - text: Name
+                  - generic [ref=e118]: "*"
+                - generic [ref=e119]:
+                  - generic [ref=e120]:
+                    - textbox [ref=e121]
+                    - generic [ref=e122]: First
+                  - generic [ref=e123]:
+                    - textbox [ref=e124]
+                    - generic [ref=e125]: Last
+              - generic [ref=e126]:
+                - generic [ref=e127]:
+                  - text: Phone
+                  - generic [ref=e128]: "*"
+                - textbox "Phone" [ref=e129]
+              - generic [ref=e130]:
+                - generic [ref=e131]:
+                  - text: Email
+                  - generic [ref=e132]: "*"
+                - textbox "Email" [ref=e133]
+              - generic [ref=e134]:
+                - generic [ref=e135]: ZIP Code
+                - textbox "ZIP Code" [ref=e136]
+              - generic [ref=e137]:
+                - generic [ref=e138]: How can we help?
+                - textbox "How can we help?" [ref=e139]
+            - button "Get My Free Estimate" [ref=e141] [cursor=pointer]
+        - generic [ref=e144]:
+          - heading "Ready to get started?" [level=2] [ref=e145]
+          - paragraph [ref=e146]: Contact us for a free onsite estimate within 24 hours.
+          - link "Contact Us" [ref=e148] [cursor=pointer]:
+            - /url: /contact-us
+    - contentinfo [ref=e149]:
+      - generic [ref=e150]:
+        - generic [ref=e151]:
+          - generic [ref=e153]:
+            - heading "Pool Cleaning Services" [level=2] [ref=e154]
+            - navigation "Pool Cleaning Services" [ref=e155]:
+              - list [ref=e156]:
+                - listitem [ref=e157]:
+                  - link "Weekly Service" [ref=e158] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e159]:
+                  - link "Chemical Balancing" [ref=e160] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e161]:
+                  - link "Filter Cleaning" [ref=e162] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e163]:
+                  - link "Green Pool Cleanup" [ref=e164] [cursor=pointer]:
+                    - /url: "#"
+          - generic [ref=e166]:
+            - heading "Equipment & Repairs" [level=2] [ref=e167]
+            - navigation "Equipment & Repairs" [ref=e168]:
+              - list [ref=e169]:
+                - listitem [ref=e170]:
+                  - link "Equipment Repairs" [ref=e171] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e172]:
+                  - link "Pump & Heater Service" [ref=e173] [cursor=pointer]:
+                    - /url: "#"
+          - generic [ref=e175]:
+            - heading "Company" [level=2] [ref=e176]
+            - navigation "Company" [ref=e177]:
+              - list [ref=e178]:
+                - listitem [ref=e179]:
+                  - link "About Us" [ref=e180] [cursor=pointer]:
+                    - /url: /about-us
+          - generic [ref=e181]:
+            - heading "Follow Us" [level=2] [ref=e182]
+            - list [ref=e184]:
+              - listitem [ref=e185]:
+                - generic [ref=e186]:
+                  - link "Facebook" [ref=e188] [cursor=pointer]:
+                    - /url: https://www.facebook.com/people/SwimStuds/61578616362975/#
+                    - img "Facebook" [ref=e189] [cursor=pointer]
+                  - link "Instagram" [ref=e191] [cursor=pointer]:
+                    - /url: https://www.instagram.com/venturedbrands/p/DM55lAJx0l7/
+                    - img "Instagram" [ref=e192] [cursor=pointer]
+                  - link "Twitter" [ref=e194] [cursor=pointer]:
+                    - /url: https://twitter.com/search?q=%23SwimStuds&src=typed_query
+                    - img "Twitter" [ref=e195] [cursor=pointer]
+                  - link "LinkedIn" [ref=e197] [cursor=pointer]:
+                    - /url: /
+                    - img "LinkedIn" [ref=e198] [cursor=pointer]
+              - listitem:
+                - link:
+                  - /url: "#"
+              - listitem [ref=e199]:
+                - paragraph [ref=e200]:
+                  - text: "Mon-Sat:"
+                  - text: 7:00 AM - 7:00 PM
+        - generic [ref=e201]:
+          - img "Ventured Brands logo" [ref=e202]
+          - list [ref=e204]:
+            - listitem [ref=e205]:
+              - link "Terms & Conditions" [ref=e206] [cursor=pointer]:
+                - /url: /terms-and-conditions/
+            - listitem [ref=e207]:
+              - link "Privacy Policy" [ref=e208] [cursor=pointer]:
+                - /url: /privacy-policy/
+          - paragraph [ref=e209]: 2025 Swim Studs. Ventured Brands All Rights Reserved.
+```

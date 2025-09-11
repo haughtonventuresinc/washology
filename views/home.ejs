@@ -59,9 +59,23 @@
   </div>
 </section>
 
+<!-- (removed duplicate early ZIP modal block) -->
 
 <!-- Page-scoped styles: Hero aesthetic -->
 <style>
+  /* ZIP capture modal styles */
+  .zip-modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: none; align-items: center; justify-content: center; z-index: 1050; }
+  .zip-modal { background: #fff; color: #05132D; width: min(520px, 92vw); border-radius: 16px; box-shadow: 0 24px 64px rgba(0,0,0,.35); overflow: hidden; }
+  .zip-modal header { padding: 1rem 1.25rem; font-weight: 800; font-size: 1.25rem; border-bottom: 1px solid #eee; }
+  .zip-modal .body { padding: 1rem 1.25rem; }
+  .zip-modal .actions { display: flex; gap: .75rem; justify-content: flex-end; padding: 1rem 1.25rem; border-top: 1px solid #eee; }
+  .zip-input-group { display: flex; align-items: center; gap: .5rem; border: 1px solid #ddd; padding: .5rem .75rem; border-radius: 10px; }
+  .zip-input-group input { border: none; outline: none; flex: 1; font-size: 1rem; }
+  .zip-suggest-modal { margin-top: .5rem; border-radius: 10px; overflow: hidden; border: 1px solid #eee; display: none; }
+  .zip-suggest-modal .item { display: flex; align-items: center; gap: .5rem; padding: .6rem .75rem; background: #fff; cursor: pointer; }
+  .zip-suggest-modal .item:hover { background: #f5f5f5; }
+  .btn-cancel { background: transparent; border: 1px solid #ddd; border-radius: 8px; padding: .6rem 1rem; }
+  .btn-continue { background: var(--brand-red); color: #fff; border: 0; border-radius: 8px; padding: .6rem 1rem; }
   .hero-aesthetic {
     position: relative;
     /* extra bottom padding so bottom-anchored ZIP has room */
@@ -93,6 +107,10 @@
     max-width: 600px;
     z-index: 10;
   }
+
+  /* Disable ZIP feature globally */
+  .zip-bottom-container,
+  .zip-map-container { display: none !important; }
   
   @media (max-width: 768px) {
     .zip-bottom-container {
@@ -518,6 +536,17 @@
   // ZIP code lookup functionality
   (function(){
     try {
+      // Feature toggle: fully disable ZIP search and remove its DOM
+      var zipFeatureDisabled = true;
+      if (zipFeatureDisabled) {
+        try {
+          var zb = document.querySelector('.zip-bottom-container');
+          if (zb) zb.remove();
+          var zm = document.querySelector('.zip-map-container');
+          if (zm) zm.remove();
+        } catch(_) {}
+        return;
+      }
       var form = document.querySelector('.zip-card');
       var input = document.querySelector('#zip-search-input');
       var results = document.querySelector('.zip-code-results');
@@ -1307,23 +1336,11 @@
 			<% } %>
 		</div>
 		
-		<!-- Navigation dots -->
-		<div class="services-navigation">
-			<div class="nav-dots">
-				<span class="nav-dot active"></span>
-				<span class="nav-dot"></span>
-			</div>
-		</div>
 	</div>
 </section>
 
 <!-- Page-scoped styles: New Services Section -->
 <style>
-  .our-services-new {
-    padding: clamp(6rem, 9vw, 8rem) 0; /* taller section */
-    background: var(--brand-yellow);
-    color: #fff;
-  }
   
   .our-services-new .services-header {
     display: flex;
@@ -1457,10 +1474,6 @@
     margin: 0;
   }
   
-  .our-services-new .services-navigation {
-    display: flex;
-    justify-content: center;
-  }
   
   .our-services-new .nav-dots {
     display: flex;
@@ -1593,6 +1606,10 @@
 
 <!-- Page-scoped styles: Pool Facts infinite marquee -->
 <style>
+  /* Tighten top spacing for the Pool Facts block */
+  section.our-stats { padding-top: 0.5rem !important; margin-top: 0 !important; }
+  section.our-stats .content-wrapper { padding-top: 0 !important; }
+  section.our-stats .section-title { margin-top: 0 !important; margin-bottom: 0.75rem !important; }
   .our-stats .stats-scroller {
     overflow: hidden;
     position: relative;
@@ -1606,9 +1623,10 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
-    gap: 2.5rem;
+    gap: 1rem;
     white-space: nowrap;
     will-change: transform;
+    animation: stats-marquee-rtl var(--stats-duration) linear infinite;
   }
 
 
@@ -1870,7 +1888,231 @@
   })();
   </script>
 
+<!-- ZIP capture modal (shown when user clicks Contact/Get Free Estimate) -->
+<div id="zip-modal-backdrop" class="zip-modal-backdrop" aria-hidden="true">
+  <div class="zip-modal" role="dialog" aria-modal="true" aria-labelledby="zip-modal-title">
+    <header id="zip-modal-title">Enter your ZIP code</header>
+    <div class="body">
+      <div class="zip-input-group">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16Zm11 20-6-6" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" id="zip-modal-input" inputmode="numeric" maxlength="5" placeholder="12345" autocomplete="postal-code" aria-label="ZIP code" />
+      </div>
+      <div id="zip-suggest-modal" class="zip-suggest-modal" role="listbox" aria-label="ZIP suggestions"></div>
+      <div id="zip-hint" style="margin-top:.5rem; font-size:.9rem; color:#666;"></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn-cancel" id="zip-cancel">Cancel</button>
+      <button type="button" class="btn-continue" id="zip-continue">Continue</button>
+    </div>
+  </div>
+  </div>
+
 <script>
+  // ZIP modal: intercept /contact CTAs, show modal, lookup ZIP -> redirect with city/state
+  (function(){
+    try {
+      var backdrop = document.getElementById('zip-modal-backdrop');
+      if (!backdrop) return; // safety
+      var input = backdrop.querySelector('#zip-modal-input');
+      var suggest = backdrop.querySelector('#zip-suggest-modal');
+      var hint = backdrop.querySelector('#zip-hint');
+      var btnCancel = backdrop.querySelector('#zip-cancel');
+      var btnGo = backdrop.querySelector('#zip-continue');
+      var selected = null;
+
+      // Provide a US serviceAreas map for richer suggestions (fallback if none provided elsewhere)
+      var serviceAreas = window.__zipServiceAreas || {
+        '78701': { city: 'Austin', state: 'TX' },
+        '78702': { city: 'Austin', state: 'TX' },
+        '78703': { city: 'Austin', state: 'TX' },
+        '78704': { city: 'Austin', state: 'TX' },
+        '78705': { city: 'Austin', state: 'TX' },
+        '78731': { city: 'Austin', state: 'TX' },
+        '78732': { city: 'Austin', state: 'TX' },
+        '78733': { city: 'Austin', state: 'TX' },
+        '78734': { city: 'Austin', state: 'TX' },
+        '78735': { city: 'Austin', state: 'TX' },
+        '78736': { city: 'Austin', state: 'TX' },
+        '78737': { city: 'Austin', state: 'TX' },
+        '78738': { city: 'Austin', state: 'TX' },
+        '78739': { city: 'Austin', state: 'TX' },
+        '78741': { city: 'Austin', state: 'TX' },
+        '78742': { city: 'Austin', state: 'TX' },
+        '78744': { city: 'Austin', state: 'TX' },
+        '78745': { city: 'Austin', state: 'TX' },
+        '78746': { city: 'Austin', state: 'TX' },
+        '78747': { city: 'Austin', state: 'TX' },
+        '78748': { city: 'Austin', state: 'TX' },
+        '78749': { city: 'Austin', state: 'TX' },
+        '78750': { city: 'Austin', state: 'TX' },
+        '78751': { city: 'Austin', state: 'TX' },
+        '78752': { city: 'Austin', state: 'TX' },
+        '78753': { city: 'Austin', state: 'TX' },
+        '78754': { city: 'Austin', state: 'TX' },
+        '78756': { city: 'Austin', state: 'TX' },
+        '78757': { city: 'Austin', state: 'TX' },
+        '78758': { city: 'Austin', state: 'TX' },
+        '78759': { city: 'Austin', state: 'TX' }
+      };
+
+      function hideSuggest(){ if (suggest){ suggest.style.display='none'; suggest.innerHTML=''; } }
+      function showLoading(){
+        if (!suggest) return;
+        suggest.innerHTML = '<div class="item" aria-live="polite"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" opacity=".35"/><path d="M21 12a9 9 0 0 1-9 9" stroke="currentColor" stroke-width="2"/></svg> Searching…</div>';
+        suggest.style.display = 'block';
+      }
+      function showSuggest(items){
+        if (!suggest) return;
+        suggest.innerHTML = '';
+        if (!items || !items.length) {
+          var empty = document.createElement('div');
+          empty.className = 'item';
+          empty.textContent = 'No results found';
+          suggest.appendChild(empty);
+          suggest.style.display = 'block';
+          return;
+        }
+        items.forEach(function(item){
+          var div = document.createElement('div');
+          div.className = 'item';
+          div.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" fill="currentColor"/></svg> ' + item.label;
+          div.addEventListener('click', function(){ selected = item; hint.textContent = item.label; hideSuggest(); });
+          suggest.appendChild(div);
+        });
+        suggest.style.display = 'block';
+      }
+      function formatLabel(zip, area){
+        var city = (area && area.city) || '';
+        var state = (area && area.state) || '';
+        if (city && state) return city + ', ' + state + ' ' + zip + ', USA';
+        return zip + ', USA';
+      }
+      function buildSuggestionsFromPrefix(prefix){
+        var out = [];
+        var n = 0;
+        Object.keys(serviceAreas).sort().forEach(function(zip){
+          if (zip.indexOf(prefix) === 0 && n < 8){ out.push({ zip: zip, city: serviceAreas[zip].city, state: serviceAreas[zip].state, label: formatLabel(zip, serviceAreas[zip]) }); n++; }
+        });
+        return out;
+      }
+      function buildRelatedSuggestions(exactZip){
+        var area = serviceAreas[exactZip];
+        var list = [];
+        if (area) list.push({ zip: exactZip, city: area.city, state: area.state, label: formatLabel(exactZip, area) });
+        // same city/state first
+        Object.keys(serviceAreas).forEach(function(z){
+          if (z !== exactZip){ var a = serviceAreas[z]; if (a && area && a.city === area.city && a.state === area.state){ list.push({ zip:z, city:a.city, state:a.state, label: formatLabel(z,a) }); } }
+        });
+        // fallback more by prefix if needed
+        var base3 = exactZip.substring(0,3);
+        if (list.length < 6){
+          Object.keys(serviceAreas).forEach(function(z){
+            if (list.length >= 8) return;
+            if (z !== exactZip && z.substring(0,3) === base3){ list.push({ zip:z, city:serviceAreas[z].city, state:serviceAreas[z].state, label: formatLabel(z, serviceAreas[z]) }); }
+          });
+        }
+        // unique by zip & cap 8
+        var seen = {};
+        var out = [];
+        for (var i=0; i<list.length && out.length<8; i++){ if (!seen[list[i].zip]){ seen[list[i].zip]=1; out.push(list[i]); } }
+        return out;
+      }
+      function show(){ backdrop.style.display='flex'; selected=null; input.value=''; hint.textContent=''; hideSuggest(); setTimeout(function(){ input.focus(); }, 30); }
+      function hide(){ backdrop.style.display='none'; }
+      function lookup(zip){
+        var z = String(zip||'').replace(/\D/g,'').slice(0,5);
+        if (z.length !== 5) { hideSuggest(); selected=null; return; }
+        // Prefer related suggestions from our local service map for richer results
+        var local = buildRelatedSuggestions(z);
+        if (local && local.length){ selected = local[0]; showSuggest(local); return; }
+        // Fallback to API when local data is not available
+        showLoading();
+        fetch('https://api.zippopotam.us/us/' + z)
+          .then(function(r){ if(!r.ok) throw new Error('nf'); return r.json(); })
+          .then(function(data){
+            var places = Array.isArray(data.places) ? data.places : [];
+            var items = places.map(function(p){
+              var city = p['place name'] || '';
+              var state = p['state abbreviation'] || '';
+              var label = (city && state) ? (city + ', ' + state + ' ' + z + ', USA') : (z + ', USA');
+              return { zip:z, city:city, state:state, label:label };
+            });
+            if (!items.length) items = [{ zip:z, city:'', state:'', label: z + ', USA' }];
+            selected = items[0];
+            showSuggest(items);
+          })
+          .catch(function(){ hideSuggest(); selected=null; });
+      }
+
+      var t;
+      input && input.addEventListener('input', function(){
+        var v = input.value.replace(/\D/g,'').slice(0,5); input.value = v;
+        clearTimeout(t);
+        if (v.length >= 3 && v.length < 5){
+          var pref = buildSuggestionsFromPrefix(v);
+          if (pref.length){ showSuggest(pref); } else { hideSuggest(); }
+          return;
+        }
+        if (v.length < 5){ hideSuggest(); return; }
+        t = setTimeout(function(){ lookup(v); }, 150);
+      });
+      input && input.addEventListener('blur', function(){ setTimeout(hideSuggest, 150); });
+      btnCancel && btnCancel.addEventListener('click', hide);
+      btnGo && btnGo.addEventListener('click', function(){
+        var v = (selected && selected.zip) || (input.value||'').replace(/\D/g,'').slice(0,5);
+        if (v.length !== 5) { hint.textContent = 'Please enter a valid 5-digit ZIP'; return; }
+        var url = '/contact-us?zip=' + v;
+        if (selected){ if (selected.city) url += '&city=' + encodeURIComponent(selected.city); if (selected.state) url += '&state=' + encodeURIComponent(selected.state); }
+        window.location.href = url;
+      });
+
+      // Global delegation so any /contact link triggers the modal (header, footer, hero, etc.)
+      if (!window.__zipModalDelegated) {
+        window.__zipModalDelegated = true;
+        document.addEventListener('click', function(ev){
+          var el = ev.target && ev.target.closest ? ev.target.closest('a,button,[data-bs-target]') : null;
+          if (!el) return;
+          var href = el.getAttribute('href') || '';
+          var target = el.getAttribute('data-bs-target') || '';
+          // match: /contact, contact, absolute http(s)://.../contact
+          var isContact = /(^|\b|\/)contact(\b|\/?|\?|#)/i.test(href);
+          var isScheduleModal = target === '#scheduleModal';
+          if (isContact || isScheduleModal) {
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            console.debug('[ZIP] Intercepted CTA', { href: href, target: target });
+            show();
+          }
+        }, true);
+      }
+
+      // Close on backdrop click or ESC
+      backdrop.addEventListener('click', function(e){ if (e.target === backdrop) hide(); });
+      document.addEventListener('keydown', function(e){ if (backdrop.style.display==='flex' && e.key==='Escape') hide(); });
+
+      // Test harness: enable with ?ziptest=1, or use window.showZipModal()
+      window.showZipModal = show;
+      try {
+        var qp = new URLSearchParams(window.location.search);
+        if (qp.get('ziptest') === '1') {
+          var btn = document.createElement('button');
+          btn.textContent = 'Open ZIP Modal (TEST)';
+          btn.style.position = 'fixed';
+          btn.style.right = '12px';
+          btn.style.bottom = '12px';
+          btn.style.zIndex = '2000';
+          btn.style.padding = '.5rem .75rem';
+          btn.style.borderRadius = '8px';
+          btn.style.border = '1px solid rgba(0,0,0,.15)';
+          btn.style.background = '#fff';
+          btn.style.color = '#05132D';
+          btn.addEventListener('click', show);
+          document.body.appendChild(btn);
+          console.debug('[ZIP] Test harness enabled');
+        }
+      } catch(_){}
+    } catch(e) { /* no-op */ }
+  })();
   // Simple button-controlled scrolling for blog slider
   (function(){
     try {
