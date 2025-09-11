@@ -202,8 +202,9 @@ section.warranty.banner.bg-jade-geometric {
 
 /* Blog features section should be white */
 section.blogFeat {
-  background: #ffffff !important;
+  background: var(--brand-red) !important;
   background-image: none !important;
+  color: white !important;
 }
 section.blogFeat::before,
 section.blogFeat::after {
@@ -214,10 +215,31 @@ section.blogFeat::after {
 
 /* Blog features intro heading color */
 section.blogFeat h4 {
-  color: var(--brand-orange) !important;
+  color: white !important;
 }
 
 /* Our Stats icons -> brand orange */
+/* Blog feature cards: yellow cards with brand-red text */
+.blogFeat .featured-posts-wrapper a.feat-post {
+  background: var(--brand-yellow) !important;
+  border-color: rgba(0,0,0,0) !important;
+}
+.blogFeat .featured-posts-wrapper a.feat-post .entry-summary,
+.blogFeat .featured-posts-wrapper a.feat-post .entry-summary h6,
+.blogFeat .featured-posts-wrapper a.feat-post .entry-summary p,
+.blogFeat .featured-posts-wrapper a.feat-post .entry-title {
+  color: var(--brand-red) !important;
+}
+.blogFeat .featured-posts-wrapper a.feat-post:hover {
+  background: color-mix(in srgb, var(--brand-yellow) 92%, #000 8%) !important;
+}
+
+.blogFeat .featured-posts-wrapper { width: 100%; }
+@media (max-width: 576px) {
+  .blogFeat .featured-posts-wrapper { padding-left: 1rem; padding-right: 1rem; }
+  .blogFeat .featured-posts-wrapper > a.feat-post { width: 100% !important; }
+}
+
 .our-stats .our-stats--stat--icon img {
   /* approximate #F7A11A */
   filter: invert(69%) sepia(71%) saturate(743%) hue-rotate(352deg) brightness(101%) contrast(101%);

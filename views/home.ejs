@@ -5,49 +5,56 @@
 
   <div class="content-wrapper container position-relative">
     <div class="row align-items-center justify-content-center">
-      <!-- Left side: Main content -->
-      <div class="col-lg-6 col-md-6 col-sm-12 hero-main-content text-center">
-        <h1 class="hero-main-title mb-3"><%= (homepage && homepage.heroTitle) || 'Your Trusted Pool Care Experts' %></h1>
-        <p class="hero-description mb-4"><%= (homepage && homepage.heroSubtitle) || 'Pool Cleaning, Chemical Balancing, Equipment Service, and More. We keep pools sparkling, safe, and swim‑ready all year long.' %></p>
+      <!-- Main content centered -->
+      <div class="col-12 hero-main-content text-center">
+        <h1 class="hero-main-title mb-3">Your Trusted Pool Care Experts</h1>
+        <p class="hero-description mb-4">Pool Cleaning, Chemical Balancing, Equipment Service, and More</p>
         
         <div class="hero-buttons">
-          <a class="btn btn-brand-primary me-3" href="<%= (homepage && homepage.ctaUrl) || '/contact' %>"><%= (homepage && homepage.ctaLabel) || 'Get in touch' %></a>
-          <button class="btn btn-outline-light">Browse services ></button>
+          <a class="btn btn-brand-primary me-3" href="/contact">Learn More</a>
+          <button class="btn btn-outline-light">Browse services &gt;</button>
         </div>
       </div>
-      
-      <!-- Right side: ZIP search card -->
-      <div class="col-lg-5 col-md-6 col-sm-12 zip-col">
-        <div class="zip-code-search">
-          <form role="search" aria-label="Find franchise by ZIP code" class="zip-card">
-            <label for="zip-search-input" class="visually-hidden">ZIP Code</label>
-            <div class="input-group input-group-lg">
-              <span class="input-group-text bg-white border-0" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
-                  <path d="M19.3115 21.1768L19.4883 21.3535L19.665 21.1768L21.1768 19.6651L21.3536 19.4883L21.1768 19.3116L16.6315 14.7665C17.7498 13.2602 18.3556 11.4325 18.3559 9.55253V9.55249C18.3559 4.69878 14.4069 0.75 9.55295 0.75C4.69901 0.75 0.75 4.69878 0.75 9.55249C0.75 14.4062 4.69901 18.355 9.55295 18.355C11.4325 18.3548 13.26 17.7494 14.7661 16.6317L19.3115 21.1768ZM9.55295 3.38812C12.9526 3.38812 15.7177 6.15305 15.7177 9.55249C15.7177 12.9519 12.9526 15.7169 9.55295 15.7169C6.15329 15.7169 3.38824 12.9519 3.38824 9.55249C3.38824 6.15305 6.15329 3.38812 9.55295 3.38812Z" fill="#05132D" stroke="#05132D" stroke-width="0.5"></path>
-                </svg>
-              </span>
-              <input
-                type="text"
-                id="zip-search-input"
-                class="form-control border-0"
-                placeholder="Enter ZIP code"
-                inputmode="numeric"
-                autocomplete="postal-code"
-                pattern="[0-9]{5}"
-                maxlength="5"
-                aria-describedby="zip-search-help"
-              />
-              <button type="submit" class="btn btn-brand-primary px-4">Search</button>
-            </div>
-            <div id="zip-search-help" class="visually-hidden">Enter a 5-digit ZIP code to find your local franchise</div>
-          </form>
-
-          <div class="zip-map-container" style="display: none;">
-            <div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>
+    </div>
+    
+    <!-- ZIP search bar positioned at bottom center -->
+    <div class="zip-bottom-container">
+      <div class="zip-code-search">
+        <form role="search" aria-label="Find franchise by ZIP code" class="zip-card">
+          <label for="zip-search-input" class="visually-hidden">ZIP Code</label>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text bg-white border-0" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+                <path d="M19.3115 21.1768L19.4883 21.3535L19.665 21.1768L21.1768 19.6651L21.3536 19.4883L21.1768 19.3116L16.6315 14.7665C17.7498 13.2602 18.3556 11.4325 18.3559 9.55253V9.55249C18.3559 4.69878 14.4069 0.75 9.55295 0.75C4.69901 0.75 0.75 4.69878 0.75 9.55249C0.75 14.4062 4.69901 18.355 9.55295 18.355C11.4325 18.3548 13.26 17.7494 14.7661 16.6317L19.3115 21.1768ZM9.55295 3.38812C12.9526 3.38812 15.7177 6.15305 15.7177 9.55249C15.7177 12.9519 12.9526 15.7169 9.55295 15.7169C6.15329 15.7169 3.38824 12.9519 3.38824 9.55249C3.38824 6.15305 6.15329 3.38812 9.55295 3.38812Z" fill="#05132D" stroke="#05132D" stroke-width="0.5"></path>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="zip-search-input"
+              class="form-control border-0"
+              placeholder="Enter ZIP code"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              pattern="[0-9]{5}"
+              maxlength="5"
+              aria-describedby="zip-search-help"
+            />
+            <button type="button" class="btn btn-light border-0 clear-zip-btn d-none" aria-label="Clear ZIP" title="Clear">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="#6c757d" stroke-width="2"/>
+                <line x1="15" y1="9" x2="9" y2="15" stroke="#6c757d" stroke-width="2"/>
+                <line x1="9" y1="9" x2="15" y2="15" stroke="#6c757d" stroke-width="2"/>
+              </svg>
+            </button>
+            <button type="submit" class="btn btn-brand-primary px-4">Search</button>
           </div>
-        </div>
+          <div id="zip-search-help" class="visually-hidden">Enter a 5-digit ZIP code to find your local franchise</div>
+        </form>
       </div>
+    </div>
+    <!-- Map container anchored to bottom of hero -->
+    <div class="zip-map-container" style="display: none;">
+      <div id="zip-map" style="height: 100%; border-radius: 12px; overflow: hidden;"></div>
     </div>
   </div>
 </section>
@@ -58,12 +65,16 @@
   .hero-aesthetic {
     position: relative;
     /* extra bottom padding so bottom-anchored ZIP has room */
-    padding: clamp(5rem, 8vw, 9rem) 0 clamp(6rem, 8vw, 8rem) 0;
+    padding: clamp(6rem, 10vw, 12rem) 0 clamp(8rem, 10vw, 10rem) 0;
     color: #fff;
-    min-height: 600px;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     overflow: visible; /* allow anchored ZIP to be visible */
+  }
+  /* When map is open, reserve extra bottom space equal to map height */
+  .hero-aesthetic.map-open {
+    padding-bottom: calc(clamp(8rem, 10vw, 10rem) + 45vh + 1.5rem);
   }
   /* Ensure the absolute ZIP card anchors to the full hero, not the inner container */
   .hero-aesthetic .content-wrapper { position: static !important; }
@@ -71,6 +82,24 @@
   .hero-aesthetic .content-wrapper .row.align-items-center { justify-content: center !important; }
   /* Explicitly override Bootstrap's justify-content-between on the hero row */
   .hero-aesthetic .content-wrapper .row.align-items-center.justify-content-between { justify-content: center !important; }
+  
+  /* Position ZIP search at bottom center */
+  .zip-bottom-container {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 600px;
+    z-index: 10;
+  }
+  
+  @media (max-width: 768px) {
+    .zip-bottom-container {
+      bottom: 1rem;
+      max-width: 90%;
+    }
+  }
   .hero-aesthetic .hero-overlay {
     position: absolute;
     inset: 0;
@@ -103,6 +132,9 @@
     color: rgba(255, 255, 255, 0.9);
     max-width: 500px;
     margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
   .hero-aesthetic .hero-buttons {
     display: flex;
@@ -337,16 +369,29 @@
     to { transform: rotate(360deg); }
   }
   
-  /* ZIP Map Container */
+  /* ZIP Map Container: expand to bottom area of hero */
   .zip-map-container {
-    margin-top: 1rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0; /* anchor to bottom of hero */
+    width: min(900px, 95vw);
+    height: 45vh; /* occupies bottom portion of hero */
+    display: none;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background: #fff; /* fallback bg while iframe loads */
+    z-index: 2;
   }
-  
-  .zip-map-container.is-visible {
-    display: block !important;
+
+  .zip-map-container.is-visible { display: block !important; }
+
+  @media (max-width: 768px) {
+    .zip-map-container {
+      width: 94vw;
+      height: 40vh;
+    }
   }
   
   /* Responsive adjustments */
@@ -477,6 +522,8 @@
       var input = document.querySelector('#zip-search-input');
       var results = document.querySelector('.zip-code-results');
       var mapContainer = document.querySelector('.zip-map-container');
+      var heroSection = document.querySelector('section.hero.hero-wrapper');
+      var clearBtn = document.querySelector('.clear-zip-btn');
       var lastZipResult = null; // store last successful lookup for redirect
       if (!form || !input) return;
       function setError(msg){
@@ -733,8 +780,9 @@
           if (mapContainer) { 
             mapContainer.classList.remove('is-visible'); 
             mapContainer.style.display = 'none';
-            mapContainer.innerHTML = '<div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>'; 
+            mapContainer.innerHTML = '<div id="zip-map" style="height: 100%; border-radius: 12px; overflow: hidden;"></div>'; 
           }
+          if (heroSection) heroSection.classList.remove('map-open');
         } else if (result.success) {
           lastZipResult = result;
           setError('');
@@ -746,6 +794,7 @@
             mapContainer.style.display = 'block';
             showMapForLocation(result.city, result.state, result.zipCode);
           }
+          if (heroSection) heroSection.classList.add('map-open');
         }
         
         // Update visibility
@@ -815,6 +864,7 @@
         clearTimeout(debounceTimer);
         var value = input.value.replace(/\D/g, '').substring(0, 5);
         input.value = value;
+        if (clearBtn) clearBtn.classList.toggle('d-none', value.length === 0);
         
         if (value.length === 5) {
           debounceTimer = setTimeout(() => {
@@ -823,8 +873,9 @@
         } else if (results && results.classList.contains('is-visible')) {
           results.innerHTML = '';
           results.classList.remove('is-visible');
-          if (mapContainer) { mapContainer.classList.remove('is-visible'); mapContainer.innerHTML = '<div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>'; }
+          if (mapContainer) { mapContainer.classList.remove('is-visible'); mapContainer.innerHTML = '<div id="zip-map" style="height: 100%; border-radius: 12px; overflow: hidden;"></div>'; }
           lastZipResult = null;
+          if (heroSection) heroSection.classList.remove('map-open');
         }
       });
 
@@ -832,10 +883,24 @@
       input.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' || (e.key === 'Backspace' && input.value.length <= 1)) {
           if (results) { results.innerHTML = ''; results.classList.remove('is-visible'); }
-          if (mapContainer) { mapContainer.classList.remove('is-visible'); mapContainer.innerHTML = '<div id="zip-map" style="height: 300px; border-radius: 12px; overflow: hidden;"></div>'; }
+          if (mapContainer) { mapContainer.classList.remove('is-visible'); mapContainer.innerHTML = '<div id="zip-map" style="height: 100%; border-radius: 12px; overflow: hidden;"></div>'; }
           lastZipResult = null;
+          if (heroSection) heroSection.classList.remove('map-open');
+          if (clearBtn) clearBtn.classList.add('d-none');
         }
       });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function(){
+          input.value = '';
+          input.focus();
+          if (results) { results.innerHTML = ''; results.classList.remove('is-visible'); }
+          if (mapContainer) { mapContainer.classList.remove('is-visible'); mapContainer.style.display = 'none'; mapContainer.innerHTML = '<div id="zip-map" style="height: 100%; border-radius: 12px; overflow: hidden;"></div>'; }
+          lastZipResult = null;
+          if (heroSection) heroSection.classList.remove('map-open');
+          clearBtn.classList.add('d-none');
+        });
+      }
 
       // Google Maps Embed integration (simpler approach)
       window.showMapForLocation = function(city, state, zipCode) {
@@ -852,8 +917,8 @@
         mapElement.innerHTML = `
           <iframe
             width="100%"
-            height="300"
-            style="border:0; border-radius: 12px;"
+            height="100%"
+            style="border:0; border-radius: 12px; height: 100%;"
             loading="lazy"
             allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"
@@ -961,7 +1026,7 @@
 </style>
 
 
-<section class="why-choose-us bg-light">
+<section class="why-choose-us">
 	<div class="content-wrapper container">
 		<div class="row align-items-center gap-4 gap-lg-0">
 			<div class="col-sm-12 col-lg-6 position-relative">
@@ -1029,7 +1094,8 @@
 <style>
   .why-choose-us {
     padding: clamp(4rem, 8vw, 6rem) 0;
-    background-color: #f8f9fa;
+    background-color: var(--brand-red);
+    color: #fff;
   }
   
   .why-choose-us .image-container {
@@ -1042,7 +1108,7 @@
     width: 100%;
     height: auto;
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
   }
   
   .why-choose-us .testimonial-card {
@@ -1099,7 +1165,7 @@
   }
   
   .why-choose-us .section-eyebrow {
-    color: var(--brand-red);
+    color: #fff;
     font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -1110,13 +1176,13 @@
   .why-choose-us .section-title {
     font-size: clamp(2rem, 4vw, 2.5rem);
     font-weight: 800;
-    color: #333;
+    color: #fff;
     line-height: 1.2;
   }
   
   .why-choose-us .section-description {
     font-size: 1.1rem;
-    color: #666;
+    color: rgba(255,255,255,0.9);
     line-height: 1.6;
   }
   
@@ -1135,8 +1201,8 @@
   .why-choose-us .feature-icon {
     width: 48px;
     height: 48px;
-    background: var(--brand-red);
-    color: white;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -1147,31 +1213,31 @@
   .why-choose-us .feature-title {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #333;
+    color: #fff;
     margin: 0 0 0.5rem 0;
   }
   
   .why-choose-us .feature-description {
     font-size: 0.95rem;
-    color: #666;
+    color: rgba(255,255,255,0.9);
     line-height: 1.5;
     margin: 0;
   }
   
   .why-choose-us .btn-brand-primary {
-    background-color: var(--brand-red) !important;
-    border-color: var(--brand-red) !important;
+    background-color: #fff !important;
+    border-color: #fff !important;
     padding: 0.75rem 1.5rem;
     font-weight: 600;
     border-radius: 8px;
     transition: all 0.3s ease;
-    color: #fff;
+    color: var(--brand-red) !important;
   }
   
   .why-choose-us .btn-brand-primary:hover {
-    filter: brightness(1.05);
+    filter: brightness(0.95);
     transform: translateY(-2px);
-    color: #fff;
+    color: var(--brand-red) !important;
   }
   
   /* Responsive adjustments */
@@ -1254,7 +1320,7 @@
 <!-- Page-scoped styles: New Services Section -->
 <style>
   .our-services-new {
-    padding: clamp(4rem, 8vw, 6rem) 0;
+    padding: clamp(6rem, 9vw, 8rem) 0; /* taller section */
     background: var(--brand-yellow);
     color: #fff;
   }
@@ -1317,11 +1383,10 @@
   
   .our-services-new .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
     gap: 2rem;
     margin-bottom: 3rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
+    align-items: stretch;
   }
   
   .our-services-new .service-card-new {
@@ -1331,6 +1396,9 @@
     overflow: hidden;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
   
   .our-services-new .service-card-new:hover {
@@ -1341,7 +1409,7 @@
   
   .our-services-new .service-image {
     position: relative;
-    height: 240px;
+    height: 320px; /* taller card images */
     overflow: hidden;
   }
   
@@ -1417,6 +1485,9 @@
   }
   
   /* Responsive adjustments */
+  @media (max-width: 1199.98px) {
+    .our-services-new .services-grid { grid-template-columns: repeat(3, 1fr); }
+  }
   @media (max-width: 991.98px) {
     .our-services-new .services-header {
       flex-direction: column;
@@ -1429,10 +1500,8 @@
       justify-content: flex-start;
     }
     
-    .our-services-new .services-grid {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
+    .our-services-new .services-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .our-services-new .service-image { height: 260px; }
   }
   
   @media (max-width: 576px) {
@@ -1445,14 +1514,9 @@
       width: 100%;
     }
     
-    .our-services-new .services-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
+    .our-services-new .services-grid { grid-template-columns: 1fr; gap: 1rem; }
     
-    .our-services-new .service-image {
-      height: 200px;
-    }
+    .our-services-new .service-image { height: 220px; }
     
     .our-services-new .service-content {
       padding: 1rem;
