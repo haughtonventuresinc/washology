@@ -1309,7 +1309,6 @@
 			</div>
 			<div class="services-header-buttons">
 				<a class="btn btn-brand-primary" href="<%= (homepage && homepage.getStartedCtaUrl) || '/contact-us' %>"><%= (homepage && homepage.getStartedCtaLabel) || 'Get Free Estimate' %></a>
-				<a class="btn btn-outline-secondary" href="/services">Browse all services</a>
 			</div>
 		</div>
 		
@@ -1371,6 +1370,16 @@
   /* Who We Are typography */
   .who-we-are .who-we-are--copy p { margin-bottom: 1.2rem; font-weight: 400; }
   .who-we-are .who-we-are--copy h5 { font-weight: 700; margin-top: 0.5rem; }
+</style>
+
+<!-- Page-scoped: Hero outline button hover color (lime bg, white border, blue text) -->
+<style>
+  .hero .btn.btn-outline-light:hover,
+  .hero .btn.btn-outline-light:focus {
+    background-color: var(--brand-yellow) !important;
+    border-color: #fff !important;
+    color: var(--brand-blue) !important;
+  }
 </style>
 
 <section class="our-stats stripes-double-top bg-icon bg-icon--right col-sm-12 text-center">

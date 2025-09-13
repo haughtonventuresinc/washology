@@ -154,11 +154,113 @@
 	})();
 	</script>
 	<a href="#main" class="visually-hidden-focusable">Skip to main content</a>
+
+	<!-- Global ZIP capture modal (available on all pages) -->
+	<div id="zip-modal-backdrop" class="zip-modal-backdrop" aria-hidden="true" style="display:none; position:fixed; inset:0; background: rgba(0,0,0,.45); z-index: 2000; align-items:center; justify-content:center;">
+	  <div class="zip-modal" role="dialog" aria-modal="true" aria-labelledby="zip-modal-title" style="background:#fff; width:min(92vw,520px); border-radius:16px; box-shadow:0 24px 48px rgba(0,0,0,.25); overflow:hidden;">
+	    <header id="zip-modal-title" style="padding:1rem 1.25rem; font-weight:800; font-size:1.1rem; background: var(--brand-yellow); color: var(--brand-blue);">Enter your ZIP code</header>
+	    <div class="body" style="padding:1rem 1.25rem;">
+	      <div class="zip-input-group" style="display:flex; align-items:center; gap:.5rem; border:1px solid #ddd; border-radius:10px; padding:.5rem .75rem;">
+	        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16Zm11 20-6-6" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>
+	        <input type="text" id="zip-modal-input" inputmode="numeric" maxlength="5" placeholder="12345" autocomplete="postal-code" aria-label="ZIP code" style="flex:1; border:0; outline:0; font-size:1rem;" />
+	      </div>
+	      <div id="zip-suggest-modal" class="zip-suggest-modal" role="listbox" aria-label="ZIP suggestions" style="display:none; margin-top:.5rem; border:1px solid #e5e5e5; border-radius:10px; overflow:hidden; background:#fff;"></div>
+	      <div id="zip-hint" style="margin-top:.5rem; font-size:.9rem; color:#666;"></div>
+	    </div>
+	    <div class="actions" style="display:flex; gap:.5rem; justify-content:flex-end; padding: .75rem 1.25rem 1.25rem;">
+	      <button type="button" class="btn-cancel" id="zip-cancel" style="background:#f3f3f3; border:1px solid #ddd; border-radius:8px; padding:.5rem .9rem;">Cancel</button>
+	      <button type="button" class="btn-continue" id="zip-continue" style="background: var(--brand-yellow); color: var(--brand-blue); border:1px solid var(--brand-yellow); border-radius:8px; padding:.5rem .9rem; font-weight:700;">Continue</button>
+	    </div>
+	  </div>
+	</div>
+	<script>
+	(function(){
+	  if (window.__zipModalGlobalInitialized) return; 
+	  window.__zipModalGlobalInitialized = true;
+	  try {
+	    var backdrop = document.getElementById('zip-modal-backdrop');
+	    var input = document.getElementById('zip-modal-input');
+	    var suggest = document.getElementById('zip-suggest-modal');
+	    var btnCancel = document.getElementById('zip-cancel');
+	    var btnGo = document.getElementById('zip-continue');
+	    var hint = document.getElementById('zip-hint');
+	    var selected = null;
+
+	    function hideSuggest(){ if (suggest){ suggest.style.display='none'; suggest.innerHTML=''; } }
+	    function showLoading(){ if (!suggest) return; suggest.innerHTML = '<div class="item" style="padding:.5rem .75rem; color:#444;">Searching…</div>'; suggest.style.display='block'; }
+	    function showSuggest(items){
+	      if (!suggest) return;
+	      suggest.innerHTML = '';
+	      if (!items || !items.length) { hideSuggest(); return; }
+	      items.forEach(function(item){
+	        var div = document.createElement('div');
+	        div.className = 'item';
+	        div.setAttribute('role','option');
+	        div.style.cssText = 'display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;cursor:pointer;';
+	        div.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" fill="currentColor"/></svg> ' + (item.label || item);
+	        div.addEventListener('click', function(){ selected = item; hint.textContent = item.label || ''; hideSuggest(); });
+	        suggest.appendChild(div);
+	      });
+	      suggest.style.display = 'block';
+	    }
+	    function formatLabel(zip, city, state){
+	      if (city && state) return city + ', ' + state + ' ' + zip + ', USA';
+	      return zip + ', USA';
+	    }
+	    function lookup(v){
+	      var z = String(v||'').replace(/\D/g,'').slice(0,5);
+	      if (z.length !== 5) { hideSuggest(); selected=null; return; }
+	      showLoading();
+	      fetch('https://api.zippopotam.us/us/' + z)
+	        .then(function(r){ if(!r.ok) throw new Error('nf'); return r.json(); })
+	        .then(function(data){
+	          var place = (data.places && data.places[0]) || null;
+	          var city = place ? place['place name'] : '';
+	          var state = place ? place['state abbreviation'] : '';
+	          selected = { zip: z, city: city, state: state, label: formatLabel(z, city, state) };
+	          showSuggest([selected]);
+	        })
+	        .catch(function(){ hideSuggest(); selected=null; });
+	    }
+	    function show(){ if (!backdrop) return; backdrop.style.display='flex'; selected=null; input && (input.value=''); hint && (hint.textContent=''); hideSuggest(); setTimeout(function(){ try { input && input.focus(); } catch(_) {} }, 30); }
+	    function hide(){ if (!backdrop) return; backdrop.style.display='none'; }
+	    window.showZipModal = show;
+
+	    if (input){
+	      var t; 
+	      input.addEventListener('input', function(){ var v = input.value.replace(/\D/g,'').slice(0,5); input.value=v; clearTimeout(t); if (v.length===5){ t=setTimeout(function(){ lookup(v); }, 120); } else { hideSuggest(); } });
+	      input.addEventListener('blur', function(){ setTimeout(hideSuggest, 150); });
+	    }
+	    btnCancel && btnCancel.addEventListener('click', hide);
+	    btnGo && btnGo.addEventListener('click', function(){
+	      var v = (selected && selected.zip) || (input && input.value || '').replace(/\D/g,'').slice(0,5);
+	      if (!v || v.length !== 5){ if (hint) hint.textContent = 'Please enter a valid 5-digit ZIP'; return; }
+	      var url = '/contact-us?zip=' + v;
+	      if (selected){ if (selected.city) url += '&city=' + encodeURIComponent(selected.city); if (selected.state) url += '&state=' + encodeURIComponent(selected.state); }
+	      window.location.href = url;
+	    });
+
+	    // Global delegation: ONLY open ZIP modal for explicit [data-zip-trigger]
+	    document.addEventListener('click', function(ev){
+	      var el = ev.target && ev.target.closest ? ev.target.closest('[data-zip-trigger]') : null;
+	      if (!el) return;
+	      ev.preventDefault();
+	      ev.stopImmediatePropagation();
+	      show();
+	    }, true);
+
+	    // Close on backdrop click or ESC
+	    backdrop && backdrop.addEventListener('click', function(e){ if (e.target === backdrop) hide(); });
+	    document.addEventListener('keydown', function(e){ if (backdrop && backdrop.style.display==='flex' && e.key==='Escape') hide(); });
+	  } catch(e) { /* no-op */ }
+	})();
+	</script>
+
 	<div id="wrapper">
 		<header>
 			<div class="banner-wrapper">
 				<div class="col-sm-12 banner-wrapper">
-					<h6 class="banner-header"><a href="/contact-us">Get Free Estimate</a></h6>
+					<h6 class="banner-header"><a href="#" data-zip-trigger="1" role="button">Get Free Estimate</a></h6>
 				</div>
 			</div>
 			<nav id="header" class="navbar navbar-expand-md justify-content-center navbar-light bg-light">

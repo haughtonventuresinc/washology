@@ -17717,11 +17717,6 @@ h4 {
     --wpforms-field-background-color: var(--garageup-snow)
 }
 
-.contact-page-v2-template .contact-us--hero {
-    border-bottom: var(--border-size) solid var(--brand-orange);
-    margin-bottom: calc(var(--border-size)*3);
-    position: relative
-}
 
 .contact-page-v2-template .content-upper-wrapper .title-wrapper {
     margin: 4rem auto 3.25rem;
@@ -19508,19 +19503,6 @@ h4 {
     z-index: 2
 }
 
-.blog-archive-wrapper article .card .card-body .floating-cat p {
-    background: var(--brand-orange);
-    border-radius: 1000px;
-    color: var(--garageup-snow);
-    font-family: Futura Now;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    margin-bottom: 0;
-    padding: 2px 8px;
-    text-transform: uppercase
-}
 
 .blog-archive-wrapper article .card .card-body a {
     color: #05132d;

@@ -12,7 +12,7 @@
   .contact-page-v2 .wpforms-container textarea,
   .contact-page-v2 .wpforms-container select {
     border-radius: 8px;
-    border-color: var(--brand-orange);
+    border-color: var(--brand-blue);
   }
 
   .contact-page-v2 .wpforms-container input[type="text"]:focus,
@@ -20,8 +20,8 @@
   .contact-page-v2 .wpforms-container input[type="tel"]:focus,
   .contact-page-v2 .wpforms-container textarea:focus,
   .contact-page-v2 .wpforms-container select:focus {
-    border-color: var(--brand-orange);
-    box-shadow: 0 0 0 .2rem rgba(247, 161, 26, 0.25);
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 .2rem rgba(11, 94, 142, 0.25);
   }
 
   /* Force dark text on left hero section overlay */
@@ -43,18 +43,20 @@
   .contact-page-v2 .wpforms-submit,
   .contact-page-v2 button[type="submit"],
   .contact-page-v2 .wpforms-page-button {
-    background-color: var(--brand-orange) !important;
-    border-color: var(--brand-red) !important;
-    color: #fff !important;
+    background-color: var(--brand-yellow) !important; /* Washology lime */
+    border-color: var(--brand-yellow) !important;
+    color: var(--brand-blue) !important; /* blue font */
     border-radius: 8px;
     padding: 0.6rem 1.25rem;
   }
   .contact-page-v2 .wpforms-submit:hover,
   .contact-page-v2 button[type="submit"]:hover,
   .contact-page-v2 .wpforms-page-button:hover {
-    background-color: white !important;
-    border-color: #d7341b !important;
-    color: var(--brand-orange) !important;
+    background-color: var(--brand-yellow) !important;
+    border-color: var(--brand-yellow) !important;
+    color: var(--brand-blue) !important;
+    filter: brightness(1.05);
+    box-shadow: 0 6px 14px rgba(184, 226, 21, 0.35);
   }
 
   /* Layout and spacing */
@@ -91,7 +93,7 @@
   /* Ensure overlay doesn't fully obscure background images on this page */
   .contact-page-v2 .content-wrapper-left.overlay-jade:before,
   .contact-page-v2 .content-wrapper-right.overlay-jade:before {
-    background-color: rgba(211, 47, 47, 0.65) !important; /* semi-transparent red */
+    background-color: rgba(11, 94, 142, 0.65) !important; /* semi-transparent brand blue */
   }
 
   /* Error states (compatible with WPForms modern) */
@@ -174,12 +176,12 @@
     }
     .zip-suggest .item { display: flex; align-items: center; gap: .5rem; padding: .625rem .75rem; cursor: pointer; }
     .zip-suggest .item:hover, .zip-suggest .item[aria-selected="true"] { background: #f2f2f2; }
-    .zip-suggest .icon { color: var(--brand-red); display: inline-flex; }
+    .zip-suggest .icon { color: var(--brand-blue); display: inline-flex; }
     .zip-suggest .primary { font-weight: 700; }
     .zip-suggest .secondary { opacity: .85; font-size: .9rem; }
   </style>
 
-        <div class="content-wrapper-right col-sm-12 col-md-6 col-lg-6 order-md-1" style="background: rgba(211, 47, 47, 0.85);">
+        <div class="content-wrapper-right col-sm-12 col-md-6 col-lg-6 order-md-1" style="background: var(--brand-blue);">
           <div class="title-wrapper col-sm-12">
             <h2 style="color: white !important;"><%= (contact && contact.rightTitle) || 'Estimates in 24 Hours or Less' %></h2>
           </div>
@@ -226,7 +228,7 @@
               </div>
 
               <div class="wpforms-submit-container">
-                <button type="submit" class="wpforms-submit" style="background-color: white !important; color: var(--brand-red) !important;">Get My Free Estimate</button>
+                <button type="submit" class="wpforms-submit" style="background-color: var(--brand-yellow) !important; border-color: var(--brand-yellow) !important; color: var(--brand-blue) !important;">Get My Free Estimate</button>
               </div>
             </form>
           </div>

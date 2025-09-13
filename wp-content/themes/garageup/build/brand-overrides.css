@@ -39,15 +39,6 @@ a:hover, a:focus { color: #d7341b; }
   background-color: var(--brand-yellow) !important;
   border-bottom: 2px solid var(--brand-orange);
 }
-#header.navbar .navbar-nav > li > a,
-#header.navbar .navbar-brand,
-#header.navbar .navbar-nav .dropdown-menu a {
-  color: var(--brand-red) !important;
-}
-#header.navbar .navbar-nav > li > a:hover,
-#header.navbar .navbar-brand:hover {
-  color: #d7341b !important;
-}
 
 /* Badges, accents */
 .bg-primary, .badge-primary { background-color: var(--brand-red) !important; }
@@ -60,6 +51,33 @@ a:hover, a:focus { color: #d7341b; }
   color: var(--brand-dark) !important;
 }
 #footer a, .site-footer a { color: var(--brand-red) !important; }
+
+/* Dropdown menus: Washology lime background with blue text */
+.dropdown-menu,
+.navbar .dropdown-menu {
+  background-color: #fff !important; /* white panel for contrast on lime page */
+  border-color: var(--brand-blue) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12) !important;
+}
+.dropdown-menu .dropdown-item,
+.navbar .dropdown-menu .dropdown-item,
+.dropdown-menu .dropdown-header,
+.navbar .dropdown-menu .dropdown-header {
+  color: var(--brand-blue) !important;
+  background-color: transparent !important;
+}
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-menu .dropdown-item:focus {
+  color: #fff !important; /* white text on blue */
+  background-color: var(--brand-blue) !important;
+}
+.dropdown-menu .dropdown-item.active,
+.navbar .dropdown-menu .dropdown-item.active {
+  color: #fff !important;
+  background-color: var(--brand-blue) !important;
+}
 
 /* Cards/sections that relied on old primary */
 .card .card-header.bg-primary, .card.bg-primary { background-color: var(--brand-red) !important; }

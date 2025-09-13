@@ -125,6 +125,14 @@
     .about-us-page-template .promise-wrapper * { color: #fff !important; }
     /* Ensure the numeric badges are also white here (overrides earlier brand-red rule) */
     .about-us-page-template .promise-wrapper .promise-card--number span { color: #fff !important; }
+
+    /* Remove hero overlay entirely */
+    .about-us-page-template .hero.gradient-overlay:before,
+    .about-us-page-template .hero.gradient-overlay::before,
+    .about-us-page-template section.hero.hero-wrapper.gradient-overlay:before {
+      content: none !important;
+      background: none !important;
+    }
   </style>
 
     
