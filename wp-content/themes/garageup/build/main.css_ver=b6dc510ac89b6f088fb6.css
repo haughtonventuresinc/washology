@@ -20639,15 +20639,9 @@ section img {
 }
 
 .our-stats--stat--icon {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     height: 3rem;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
     margin: 1.5rem auto .5rem
 }

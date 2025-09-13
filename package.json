@@ -1,8 +1,8 @@
 {
-  "name": "garageup-site",
+  "name": "washology",
   "version": "1.0.0",
   "private": true,
-  "description": "Node.js app serving static GarageUp site via Express routes",
+  "description": "Node.js app serving static Washology site via Express routes",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

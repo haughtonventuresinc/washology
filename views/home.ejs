@@ -1,17 +1,17 @@
 <%- include('partials/header') %>
 
-<section class="hero hero-wrapper overlay-jade hero-aesthetic" data-hero-bg="<%= (homepage && homepage.heroBg) || '/wp-content/uploads/2025/09/1756764490731-7BD25153-9885-43B2-A855-485788BC9DAE.png' %>" style="background-image: url(&quot;<%= (homepage && homepage.heroBg) || '/wp-content/uploads/2025/09/1756764490731-7BD25153-9885-43B2-A855-485788BC9DAE.png' %>&quot;); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+<section class="hero hero-wrapper overlay-jade hero-aesthetic" data-hero-bg="<%= (homepage && homepage.heroBg) || '/pictures/Washology/2.png' %>" style="background-image: url(&quot;<%= (homepage && homepage.heroBg) || '/pictures/Washology/2.png' %>&quot;); background-repeat: no-repeat; background-size: cover; background-position: center center;">
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <div class="content-wrapper container position-relative">
     <div class="row align-items-center justify-content-center">
       <!-- Main content centered -->
       <div class="col-12 hero-main-content text-center">
-        <h1 class="hero-main-title mb-3">Your Trusted Pool Care Experts</h1>
-        <p class="hero-description mb-4">Pool Cleaning, Chemical Balancing, Equipment Service, and More</p>
+        <h1 class="hero-main-title mb-3">Professional Pressure Washing & Soft Washing</h1>
+        <p class="hero-description mb-4">Driveways, roofs, siding, patios, and storefronts. Safe soft wash & power wash for like‑new curb appeal.</p>
         
         <div class="hero-buttons">
-          <a class="btn btn-brand-primary me-3" href="/contact">Learn More</a>
+          <a class="btn btn-brand-primary me-3" href="#" data-zip-trigger="1">Get Free Estimate</a>
           <a class="btn btn-outline-light" href="#our-services-new">Browse services &gt;</a>
         </div>
       </div>
@@ -104,24 +104,11 @@
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 600px;
-    z-index: 10;
-  }
-
-  /* Disable ZIP feature globally */
-  .zip-bottom-container,
-  .zip-map-container { display: none !important; }
-  
-  @media (max-width: 768px) {
-    .zip-bottom-container {
-      bottom: 1rem;
-      max-width: 90%;
-    }
   }
   .hero-aesthetic .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.4) 100%);
+    background: linear-gradient(180deg, rgba(11, 94, 142, 0.45) 0%, rgba(11, 94, 142, 0.25) 40%, rgba(11, 94, 142, 0.45) 100%);
     pointer-events: none;
   }
   
@@ -160,15 +147,7 @@
     flex-wrap: wrap;
     justify-content: center; /* center buttons under headline */
   }
-  .hero-aesthetic .btn-brand-primary {
-    background-color: var(--brand-red) !important;
-    border-color: var(--brand-red) !important;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    color: #fff;
-  }
+  .hero-aesthetic .btn-brand-primary { background-color: var(--brand-red) !important; border-color: var(--brand-red) !important; padding: 0.75rem 1.5rem; font-weight: 700; border-radius: 8px; transition: all 0.3s ease; color: #fff; box-shadow: 0 10px 24px rgba(11,94,142,.25); }
   .hero-aesthetic .btn-brand-primary:hover {
     filter: brightness(1.05);
     transform: translateY(-2px);
@@ -178,15 +157,15 @@
     padding: 0.75rem 1.5rem;
     font-weight: 600;
     border-radius: 8px;
-    border: 2px solid rgba(255, 255, 255, 0.8);
+    border: 2px solid var(--brand-yellow);
     color: #fff;
     background: transparent;
     transition: all 0.3s ease;
   }
   .hero-aesthetic .btn-outline-light:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: #fff;
-    color: #fff;
+    background-color: rgba(184, 226, 21, 0.15); /* lime tint */
+    border-color: var(--brand-yellow);
+    color: var(--brand-blue); /* blue text on lime */
     transform: translateY(-2px);
   }
   
@@ -279,10 +258,7 @@
   @media (min-width: 992px) {
     .hero-aesthetic .zip-col { display: contents; }
   }
-  .hero-aesthetic .zip-card:focus-within {
-    box-shadow: 0 0 0 3px var(--brand-red), 0 12px 30px rgba(0,0,0,.25);
-    border-color: var(--brand-red);
-  }
+  .hero-aesthetic .zip-card:focus-within { box-shadow: 0 0 0 3px var(--brand-yellow), 0 12px 30px rgba(0,0,0,.25); border-color: var(--brand-yellow); }
   .hero-aesthetic .zip-card .input-group-text {
     background: transparent !important;
     border: none !important;
@@ -528,6 +504,8 @@
   }
   /* Adjust fade to yellow cards inside blog */
   .featured-posts-wrapper a.feat-post .entry-summary.fade-after::after { background: linear-gradient(to bottom, rgba(255,255,255,0), var(--brand-yellow)); }
+  /* Ensure scroller on lime background uses blue text */
+  .scroller { color: var(--brand-red) !important; }
   .read-more-btn { background: none; border: none; color: var(--brand-red); font-weight: 800; padding: .25rem 0; cursor: pointer; }
   .read-more-btn:focus { outline: 3px solid var(--brand-red); outline-offset: 2px; }
 </style>
@@ -1017,7 +995,7 @@
 		<div class="scroller" data-speed="fast" style="color: var(--brand-red)!important; background-color: var(--brand-yellow)!important;">
 			<ul class="tag-list scroller__inner">
 				<li>
-					<div class="h1"><%= (homepage && homepage.scrollerText) || 'Cleaning, Balancing, Repairs, and more' %></div>
+					<div class="h1"><%= (homepage && homepage.scrollerText) || 'DRIVEWAYS • ROOFS • SIDING • PATIOS • FENCES • GUTTERS • WINDOWS' %></div>
 				</li>
 			</ul>
 		</div>
@@ -1055,17 +1033,39 @@
 </style>
 
 
+<!-- Styles: Services section (layout + brand) -->
+<style>
+  .our-services-new { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--brand-yellow); color: var(--brand-blue); }
+  .our-services-new .services-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.25rem; margin-bottom: 2rem; }
+  .our-services-new .services-main-title { color: var(--brand-blue); font-weight: 800; line-height: 1.1; margin: 0; }
+  .our-services-new .services-header-buttons { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .our-services-new .btn-brand-primary { background: var(--brand-blue) !important; border-color: var(--brand-blue) !important; color: #fff !important; }
+  .our-services-new .btn-brand-primary:hover { filter: brightness(1.05); box-shadow: 0 8px 18px rgba(11,94,142,.22); }
+  .our-services-new .btn-outline-secondary { border: 2px solid var(--brand-blue) !important; color: var(--brand-blue) !important; background: transparent !important; }
+  .our-services-new .btn-outline-secondary:hover { background: rgba(11,94,142,.08) !important; color: #052B44 !important; }
+  .our-services-new .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+  .our-services-new .service-card-new { background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid rgba(11,94,142,.15); transition: transform .2s ease, box-shadow .2s ease; display: block; }
+  .our-services-new .service-card-new:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0,0,0,.15); }
+  .our-services-new .service-image { position: relative; height: 200px; overflow: hidden; }
+  .our-services-new .service-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .our-services-new .service-icon { position: absolute; top: 14px; left: 14px; width: 42px; height: 42px; background: var(--brand-blue); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .our-services-new .service-content { padding: 1rem 1rem 1.25rem; }
+  .our-services-new .service-title { color: var(--brand-blue); font-weight: 700; font-size: 1.05rem; margin: 0; }
+  @media (max-width: 767.98px) { .our-services-new .services-header { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 575.98px) { .our-services-new .service-image { height: 180px; } }
+</style>
+
 <section class="why-choose-us">
-	<div class="content-wrapper container">
+    <div class="content-wrapper container">
 		<div class="row align-items-center gap-4 gap-lg-0">
 			<div class="col-sm-12 col-lg-6 position-relative">
 				<div class="image-container">
-					<img width="750" height="600" src="<%= (homepage && homepage.whoWeAreImage) || '/wp-content/uploads/2025/08/1756331516002-A9A44F80-33F4-4B58-BD13-6FB384598A18-1-.png' %>" class="img-fluid main-image" alt="Pool maintenance professional at work" decoding="async" fetchpriority="high" />
+					<img width="750" height="600" src="<%= (homepage && homepage.whoWeAreImage) || '/pictures/Washology/3.png' %>" class="img-fluid main-image" alt="Pressure washing professional at work" decoding="async" fetchpriority="high" />
 					
 					<!-- Testimonial overlay card -->
 					<div class="testimonial-card">
 						<blockquote class="testimonial-quote">
-							"Consistent, meticulous cleanings—our pool has never looked better."
+							"Consistent, meticulous work—our driveway and siding look brand new."
 						</blockquote>
 						<div class="testimonial-author">
 							<div class="author-avatar">
@@ -1085,7 +1085,7 @@
 			<div class="col-lg-5 col-sm-12">
 				<div class="section-eyebrow">ABOUT US</div>
 				<h2 class="section-title mb-4"><%= (homepage && homepage.whoWeAreTitle) || 'Why choose us?' %></h2>
-				<p class="section-description mb-4"><%= (homepage && homepage.whoWeAreBody) || 'At Swim Studs, we deliver professional pool care with certified technicians, reliable service, and transparent communication to keep your pool sparkling year-round.' %></p>
+				<p class="section-description mb-4"><%= (homepage && homepage.whoWeAreBody) || 'At Washology, we deliver professional pressure washing and soft washing with eco‑friendly detergents, reliable scheduling, and clear communication—restoring curb appeal without damage.' %></p>
 				
 				<div class="features-list">
 					<div class="feature-item">
@@ -1095,8 +1095,8 @@
 							</svg>
 						</div>
 						<div class="feature-content">
-							<h4 class="feature-title">Pool Care Experts</h4>
-							<p class="feature-description">Certified technicians with years of experience in pool maintenance and equipment repair.</p>
+							<h4 class="feature-title">Exterior Cleaning Experts</h4>
+							<p class="feature-description">Trained technicians using the right method for every surface—soft wash for roofs and siding, power wash for concrete and brick.</p>
 						</div>
 					</div>
 					
@@ -1108,12 +1108,12 @@
 						</div>
 						<div class="feature-content">
 							<h4 class="feature-title">Reliable Service</h4>
-							<p class="feature-description">Consistent weekly cleaning, chemical balancing, and equipment maintenance you can count on.</p>
+							<p class="feature-description">Consistent, professional results with on‑time service, clear updates, and workmanship that lasts.</p>
 						</div>
 					</div>
 				</div>
 				
-				<button class="btn btn-brand-primary mt-4">Get in touch</button>
+				<a class="btn btn-brand-primary mt-4" href="/contact-us">Get in touch</a>
 			</div>
 		</div>
 	</div>
@@ -1300,30 +1300,37 @@
   }
 </style>
 
-
 <section class="our-services-new" id="our-services-new">
 	<div class="content-wrapper container">
 		<!-- Header with title and buttons -->
 		<div class="services-header">
 			<div class="services-title-section">
-				<h2 class="services-main-title"><%= (homepage && homepage.servicesTitle) || 'Explore our wide<br>range of services' %></h2>
+				<h2 class="services-main-title"><%= (homepage && homepage.servicesTitle) || 'Pressure Washing & Soft Washing Services' %></h2>
 			</div>
 			<div class="services-header-buttons">
-				<a class="btn btn-brand-primary" href="<%= (homepage && homepage.getStartedCtaUrl) || '/contact' %>"><%= (homepage && homepage.getStartedCtaLabel) || 'Get in touch' %></a>
+				<a class="btn btn-brand-primary" href="<%= (homepage && homepage.getStartedCtaUrl) || '/contact-us' %>"><%= (homepage && homepage.getStartedCtaLabel) || 'Get Free Estimate' %></a>
 				<a class="btn btn-outline-secondary" href="/services">Browse all services</a>
 			</div>
 		</div>
 		
 		<!-- Services grid -->
 		<div class="services-grid">
-			<% for (let i = 1; i <= 4; i++) { %>
-				<% const sTitle = (homepage && homepage[`featuredService${i}Title`]) || `Service ${i}`; %>
-				<% const sUrl = (homepage && homepage[`featuredService${i}Url`]) || '/services'; %>
-				<% const sImg = (homepage && homepage[`featuredService${i}Image`]) || '/wp-content/uploads/2025/08/1756331571421-A9A44F80-33F4-4B58-BD13-6FB384598A18-1-.png'; %>
-				<a class="service-card-new" href="<%= sUrl %>">
-					<div class="service-image">
-						<img src="<%= sImg %>" alt="<%= sTitle %>" class="img-fluid">
-						<div class="service-icon">
+			      <% 
+        const _defaults = [
+          { title: 'House & Siding Washing', url: '/services#house-washing' },
+          { title: 'Roof Soft Wash', url: '/services#roof-soft-wash' },
+          { title: 'Driveway & Concrete Cleaning', url: '/services#concrete-cleaning' },
+          { title: 'Commercial Washing', url: '/services#commercial' }
+        ];
+        for (let i = 1; i <= 4; i++) { 
+      %>
+        <% const sTitle = (homepage && homepage[`featuredService${i}Title`]) || _defaults[i-1].title; %>
+        <% const sUrl = (homepage && homepage[`featuredService${i}Url`]) || _defaults[i-1].url; %>
+        <% const sImg = (homepage && homepage[`featuredService${i}Image`]) || ((i % 2 === 0) ? '/pictures/Washology/3.png' : '/pictures/Washology/2.png'); %>
+        <a class="service-card-new" href="<%= sUrl %>">
+          <div class="service-image">
+            <img src="<%= sImg %>" alt="<%= sTitle %>" class="img-fluid">
+            <div class="service-icon">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
 							</svg>
@@ -1339,234 +1346,7 @@
 	</div>
 </section>
 
-<!-- Page-scoped styles: New Services Section -->
-<style>
-  
-  .our-services-new .services-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 3rem;
-    gap: 2rem;
-  }
-  
-  .our-services-new .services-main-title {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--brand-red);
-    margin: 0;
-    max-width: 500px;
-  }
-  
-  .our-services-new .services-header-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-shrink: 0;
-  }
-  
-  .our-services-new .btn-brand-primary {
-    background-color: var(--brand-red) !important;
-    border-color: var(--brand-red) !important;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    color: #fff;
-  }
-  
-  .our-services-new .btn-brand-primary:hover {
-    filter: brightness(1.05);
-    transform: translateY(-2px);
-    color: #fff;
-  }
-  
-  .our-services-new .btn-outline-secondary {
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: var(--brand-red);
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-  
-  .our-services-new .btn-outline-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: var(--brand-red);
-    transform: translateY(-2px);
-  }
-  
-  .our-services-new .services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
-    gap: 2rem;
-    margin-bottom: 3rem;
-    align-items: stretch;
-  }
-  
-  .our-services-new .service-card-new {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .our-services-new .service-card-new:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.15);
-  }
-  
-  .our-services-new .service-image {
-    position: relative;
-    height: 320px; /* taller card images */
-    overflow: hidden;
-  }
-  
-  .our-services-new .service-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .our-services-new .service-card-new:hover .service-image img {
-    transform: scale(1.05);
-  }
-  
-  .our-services-new .service-icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 48px;
-    height: 48px;
-    background: var(--brand-red);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .our-services-new .service-content {
-    padding: 1.5rem;
-  }
-  
-  .our-services-new .service-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--brand-red);
-    margin: 0 0 0.75rem 0;
-  }
-  
-  .our-services-new .service-description {
-    font-size: 0.95rem;
-    color: var(--brand-red);
-    line-height: 1.5;
-    margin: 0;
-  }
-  
-  
-  .our-services-new .nav-dots {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .our-services-new .nav-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .our-services-new .nav-dot.active {
-    background: var(--brand-red);
-  }
-  
-  .our-services-new .nav-dot:hover {
-    background: rgba(255, 255, 255, 0.5);
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 1199.98px) {
-    .our-services-new .services-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 991.98px) {
-    .our-services-new .services-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
-    }
-    
-    .our-services-new .services-header-buttons {
-      width: 100%;
-      justify-content: flex-start;
-    }
-    
-    .our-services-new .services-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-    .our-services-new .service-image { height: 260px; }
-  }
-  
-  @media (max-width: 576px) {
-    .our-services-new {
-      padding: 3rem 0;
-    }
-    
-    .our-services-new .services-header-buttons {
-      flex-direction: column;
-      width: 100%;
-    }
-    
-    .our-services-new .services-grid { grid-template-columns: 1fr; gap: 1rem; }
-    
-    .our-services-new .service-image { height: 220px; }
-    
-    .our-services-new .service-content {
-      padding: 1rem;
-    }
-  }
-</style>
-
-<script>
-  // Simple button-controlled scrolling for services slider
-  (function(){
-    try {
-      var slider = document.querySelector('.our-services .our-services--slider');
-      if (!slider) return;
-      var track = slider.querySelector('.our-services--featured');
-      var prev = slider.querySelector('.services-nav--prev');
-      var next = slider.querySelector('.services-nav--next');
-      if (!track || !prev || !next) return;
-
-      function scrollByDir(dir){
-        var amount = Math.max(240, Math.min(track.clientWidth * 0.9, 600));
-        track.scrollBy({ left: dir * amount, behavior: 'smooth' });
-      }
-      prev.addEventListener('click', function(){ scrollByDir(-1); });
-      next.addEventListener('click', function(){ scrollByDir(1); });
-
-      // Optional: disable buttons at ends (for non-infinite)
-      function updateDisabled(){
-        var maxScroll = track.scrollWidth - track.clientWidth - 2;
-        prev.disabled = track.scrollLeft <= 2;
-        next.disabled = track.scrollLeft >= maxScroll;
-      }
-      track.addEventListener('scroll', updateDisabled);
-      window.addEventListener('resize', updateDisabled);
-      updateDisabled();
-    } catch(e) { /* no-op */ }
-  })();
-</script>
+<!-- Legacy Services styles and slider script removed to prevent conflicts -->
 
 <!-- Page-scoped styles: Quick Facts brand color overrides -->
 <style>
@@ -1575,10 +1355,19 @@
   .our-stats .our-stats--stat p {
     color: var(--brand-red) !important;
   }
-  /* Recolor orange SVGs to brand red within Quick Facts only */
+  /* Recolor emoji SVGs to Washology deep blue within Quick Facts */
   .our-stats .our-stats--stat--icon img {
-    filter: invert(18%) sepia(86%) saturate(4288%) hue-rotate(356deg) brightness(94%) contrast(102%);
+    /* Approximate #0B5E8E via CSS filter */
+    filter: invert(19%) sepia(97%) saturate(1217%) hue-rotate(173deg) brightness(92%) contrast(96%) !important;
+    transform: scale(1.18);
+    transform-origin: center center;
+    transition: none !important;
   }
+  /* Lock the same blue on hover to prevent theme overrides */
+  .our-stats .our-stats--stat:hover .our-stats--stat--icon img {
+    filter: invert(19%) sepia(97%) saturate(1217%) hue-rotate(173deg) brightness(92%) contrast(96%) !important;
+  }
+  .our-stats .our-stats--stat--icon { display: inline-flex; align-items: center; justify-content: center; }
   /* Who We Are typography */
   .who-we-are .who-we-are--copy p { margin-bottom: 1.2rem; font-weight: 400; }
   .who-we-are .who-we-are--copy h5 { font-weight: 700; margin-top: 0.5rem; }
@@ -1588,7 +1377,7 @@
 	<div class="content-wrapper container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h2 class="section-title">Pool Facts</h2>
+				<h2 class="section-title">Quick Facts</h2>
 			</div>
 		</div>
 		<div class="stats-scroller" data-speed="normal">
@@ -1604,9 +1393,9 @@
 	</div>
 </section>
 
-<!-- Page-scoped styles: Pool Facts infinite marquee -->
+<!-- Page-scoped styles: Quick Facts infinite marquee -->
 <style>
-  /* Tighten top spacing for the Pool Facts block */
+  /* Tighten top spacing for the Quick Facts block */
   section.our-stats { padding-top: 0.5rem !important; margin-top: 0 !important; }
   section.our-stats .content-wrapper { padding-top: 0 !important; }
   section.our-stats .section-title { margin-top: 0 !important; margin-bottom: 0.75rem !important; }
@@ -2066,23 +1855,20 @@
         window.location.href = url;
       });
 
-      // Global delegation so any /contact link triggers the modal (header, footer, hero, etc.)
+      // Global delegation: ONLY open ZIP modal for explicit triggers
       if (!window.__zipModalDelegated) {
         window.__zipModalDelegated = true;
         document.addEventListener('click', function(ev){
-          var el = ev.target && ev.target.closest ? ev.target.closest('a,button,[data-bs-target]') : null;
+          var el = ev.target && ev.target.closest ? ev.target.closest('a,button,[data-zip-trigger],[data-bs-target]') : null;
           if (!el) return;
-          var href = el.getAttribute('href') || '';
+          var isZipTrigger = el.hasAttribute('data-zip-trigger');
           var target = el.getAttribute('data-bs-target') || '';
-          // match: /contact, contact, absolute http(s)://.../contact
-          var isContact = /(^|\b|\/)contact(\b|\/?|\?|#)/i.test(href);
           var isScheduleModal = target === '#scheduleModal';
-          if (isContact || isScheduleModal) {
-            ev.preventDefault();
-            ev.stopImmediatePropagation();
-            console.debug('[ZIP] Intercepted CTA', { href: href, target: target });
-            show();
-          }
+          if (!(isZipTrigger || isScheduleModal)) return;
+          ev.preventDefault();
+          ev.stopImmediatePropagation();
+          console.debug('[ZIP] Triggered from explicit element');
+          show();
         }, true);
       }
 

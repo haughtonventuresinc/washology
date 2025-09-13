@@ -4,25 +4,33 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<style>
+		/* Brand palette */
+		:root {
+			--brand-blue: #0B5E8E;   /* primary deep blue */
+			--brand-lime: #B8E215;   /* accent lime */
+			/* Map legacy tokens used across templates */
+			--brand-red: var(--brand-blue);
+			--brand-yellow: var(--brand-lime);
+		}
 		img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }
 	</style>
-	<title>Swim Studs | Professional Pool Cleaning, Maintenance & Repairs</title>
-	<meta name="description" content="Swim Studs keeps your pool crystal clear. Weekly cleaning, chemical balancing, filter & pump service, and equipment repairs. Get a free quote today!" />
+	<title>Washology | Professional Pressure Washing & Soft Washing</title>
+	<meta name="description" content="Washology restores curb appeal with expert pressure washing and soft wash services for homes and businesses. Driveways, roofs, siding, patios and more. Free estimates." />
 	<link rel="canonical" href="/" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="og:type" content="website" />
-	<meta property="og:title" content="Swim Studs | Professional Pool Cleaning, Maintenance & Repairs" />
-	<meta property="og:description" content="Swim Studs keeps your pool crystal clear. Weekly cleaning, chemical balancing, filter & pump service, and equipment repairs." />
-	<meta property="og:site_name" content="Swim Studs" />
+	<meta property="og:title" content="Washology | Professional Pressure Washing & Soft Washing" />
+	<meta property="og:description" content="Expert exterior cleaning: pressure washing and soft washing for driveways, roofs, siding, patios, and storefronts." />
+	<meta property="og:site_name" content="Washology" />
 	<meta property="og:image:width" content="800" />
 	<meta property="og:image:height" content="527" />
-	<meta property="og:image:alt" content="a completed garage renovation project including new storage units, hex lighting, and epoxy flooring completed by Swim Studs First Coast" />
+	<meta property="og:image:alt" content="a completed garage renovation project including new storage units, hex lighting, and epoxy flooring completed by Washology First Coast" />
 	<meta property="og:image:type" content="image/png" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Swim Studs | Professional Pool Cleaning, Maintenance & Repairs" />
-	<meta name="twitter:description" content="Weekly cleaning, chemical balancing, filter & pump service, and equipment repairs. Get a free quote today!" />
-	<link rel="alternate" type="application/rss+xml" title="Swim Studs » Feed" href="/feed/" />
-	<link rel="alternate" type="application/rss+xml" title="Swim Studs » Comments Feed" href="/comments/feed/" />
+	<meta name="twitter:title" content="Washology | Professional Pressure Washing & Soft Washing" />
+	<meta name="twitter:description" content="Exterior cleaning pros. Soft wash for roofs and siding, pressure wash for concrete and brick. Free estimates." />
+	<link rel="alternate" type="application/rss+xml" title="Washology » Feed" href="/feed/" />
+	<link rel="alternate" type="application/rss+xml" title="Washology » Comments Feed" href="/comments/feed/" />
 	<style id='wp-emoji-styles-inline-css'>
 		img.wp-smiley, img.emoji { display: inline !important; border: none !important; box-shadow: none !important; height: 1em !important; width: 1em !important; margin: 0 0.07em !important; vertical-align: -0.1em !important; background: none !important; padding: 0 !important; }
 	</style>
@@ -32,6 +40,30 @@
 	<link rel='stylesheet' id='main-css' href='/wp-content/themes/garageup/build/main.css_ver=b6dc510ac89b6f088fb6.css' media='all' />
 	<link rel='stylesheet' id='nav-overrides-css' href='/wp-content/themes/garageup/build/nav-overrides.css' media='all' />
 	<link rel='stylesheet' id='brand-overrides-css' href='/wp-content/themes/garageup/build/brand-overrides.css' media='all' />
+	<!-- Late brand override to ensure palette wins over bundled CSS -->
+	<style>
+		:root { 
+			--brand-blue: #0B5E8E !important; 
+			--brand-lime: #B8E215 !important; 
+			--brand-red: var(--brand-blue) !important; 
+			--brand-yellow: var(--brand-lime) !important; 
+		}
+		/* Header banner and navbar */
+		.banner-wrapper { background-color: var(--brand-blue) !important; }
+		#header.navbar { border-bottom: 3px solid var(--brand-lime) !important; }
+		#header .nav-link { color: var(--brand-blue) !important; }
+		#header .nav-link:hover { color: #063e61 !important; }
+		#header .dropdown-item:hover { background: var(--brand-lime) !important; color: #052B44 !important; }
+
+		/* Global component overrides */
+		.btn-primary, .btn-brand-primary { background-color: var(--brand-blue) !important; border-color: var(--brand-blue) !important; color: #fff !important; }
+		.btn-outline-secondary { border-color: var(--brand-blue) !important; color: var(--brand-blue) !important; }
+		.btn-outline-secondary:hover { background: var(--brand-lime) !important; border-color: var(--brand-lime) !important; color: #052B44 !important; }
+		.badge, .label { background: var(--brand-lime) !important; color: #052B44 !important; }
+		.bg-warning, .bg-danger, .bg-primary { background-color: var(--brand-blue) !important; }
+		.text-danger, .text-primary { color: var(--brand-blue) !important; }
+		.border-primary { border-color: var(--brand-lime) !important; }
+	</style>
 	<script src="/wp-includes/js/jquery/jquery.min.js_ver=3.7.1" id="jquery-core-js"></script>
 	<script src="/wp-includes/js/jquery/jquery-migrate.min.js_ver=3.4.1" id="jquery-migrate-js"></script>
 	<link rel="https://api.w.org/" href="/wp-json/" />
@@ -72,6 +104,17 @@
 		  #navbar .navbar-nav .center-brand { display: flex !important; align-items: center; justify-content: center; padding: 0 8px; }
 		}
 
+		/* Brand theming for navbar */
+		#header.navbar { border-bottom: 3px solid var(--brand-yellow); }
+		#header .nav-link { color: var(--brand-red); font-weight: 600; }
+		#header .nav-link:hover, #header .nav-link:focus { color: #063e61; }
+		#header .dropdown-menu { border-radius: 10px; border-color: rgba(11,94,142,.15); }
+		#header .dropdown-item:hover, #header .dropdown-item:focus { background: var(--brand-yellow); color: #052B44; }
+
+		/* Primary buttons in header context */
+		.btn.btn-brand-primary { background-color: var(--brand-red) !important; border-color: var(--brand-red) !important; color: #fff; }
+		.btn.btn-brand-primary:hover { filter: brightness(1.05); box-shadow: 0 6px 16px rgba(11,94,142,.28); }
+
 		/* Site loader overlay */
 		#site-loader { position: fixed; inset: 0; background: var(--brand-yellow); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity .3s ease, visibility .3s ease; }
 		#site-loader img { width: 170px; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.15)); }
@@ -81,7 +124,7 @@
 <body class="<%= typeof bodyClass !== 'undefined' && bodyClass ? bodyClass : 'home wp-singular page-template page-template-templates page-template-landing page-template-templateslanding-php page page-id-8 wp-theme-resi-franchise wp-child-theme-garageup' %>">
 	<!-- Site Loader -->
 	<div id="site-loader" aria-hidden="true" role="presentation">
-		<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
+		<img src="/pictures/logo/Washology.png" alt="Washology" />
 	</div>
 	<script>
 		window.addEventListener('load', function () {
@@ -91,20 +134,38 @@
 			setTimeout(function(){ try { el.remove(); } catch(e) { if (el && el.parentNode) el.parentNode.removeChild(el); } }, 400);
 		});
 	</script>
+	<!-- Force header Contact links to navigate (do not open ZIP modal) -->
+	<script>
+	(function(){
+	  function sanitizeLink(a){
+	    try {
+	      a.removeAttribute('data-bs-toggle');
+	      a.removeAttribute('data-bs-target');
+	      // Stop any other scripts from intercepting the click; allow default navigation to proceed
+	      a.addEventListener('click', function(e){ e.stopImmediatePropagation(); }, true);
+	    } catch(_) {}
+	  }
+	  document.addEventListener('DOMContentLoaded', function(){
+	    // Header nav and banner contact links
+	    document.querySelectorAll('header a[href="/contact-us"]').forEach(sanitizeLink);
+	    var banner = document.querySelector('.banner-header a');
+	    if (banner && /\/contact-us$/.test(banner.getAttribute('href')||'')) sanitizeLink(banner);
+	  });
+	})();
+	</script>
 	<a href="#main" class="visually-hidden-focusable">Skip to main content</a>
 	<div id="wrapper">
 		<header>
 			<div class="banner-wrapper">
 				<div class="col-sm-12 banner-wrapper">
-					
-					<h6 class="banner-header"><a href="#" data-bs-toggle="modal" data-bs-target="#scheduleModal">Get Free Estimate</a></h6>
+					<h6 class="banner-header"><a href="/contact-us">Get Free Estimate</a></h6>
 				</div>
 			</div>
 			<nav id="header" class="navbar navbar-expand-md justify-content-center navbar-light bg-light">
 				<div class="container">
 					<div class="mbl-nav-wrapper">
-						<a class="navbar-brand d-md-none" href="/" title="Swim Studs" rel="home">
-							<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
+						<a class="navbar-brand d-md-none" href="/" title="Washology" rel="home">
+							<img src="/pictures/logo/Washology.png" alt="Washology" />
 						</a>
 						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
@@ -117,8 +178,8 @@
 								<li class="menu-item menu-item-type-post_type menu-item-object-page nav-item"><a title="Contact Us" href="/contact-us" class="nav-link">Contact Us</a></li>
 							</ul>
 							<li class="center-brand d-none d-md-flex">
-								<a class="navbar-brand" href="/" title="Swim Studs" rel="home">
-									<img src="/wp-content/themes/garageup/images/Logo Transparent.png" alt="Swim Studs" />
+								<a class="navbar-brand" href="/" title="Washology" rel="home">
+									<img src="/pictures/logo/Washology.png" alt="Washology" />
 								</a>
 							</li>
 							<ul id="menu-main-menu-1" class="navbar-nav right-menu">
