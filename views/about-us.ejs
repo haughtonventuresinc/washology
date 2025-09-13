@@ -72,13 +72,13 @@
       .about-us-page-template .wpforms-container .wpforms-submit-container { text-align: center; }
     }
 
-    /* Core Values: force white text within the dark section */
+    /* Core Values: force brand blue text within the section */
     .core-values, 
     .core-values .section-title,
     .core-values h2,
     .core-values h3,
     .core-values p,
-    .core-values li { color: #fff !important; }
+    .core-values li { color: var(--brand-blue) !important; }
     /* Increase specificity to beat theme styles */
     .core-values .core-values--values,
     .core-values .core-values--value,
@@ -88,10 +88,10 @@
     .core-values .left *,
     .core-values .right,
     .core-values .right *,
-    .core-values a { color: #fff !important; }
-    /* Final override: ensure Core Values section text stays white */
-    .core-values, .core-values * { color: #fff !important; }
-    .core-values a:hover, .core-values a:focus { color: #fff !important; text-decoration: underline; }
+    .core-values a { color: var(--brand-blue) !important; }
+    /* Final override: ensure Core Values section text stays blue */
+    .core-values, .core-values * { color: var(--brand-blue) !important; }
+    .core-values a:hover, .core-values a:focus { color: var(--brand-blue) !important; text-decoration: underline; }
     /* Extra-specific paragraph overrides in Core Values */
     .core-values p,
     .core-values .core-values--values p,
@@ -102,7 +102,7 @@
     /* Ultra-specific combos to beat any theme selectors */
     .core-values.bg-garageup-primary-dark .left .core-values--values .core-values--value .core-values--content p,
     .core-values.bg-garageup-primary-dark .left .core-values--content p,
-    .about-us-page .core-values .left .core-values--content p { color: #fff !important; }
+    .about-us-page .core-values .left .core-values--content p { color: var(--brand-blue) !important; }
     
     /* Make single images large and clean in each section */
     .about-us-page-template .image-col figure { margin: 0; }
@@ -115,9 +115,9 @@
       border-radius: 12px; 
     }
 
-    /* Core Values icons: inline SVGs use currentColor; force white */
+    /* Core Values icons: inline SVGs use currentColor; force brand blue */
     .about-us-page-template .core-values .core-values--icon svg {
-      width: 52px; height: 52px; display: block; color: #fff; fill: currentColor;
+      width: 52px; height: 52px; display: block; color: var(--brand-blue); fill: currentColor;
     }
 
     /* Promise section: force all typography to white on red background */
@@ -135,12 +135,12 @@
         const _isAbs = /^https?:\/\//i.test(_trimHero);
         const _safeHero = _trimHero
           ? (_isAbs ? _trimHero : ('/' + _trimHero.replace(/^\/+/, '')))
-          : 'https://images.ctfassets.net/ftcnv5up9dxv/7dX53kEhONSiR3WxVDA347/4e95c833c6b566b450951f3100d6f56f/What_You_ll_Need_to_Clean_Your_Pool.jpg';
+          : '/pictures/Washology/2.png';
       %>
       <!-- Hero -->
       <section class="hero hero-wrapper gradient-overlay"
         style="background-image: url('<%= _safeHero %>');">
-        <h1><%= (about && about.heroTitle) || 'Pool Care Above and Beyond' %></h1>
+        <h1><%= (about && about.heroTitle) || 'About Washology' %></h1>
       </section>
 
       
@@ -167,8 +167,8 @@
                        <% } %>
                    <% });
                    } else { %>
-                     <p>At Swim Studs, our mission is to keep pools sparkling, safe, and effortless to enjoy. From weekly cleaning and chemical balancing to filter and pump maintenance, we deliver dependable service tailored to your pool’s needs.</p>
-                     <p>We’re committed, certified pool technicians who take pride in the details—so you can relax. Whether it’s routine care, green‑to‑clean recovery, or equipment repairs, Swim Studs keeps your water crystal clear and hassle‑free.</p>
+                     <p>At Washology, our mission is to restore curb appeal with professional pressure washing and soft washing. From house washing and roof soft wash to driveway, patio, and storefront cleaning, we use the right method for every surface.</p>
+                     <p>We’re a friendly, trained team that takes pride in the details—so you can relax. Expect on‑time arrivals, photo updates, and consistent, long‑lasting results without damage.</p>
                      <p><strong>We’re growing across the region and remain focused on transparent communication, trusted results, and five‑star service—every visit.</strong></p>
                    <% }
                  } %>
@@ -176,8 +176,8 @@
             <div class="col-lg-1"></div>
             <div class="col-sm-12 col-lg-6 image-col">
               <figure>
-                <img width="1280" height="853" class="img-fluid" alt="A Swim Studs technician at work"
-                  src="<%= (about && about.introImage1) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" />
+                <img width="1280" height="853" class="img-fluid" alt="Washology technician pressure washing"
+                  src="<%= (about && about.introImage1) || '/pictures/Washology/3.png' %>" />
               </figure>
             </div>
           </div>
@@ -190,8 +190,8 @@
           <div class="row">
             <!-- Images on the left -->
             <div class="col-sm-12 col-lg-5 right">
-              <img width="1500" height="1200" class="img-fluid" alt="Custom maintenance setup"
-                   src="<%= (about && about.coreRightImage1) || 'https://i.pinimg.com/736x/ce/db/8e/cedb8ea3e7e0a515edf67cade4465d97.jpg' %>" />
+              <img width="1500" height="1200" class="img-fluid" alt="Exterior cleaning in progress"
+                   src="<%= (about && about.coreRightImage1) || '/pictures/Washology/2.png' %>" />
             </div>
             <div class="col-lg-1"></div>
             <!-- Text on the right -->
@@ -201,7 +201,7 @@
                 <div class="core-values--value">
                   <div class="core-values--icon" aria-hidden="true">
                     <!-- Shield Check (inline) -->
-                    <svg viewBox="0 0 24 24" role="img" focusable="false"><path d="M12 2.25c.2 0 .4.04.58.12l7 3.11c.38.17.62.54.62.95V11c0 5.05-3.45 8.88-7.92 10.6a1.5 1.5 0 0 1-1.36 0C6.45 19.88 3 16.05 3 11V6.43c0-.41.24-.78.62-.95l7-3.11c.18-.08.38-.12.58-.12Zm-1.1 12.15 5.3-5.3a.75.75 0 0 0-1.06-1.06l-4.77 4.77-2.02-2.02a.75.75 0 0 0-1.06 1.06l2.55 2.55c.3.3.77.3 1.06 0Z"/></svg>
+                    <svg viewBox="0 0 24 24" role="img" focusable="false"><path d="M12 2.25C6.62 3.25 2.25 6.9 2.25 11.3c0 2.1.96 3.99 2.54 5.43-.22 1.08-.77 2.2-1.66 3.35a.75.75 0 0 0 .64 1.2c2.22-.1 3.95-.64 5.22-1.38 1.01.29 2.1.45 3.26.45 5.38 0 9.75-3.65 9.75-8.05S17.38 3.25 12 3.25Zm-3 8.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>
                   </div>
                   <div class="core-values--content">
                     <h3><%= (about && about.coreValue1Title) || 'Crystal‑Clear Standards' %></h3>
@@ -234,12 +234,12 @@
         </div>
       </section>
 
-      <!-- The Swim Studs Way / Promises -->
+      <!-- The Washology Way / Promises -->
       <section class="promise-wrapper mb-5 bg-garageup-black" style="background-color: var(--brand-red) !important">
         <div class="container">
           <div class="row">
             <div class="title-wrapper col-sm-12 col-lg-5">
-              <h2 class="section-title" style="color: white !important;"><%= (about && about.wayTitle) || 'The Swim Studs Way' %></h2>
+              <h2 class="section-title" style="color: white !important;"><%= (about && about.wayTitle) || 'The Washology Way' %></h2>
             </div>
             <div class="copy-wrapper col-sm-12 col-lg-7">
               <% 
@@ -258,8 +258,8 @@
                        <% } %>
                    <% });
                    } else { %>
-                     <p>We go above and beyond to keep your water crystal clear and your experience stress‑free. The Swim Studs team communicates proactively, arrives on time, and delivers dependable results on every visit—from weekly service to green‑to‑clean recovery and equipment repairs.</p>
-                     <p><strong>Let Swim Studs keep your pool sparkling with expert care you can trust.</strong></p>
+                     <p>We go above and beyond to make exterior cleaning effortless. Our team communicates proactively, arrives on time, and delivers dependable results on every visit—from house washing and roof soft wash to concrete and commercial cleaning.</p>
+                     <p><strong>Let Washology bring back that like‑new look with care you can trust.</strong></p>
                    <% }
                  } %>
             </div>
@@ -272,8 +272,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>01</span></div>
                   <div class="promise-card--content">
-                    <h3><%= (about && about.promise1Title) || 'Our Work Brings Joy' %></h3>
-                    <p><%= (about && about.promise1Body) || 'We deliver crystal‑clear results that make pool time effortless and enjoyable. No pool is too small or system too complex for our commitment to quality.' %></p>
+                    <h3><%= (about && about.promise1Title) || 'Results You Can See' %></h3>
+                    <p><%= (about && about.promise1Body) || 'From roofs to driveways, we deliver a dramatic, even clean—curb appeal restored without damage.' %></p>
                   </div>
                 </div>
               </div>
@@ -285,8 +285,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>02</span></div>
                   <div class="promise-card--content">
-                    <h3><%= (about && about.promise2Title) || 'Respect Time & Communication' %></h3>
-                    <p><%= (about && about.promise2Body) || 'Your time matters. We provide clear service windows, updates before and after each visit, and fast responses when you need help. If plans change, you’ll know right away.' %></p>
+                    <h3><%= (about && about.promise2Title) || 'On‑Time & Transparent' %></h3>
+                    <p><%= (about && about.promise2Body) || 'Clear service windows and quick updates before and after each visit. If plans change, you’ll know right away.' %></p>
                   </div>
                 </div>
               </div>
@@ -298,8 +298,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>03</span></div>
                   <div class="promise-card--content">
-                    <h3><%= (about && about.promise3Title) || 'Stress-Free, Mess-Free Service' %></h3>
-                    <p><%= (about && about.promise3Body) || 'Pool care shouldn’t add stress. We use safe, proven methods, keep equipment tidy, and leave your deck clean—so all you have to do is enjoy the water.' %></p>
+                    <h3><%= (about && about.promise3Title) || 'Safe For Your Home' %></h3>
+                    <p><%= (about && about.promise3Body) || 'We use the right pressure and eco‑friendly detergents, protect landscaping, and leave your property tidy.' %></p>
                   </div>
                 </div>
               </div>
@@ -311,8 +311,8 @@
                 <div class="d-flex">
                   <div class="promise-card--number"><span>04</span></div>
                   <div class="promise-card--content">
-                    <h3><%= (about && about.promise4Title) || 'Value Based Pricing' %></h3>
-                    <p><%= (about && about.promise4Body) || 'Transparent, upfront pricing with no surprises. Expect top‑tier service, reliable scheduling, and long‑lasting results—every visit, every season.' %></p>
+                    <h3><%= (about && about.promise4Title) || 'Transparent Pricing' %></h3>
+                    <p><%= (about && about.promise4Body) || 'Upfront quotes, no surprises. Expect top‑tier service, reliable scheduling, and long‑lasting results.' %></p>
                   </div>
                 </div>
               </div>

@@ -19882,11 +19882,6 @@ section.bg-primary {
     background-color: var(--brand-yellow)
 }
 
-section.bg-garageup-primary-dark,
-section.bg-primary-dark {
-    background-color: var(--brand-orange)
-}
-
 section.bg-garageup-black,
 section.bg-primary-black {
     background-color: var(--garageup-carbon)
