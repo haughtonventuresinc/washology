@@ -7,17 +7,49 @@
   <link rel='stylesheet' href='/wp-includes/css/dist/block-library/style.min.css_ver=6.8.2.css' />
   <link rel='stylesheet' href='/wp-content/themes/garageup/build/main.css_ver=b6dc510ac89b6f088fb6.css' />
   <link rel='stylesheet' href='/wp-content/themes/garageup/build/nav-overrides.css' />
-  <link rel='stylesheet' href='/wp-content/themes/garageup/build/brand-overrides.css' />
   <style>
+    		:root { 
+			--brand-blue: #0B5E8E !important; 
+			--brand-lime: #B8E215 !important; 
+			--brand-red: var(--brand-blue) !important; 
+			--brand-yellow: var(--brand-lime) !important; 
+		}
     html, body { height: 100%; }
-    body { background: white; }
+    /* Dashboard canvas: lime green (matches site pages) */
+    body.dashboard-page { background: var(--brand-lime); }
     .dashboard { min-height: 100vh; }
     .dashboard .row { min-height: 100vh; }
     .dashboard aside { position: sticky; top: 0; height: 100vh; overflow: auto; }
+    .dashboard .list-group { border-radius: 14px; overflow: hidden; box-shadow: 0 8px 18px rgba(0,0,0,.08); }
     .dashboard .list-group-item { border: 0; border-bottom: 1px solid #eee; }
-    .dashboard .list-group-item.active, .dashboard .list-group-item:hover { background: #fff2f3; }
+    .dashboard .list-group-item.active, .dashboard .list-group-item:hover {
+      background: color-mix(in srgb, var(--brand-lime) 24%, #fff 76%);
+      color: var(--brand-blue);
+      border-left: 4px solid var(--brand-lime);
+    }
     .dashboard .dash-link { text-decoration: none; color: inherit; display: block; }
     .dashboard .content-col { max-height: 100vh; overflow: auto; }
+    /* Cards */
+    .dashboard .card { background: #fff; border: none; border-radius: 14px; box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+    /* Force blue header, even when theme adds bg-light */
+    .dashboard .card > .card-header,
+    .dashboard .card > .card-header.bg-light { background: var(--brand-blue) !important; color: #fff !important; }
+    .dashboard .card > .card-header .h5, 
+    .dashboard .card > .card-header h2, 
+    .dashboard .card > .card-header span { color: #fff !important; }
+    .dashboard .card > .card-header .text-muted { opacity: .85; }
+    .dashboard .card > .card-header .btn,
+    .dashboard .card > .card-header a.btn,
+    .dashboard .card > .card-header .btn.btn-outline-secondary {
+      border-color: #fff !important; color: #fff !important; background: transparent !important;
+    }
+    .dashboard .card > .card-header .btn:hover,
+    .dashboard .card > .card-header a.btn:hover,
+    .dashboard .card > .card-header .btn.btn-outline-secondary:hover {
+      background: #fff !important; color: var(--brand-blue) !important; border-color: #fff !important;
+    }
+    .dashboard .card > .card-body { background: #fff; }
+
     /* Toasts */
     .toast-container { position: fixed; right: 16px; bottom: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
     .toast { color: #fff; padding: 10px 14px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.15); opacity: 0; transform: translateY(10px); transition: opacity .2s ease, transform .2s ease; font-size: 14px; }
@@ -27,7 +59,7 @@
     .toast.info { background: #0d6efd; }
     .toast.warn { background: #fd7e14; }
   </style>
-  <link rel="icon" href="/wp-content/uploads/2025/04/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" href="/pictures/favicon/washology/favicon-32x32.png" sizes="32x32" />
 </head>
 <body class="dashboard-page">
   <main>
@@ -37,21 +69,18 @@
           <!-- Sidebar -->
           <aside class="col-12 col-md-3 col-lg-2 mb-4 mb-md-0">
             <nav class="card shadow-sm border-0" style="border-radius: 10px; overflow: hidden;">
-              <div class="card-header" style="background: var(--brand-red); color: #fff;">
+              <div class="card-header" style="background: var(--brand-blue); color: #fff;">
                 <h3 class="my-2" style="font-size: 1.1rem; letter-spacing: .02em;">Admin Panel</h3>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item <%= section === 'home' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/home">Overview</a></li>
                 <li class="list-group-item <%= section === 'homepage' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/homepage">Homepage</a></li>
                 <li class="list-group-item <%= section === 'about' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/about">About Us</a></li>
-                <li class="list-group-item <%= section === 'pages' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/pages">Pages</a></li>
-                <li class="list-group-item <%= section === 'services' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/services">Services</a></li>
                 <li class="list-group-item <%= section === 'blog' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/blog">Blog</a></li>
                 <li class="list-group-item <%= section === 'contact' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/contact">Contact Us</a></li>
-                <li class="list-group-item <%= section === 'settings' ? 'active' : '' %>"><a class="dash-link" href="/dashboard/settings">Settings</a></li>
               </ul>
               <div class="card-body">
-                <button id="logoutBtn" class="btn w-100" style="background: var(--brand-red); color: #fff;">Logout</button>
+                <button id="logoutBtn" class="btn w-100" style="background: var(--brand-blue); color: #fff;">Logout</button>
               </div>
             </nav>
           </aside>
@@ -322,7 +351,7 @@
                     <% } %>
 
                     <div class="col-12 d-flex gap-2 mt-2">
-                      <button type="submit" class="btn btn-primary">Save</button>
+                      <button type="submit" class="btn btn-primary" style="background: limegreen; color: #fff; border-color: limegreen;">Save</button>
                       <span id="homepageStatus" class="text-muted"></span>
                     </div>
                   </form>
