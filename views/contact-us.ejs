@@ -188,28 +188,28 @@
 
           <!-- Accessible contact form preserving original look and CSS targets -->
           <div class="wpforms-container wpforms-container-full">
-            <form class="wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain" novalidate>
+            <form id="contactForm1" class="wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain">
               <div class="wpforms-field-container">
                 <div class="wpforms-field">
                   <label class="wpforms-field-label" for="contact-name" style="color: white !important;">Name <span aria-hidden="true" class="wpforms-required-label">*</span></label>
                   <div class="wpforms-field-row">
                     <div class="wpforms-field-row-block wpforms-one-half">
-                      <input type="text" id="contact-name-first" name="firstName" placeholder="First" required />
+                      <input type="text" id="contact-name-first" name="firstName" placeholder="First" required autocomplete="given-name" />
                     </div>
                     <div class="wpforms-field-row-block wpforms-one-half">
-                      <input type="text" id="contact-name-last" name="lastName" placeholder="Last" required />
+                      <input type="text" id="contact-name-last" name="lastName" placeholder="Last" required autocomplete="family-name" />
                     </div>
                   </div>
                 </div>
 
                 <div class="wpforms-field">
                   <label class="wpforms-field-label" for="contact-phone" style="color: white !important;">Phone <span aria-hidden="true" class="wpforms-required-label">*</span></label>
-                  <input type="tel" id="contact-phone" name="phone" inputmode="tel" placeholder="(555) 555-5555" required />
+                  <input type="tel" id="contact-phone" name="phone" inputmode="tel" placeholder="(555) 555-5555" pattern="^\\+?[0-9\\s().-]{7,}$" required autocomplete="tel" />
                 </div>
 
                 <div class="wpforms-field">
                   <label class="wpforms-field-label" for="contact-email" style="color: white !important;">Email <span aria-hidden="true" class="wpforms-required-label">*</span></label>
-                  <input type="email" id="contact-email" name="email" placeholder="you@example.com" required />
+                  <input type="email" id="contact-email" name="email" placeholder="you@example.com" required autocomplete="email" />
                 </div>
 
                 <div class="wpforms-field">
@@ -331,6 +331,35 @@
     })();
   </script>
 
+  <script>
+    (function(){
+      try {
+        function wireValidation(formId){
+          var form = document.getElementById(formId);
+          if (!form) return;
+          // Real-time aria-invalid for accessibility
+          form.addEventListener('input', function(ev){
+            var el = ev.target;
+            if (!(el && el.checkValidity)) return;
+            el.setAttribute('aria-invalid', el.checkValidity() ? 'false' : 'true');
+          });
+          form.addEventListener('submit', function(ev){
+            if (!form.checkValidity()){
+              ev.preventDefault();
+              ev.stopPropagation();
+              try { form.reportValidity(); } catch(_) {}
+              var firstInvalid = form.querySelector(':invalid');
+              if (firstInvalid && firstInvalid.focus) firstInvalid.focus();
+              return false;
+            }
+          }, true);
+        }
+        wireValidation('contactForm1');
+        wireValidation('contactForm2');
+      } catch(_) {}
+    })();
+  </script>
+
   <div class="container">
     <div class="bottom-form-wrapper mt-5 col-sm-12">
       <div class="inner-wrapper">
@@ -338,7 +367,7 @@
           <h2><%= (contact && contact.bottomTitle) || 'Get An Estimate' %></h2>
         </div>
         <div class="wpforms-container wpforms-container-full wpforms-render-modern">
-          <form class="wpforms-validate wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain" novalidate>
+          <form id="contactForm2" class="wpforms-validate wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain">
             <div class="wpforms-field-container">
               <div class="wpforms-field wpforms-field-name">
                 <fieldset>
@@ -358,12 +387,12 @@
 
               <div class="wpforms-field wpforms-field-phone">
                 <label class="wpforms-field-label" for="estimate-phone">Phone <span class="wpforms-required-label" aria-hidden="true">*</span></label>
-                <input id="estimate-phone" type="tel" name="phone" inputmode="tel" required />
+                <input id="estimate-phone" type="tel" name="phone" inputmode="tel" pattern="^\\+?[0-9\\s().-]{7,}$" required autocomplete="tel" />
               </div>
 
               <div class="wpforms-field wpforms-field-email">
                 <label class="wpforms-field-label" for="estimate-email">Email <span class="wpforms-required-label" aria-hidden="true">*</span></label>
-                <input id="estimate-email" type="email" name="email" required />
+                <input id="estimate-email" type="email" name="email" required autocomplete="email" />
               </div>
 
               <div class="wpforms-field">
