@@ -251,6 +251,43 @@ section.blogFeat h4 {
   .blogFeat .featured-posts-wrapper > a.feat-post { width: 100% !important; }
 }
 
+/* Blog feature: action buttons and nav should match Washology palette */
+.blogFeat .blog-slider .blog-nav,
+.blogFeat .blog-slider .blog-nav:disabled {
+  background: var(--brand-blue) !important;
+  color: #fff !important;
+}
+.blogFeat .blog-slider .blog-nav:hover,
+.blogFeat .blog-slider .blog-nav:focus {
+  filter: brightness(1.05);
+}
+
+/* Detail card primary action */
+.blogFeat .featured-post-detail .detail-actions .btn,
+.blogFeat .featured-post-detail .detail-actions a.btn,
+.blogFeat .featured-post-detail .detail-actions .btn-primary-dark {
+  background-color: var(--brand-blue) !important;
+  border-color: var(--brand-blue) !important;
+  color: #fff !important;
+}
+.blogFeat .featured-post-detail .detail-actions .btn:hover,
+.blogFeat .featured-post-detail .detail-actions .btn:focus {
+  filter: brightness(1.05);
+  color: #fff !important;
+}
+
+/* All Posts button at bottom of section */
+.blogFeat .blogContent .text-center .btn.btn-primary,
+.blogFeat .blogContent .text-center a.btn.btn-primary {
+  background-color: var(--brand-blue) !important;
+  border-color: var(--brand-blue) !important;
+  color: #fff !important;
+}
+.blogFeat .blogContent .text-center .btn.btn-primary:hover,
+.blogFeat .blogContent .text-center .btn.btn-primary:focus {
+  filter: brightness(1.05);
+}
+
 .our-stats .our-stats--stat--icon img {
   /* approximate #F7A11A */
   filter: invert(69%) sepia(71%) saturate(743%) hue-rotate(352deg) brightness(101%) contrast(101%);
