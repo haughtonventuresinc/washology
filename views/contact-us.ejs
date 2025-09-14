@@ -188,7 +188,7 @@
 
           <!-- Accessible contact form preserving original look and CSS targets -->
           <div class="wpforms-container wpforms-container-full">
-            <form id="contactForm1" class="wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain">
+            <form id="contactForm1" class="wpforms-form" method="post" action="/api/leads">
               <div class="wpforms-field-container">
                 <div class="wpforms-field">
                   <label class="wpforms-field-label" for="contact-name" style="color: white !important;">Name <span aria-hidden="true" class="wpforms-required-label">*</span></label>
@@ -227,8 +227,10 @@
                 </div>
               </div>
 
+              <input type="hidden" name="source" value="contact-top" />
               <div class="wpforms-submit-container">
                 <button type="submit" class="wpforms-submit" style="background-color: var(--brand-yellow) !important; border-color: var(--brand-yellow) !important; color: var(--brand-blue) !important;">Get My Free Estimate</button>
+                <div id="contactForm1Status" class="text-muted mt-2" style="color:#fff !important;"></div>
               </div>
             </form>
           </div>
@@ -367,7 +369,7 @@
           <h2><%= (contact && contact.bottomTitle) || 'Get An Estimate' %></h2>
         </div>
         <div class="wpforms-container wpforms-container-full wpforms-render-modern">
-          <form id="contactForm2" class="wpforms-validate wpforms-form" method="post" action="mailto:contact@haughtonventures.com?subject=Free%20Estimate%20Request" enctype="text/plain">
+          <form id="contactForm2" class="wpforms-validate wpforms-form" method="post" action="/api/leads">
             <div class="wpforms-field-container">
               <div class="wpforms-field wpforms-field-name">
                 <fieldset>
@@ -408,8 +410,10 @@
               </div>
             </div>
 
+            <input type="hidden" name="source" value="contact-bottom" />
             <div class="wpforms-submit-container">
               <button type="submit" class="wpforms-submit">Get My Free Estimate</button>
+              <div id="contactForm2Status" class="text-muted mt-2"></div>
             </div>
           </form>
         </div>

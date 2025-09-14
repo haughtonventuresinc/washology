@@ -129,6 +129,28 @@ const HOMEPAGE_DB_PATH = path.join(siteRoot, 'data', 'homepage.json');
 const ABOUT_DB_PATH = path.join(siteRoot, 'data', 'about.json');
 const BLOG_DB_PATH = path.join(siteRoot, 'data', 'blog.json');
 const CONTACT_DB_PATH = path.join(siteRoot, 'data', 'contact.json');
+const LEADS_DB_PATH = path.join(siteRoot, 'data', 'leads.json');
+
+function loadLeads() {
+  try {
+    const raw = fs.readFileSync(LEADS_DB_PATH, 'utf8');
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveLead(entry) {
+  try {
+    const list = loadLeads();
+    list.push(entry);
+    fs.writeFileSync(LEADS_DB_PATH, JSON.stringify(list, null, 2), 'utf8');
+    return entry;
+  } catch (e) {
+    return null;
+  }
+}
 
 function loadUsers() {
   try {
@@ -184,6 +206,39 @@ app.use((req, res, next) => {
   // eslint-disable-next-line no-console
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
   next();
+});
+
+// Public lead capture endpoint (replaces insecure mailto forms)
+app.post('/api/leads', (req, res) => {
+  try {
+    const b = req.body || {};
+    const firstName = (b.firstName || '').toString().trim();
+    const lastName = (b.lastName || '').toString().trim();
+    const phone = (b.phone || '').toString().trim();
+    const email = (b.email || '').toString().trim();
+    const zip = (b.zip || '').toString().trim();
+    const city = (b.city || '').toString().trim();
+    const state = (b.state || '').toString().trim();
+    const message = (b.message || '').toString().trim();
+    const source = (b.source || '').toString().trim();
+
+    // Minimal validation: require name and at least one contact method
+    if (!firstName || !lastName || (!phone && !email)) {
+      return res.status(400).json({ error: 'Please provide first name, last name, and phone or email.' });
+    }
+
+    const entry = {
+      firstName, lastName, phone, email, zip, city, state, message, source,
+      userAgent: (req.headers['user-agent'] || ''),
+      ip: (req.headers['x-forwarded-for'] || req.socket.remoteAddress || ''),
+      createdAt: new Date().toISOString()
+    };
+    const saved = saveLead(entry);
+    if (!saved) return res.status(500).json({ error: 'Failed to save lead' });
+    return res.json({ ok: true });
+  } catch (e) {
+    return res.status(500).json({ error: 'Exception while saving lead' });
+  }
 });
 
 // Clean routes for top-level pages
