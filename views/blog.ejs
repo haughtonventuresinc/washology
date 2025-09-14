@@ -1,7 +1,7 @@
 <%- include('partials/header', { bodyClass: typeof bodyClass !== 'undefined' ? bodyClass : 'blog wp-theme-resi-franchise wp-child-theme-garageup' }) %>
 
   <div class="blog-archive-wrapper">
-  <section class="hero hero-wrapper col-sm-12" style="background-image: url(<%= JSON.stringify((blog && blog.heroBg) || '/pictures/Washology/2.png') %>)">
+  <section class="hero hero-wrapper col-sm-12" style="background-image: url('<%= (blog && blog.heroBg) || '/pictures/Washology/2.png' %>');">
     <h1><%= (blog && blog.heroTitle) || 'Blog' %></h1>
   </section>
 
@@ -24,6 +24,12 @@
       <div class="cards-inner-wrapper" role="region" aria-label="Blog posts slider">
         <% 
           const posts = [];
+          const toSlug = (s) => String(s || '')
+            .toLowerCase()
+            .replace(/&/g, ' and ')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .substring(0, 120);
           if (blog) {
             for (let i = 1; i <= 12; i++) {
               const t = blog[`post${i}Title`];
@@ -33,7 +39,8 @@
               const img = blog[`post${i}Image`];
               const ex = blog[`post${i}Excerpt`];
               if (t || img || ex) {
-                posts.push({ t: t || '', u: u || '/', c: c || 'Uncategorized', r: r || '', img: img || '', ex: ex || '' });
+                const s = toSlug(t || '');
+                posts.push({ t: t || '', u: u || '/', s, c: c || 'Uncategorized', r: r || '', img: img || '', ex: ex || '' });
               }
             }
           }
@@ -42,7 +49,7 @@
           <% posts.forEach(function(p){ %>
             <article class="archive-post-card">
               <div class="card">
-                <a href="<%- p.u %>" rel="bookmark">
+                <a href="/blog/<%- p.s %>" rel="bookmark">
                   <div class="card-body">
                     <span class="floating-cat">
                       <p><%- p.c %></p>

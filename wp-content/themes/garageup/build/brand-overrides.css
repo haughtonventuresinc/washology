@@ -6,11 +6,7 @@
   --brand-dark: #1B1B1B;   /* dark text fallback */
 }
 
-/* Base */
-html, body {
-  background-color: var(--brand-yellow);
-}
-
+  
 /* Text & links */
 a { color: var(--brand-red); }
 a:hover, a:focus { color: #d7341b; }

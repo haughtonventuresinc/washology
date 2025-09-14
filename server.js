@@ -508,7 +508,7 @@ app.post('/api/blog', requireAuth, (req, res) => {
   ];
   for (let i = 1; i <= 12; i++) {
     allowed.push(
-      `post${i}Title`, `post${i}Url`, `post${i}Category`, `post${i}ReadMin`, `post${i}Image`, `post${i}Excerpt`
+      `post${i}Title`, `post${i}Url`, `post${i}Category`, `post${i}ReadMin`, `post${i}Image`, `post${i}Excerpt`, `post${i}Body`
     );
   }
   const payload = {};

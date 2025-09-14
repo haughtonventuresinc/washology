@@ -17,13 +17,25 @@
 </section>
 
 <style>
+  /* Hero overlay to match Washology gradient */
+  .hero-aesthetic .hero-overlay {
+    background: linear-gradient(180deg, rgba(11, 94, 142, 0.45) 0%, rgba(11, 94, 142, 0.25) 40%, rgba(11, 94, 142, 0.45) 100%);
+  }
+  /* Article styles */
   .post-article { padding: 2.25rem 0 3rem; }
-  .post-article .post-meta { color: var(--brand-red); font-weight: 700; letter-spacing: .02em; }
+  .post-article .post-meta { color: var(--brand-blue); font-weight: 700; letter-spacing: .02em; }
+  .post-article .post-meta .badge.category { background: var(--brand-yellow) !important; color: var(--brand-blue) !important; border: 0; }
+  .post-article .post-meta .badge.time { background: transparent; border: 2px solid var(--brand-blue); color: var(--brand-blue); font-weight: 800; }
   .post-article .post-figure { border-radius: 16px; overflow: hidden; box-shadow: 0 12px 28px rgba(0,0,0,.16); }
   .post-article .content p { font-size: 1.05rem; line-height: 1.8; margin: 0 0 1.15rem; }
-  .post-article .content h2, .post-article .content h3 { font-weight: 800; margin-top: 1.5rem; }
+  .post-article .content h2, .post-article .content h3 { font-weight: 800; margin-top: 1.5rem; color: #05132D; }
+  .post-article .content a { color: var(--brand-blue); text-decoration-color: var(--brand-yellow); text-underline-offset: 2px; }
+  .post-article .content a:hover { filter: brightness(0.95); }
   .post-article .content img { max-width: 100%; height: auto; border-radius: 12px; }
   .post-article .back-link { display: inline-block; margin-top: 1rem; }
+  /* Define primary-dark button variant for Back button */
+  .btn.btn-primary-dark { background-color: var(--brand-blue) !important; border-color: var(--brand-blue) !important; color: #fff !important; }
+  .btn.btn-primary-dark:hover { filter: brightness(1.05); box-shadow: 0 8px 18px rgba(11,94,142,.22); color: #fff !important; }
 </style>
 
 <section class="post-article">
@@ -32,10 +44,10 @@
       <div class="col-lg-9 col-md-10">
         <div class="post-meta mb-3">
           <% if (post && post.category) { %>
-            <span class="badge bg-warning text-dark me-2"><%= post.category %></span>
+            <span class="badge category me-2"><%= post.category %></span>
           <% } %>
           <% if (post && post.readMin) { %>
-            <span class="badge bg-danger"><%= post.readMin %></span>
+            <span class="badge time"><%= post.readMin %></span>
           <% } %>
         </div>
 

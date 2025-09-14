@@ -653,6 +653,11 @@
                         <label class="form-label">Excerpt</label>
                         <textarea name="post<%= i %>Excerpt" class="form-control" rows="2"><%= (blog && blog[`post${i}Excerpt`]) || '' %></textarea>
                       </div>
+                      <div class="col-12">
+                        <label class="form-label">Body</label>
+                        <textarea name="post<%= i %>Body" class="form-control" rows="8" placeholder="Write your post here. No HTML needed—line breaks become paragraphs."><%= (blog && blog[`post${i}Body`]) || '' %></textarea>
+                        <small class="text-muted">No HTML required. We will auto-format your text into paragraphs and lists.</small>
+                      </div>
                     <% } %>
 
                     <div class="col-12 mt-4"><h3 class="h6">CTA</h3></div>
@@ -873,6 +878,52 @@
       // --- Blog page: hydrate, save, and image wiring ---
       const blogForm = document.getElementById('blogForm');
 
+      // Convert plain text to simple HTML: paragraphs and lists
+      function plaintextToHtml(text) {
+        try {
+          if (!text) return '';
+          const hasTags = /<\s*\w+[^>]*>/.test(text); // already HTML
+          if (hasTags) return text;
+          const lines = String(text).replace(/\r\n/g, '\n').split('\n');
+          const blocks = [];
+          let listType = null; // 'ul' or 'ol'
+          let listItems = [];
+          function flushList(){
+            if (listType && listItems.length){
+              blocks.push(`<${listType}>` + listItems.map(li => `<li>${li}</li>`).join('') + `</${listType}>`);
+            }
+            listType = null; listItems = [];
+          }
+          for (const raw of lines){
+            const line = raw.trim();
+            if (!line){
+              flushList();
+              continue;
+            }
+            const mUl = /^[-*]\s+(.+)$/.exec(line);
+            const mOl = /^(\d+)\.[)\s]+(.+)$/.exec(line);
+            if (mUl){
+              const item = mUl[1].trim();
+              if (listType !== 'ul') { flushList(); listType = 'ul'; }
+              listItems.push(item);
+              continue;
+            }
+            if (mOl){
+              const item = mOl[2].trim();
+              if (listType !== 'ol') { flushList(); listType = 'ol'; }
+              listItems.push(item);
+              continue;
+            }
+            // paragraph line
+            flushList();
+            blocks.push(`<p>${line}</p>`);
+          }
+          flushList();
+          // Merge adjacent paragraphs if needed; here we keep as-is
+          return blocks.join('\n');
+        } catch(_) { return text; }
+      }
+
       async function saveBlogPartial(patch, statusEl) {
         try {
           statusEl && (statusEl.textContent = 'Saving...');
@@ -934,14 +985,14 @@
       const blogHeroStatus = document.getElementById('blogHeroBgStatus');
       const blogHeroUrlInput = document.querySelector('#blogForm input[name="heroBg"]');
       const blogHeroPreview = document.getElementById('blogHeroBgPreview');
-      if (blogForm) wireImageField({ fileEl: blogHeroFile, urlInputEl: blogHeroUrlInput, previewEl: blogHeroPreview, statusEl: blogHeroStatus, payloadKey: 'heroBg' });
+      if (blogForm) wireBlogImageField({ fileEl: blogHeroFile, urlInputEl: blogHeroUrlInput, previewEl: blogHeroPreview, statusEl: blogHeroStatus, payloadKey: 'heroBg' });
 
       for (let i = 1; i <= 12; i++) {
         const f = document.getElementById(`post${i}ImageFile`);
         const s = document.getElementById(`post${i}ImageStatus`);
         const u = document.querySelector(`#blogForm input[name="post${i}Image"]`);
         const p = document.getElementById(`post${i}ImagePreview`);
-        if (blogForm) wireImageField({ fileEl: f, urlInputEl: u, previewEl: p, statusEl: s, payloadKey: `post${i}Image` });
+        if (blogForm) wireBlogImageField({ fileEl: f, urlInputEl: u, previewEl: p, statusEl: s, payloadKey: `post${i}Image` });
       }
 
       if (blogForm) {
@@ -958,7 +1009,11 @@
           for (const [k, v] of Object.entries(raw)) {
             const s = typeof v === 'string' ? v.trim() : v;
             if (typeof s === 'string' && s.length === 0) continue;
-            data[k] = s;
+            if (/^post\d+Body$/.test(k)) {
+              data[k] = plaintextToHtml(s);
+            } else {
+              data[k] = s;
+            }
           }
           const statusEl = document.getElementById('blogStatus');
           await saveBlogPartial(data, statusEl);
@@ -1001,6 +1056,26 @@
           showToast('Upload failed', 'error');
           return null;
         }
+      }
+
+      // Blog: image wiring that saves to /api/blog
+      function wireBlogImageField({ fileEl, urlInputEl, previewEl, statusEl, payloadKey }) {
+        if (!fileEl || !urlInputEl) return;
+        async function run() {
+          const file = fileEl && fileEl.files && fileEl.files[0];
+          if (!file) { statusEl && (statusEl.textContent = 'Choose an image first'); return; }
+          const url = await uploadImage(file, statusEl);
+          if (!url) return;
+          urlInputEl.value = url;
+          if (previewEl) { previewEl.src = url; previewEl.hidden = false; }
+          console.log('[dashboard-blog] auto-saving', payloadKey, url);
+          const saved = await saveBlogPartial({ [payloadKey]: url }, statusEl);
+          console.log('[dashboard-blog] auto-save result', saved);
+          const finalUrl = saved && saved[payloadKey] ? saved[payloadKey] : url;
+          urlInputEl.value = finalUrl;
+          if (previewEl) { previewEl.src = finalUrl; previewEl.hidden = false; }
+        }
+        fileEl.addEventListener('change', run);
       }
 
       // Generic image field wiring

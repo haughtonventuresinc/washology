@@ -1316,15 +1316,15 @@
 		<div class="services-grid">
 			      <% 
         const _defaults = [
-          { title: 'House & Siding Washing', url: '/services#house-washing' },
-          { title: 'Roof Soft Wash', url: '/services#roof-soft-wash' },
-          { title: 'Driveway & Concrete Cleaning', url: '/services#concrete-cleaning' },
-          { title: 'Commercial Washing', url: '/services#commercial' }
+          { title: 'House & Siding Washing', url: '/' },
+          { title: 'Roof Soft Wash', url: '/' },
+          { title: 'Driveway & Concrete Cleaning', url: '/' },
+          { title: 'Commercial Washing', url: '/' }
         ];
         for (let i = 1; i <= 4; i++) { 
       %>
         <% const sTitle = (homepage && homepage[`featuredService${i}Title`]) || _defaults[i-1].title; %>
-        <% const sUrl = (homepage && homepage[`featuredService${i}Url`]) || _defaults[i-1].url; %>
+        <% const sUrl = '/'; %>
         <% const sImg = (homepage && homepage[`featuredService${i}Image`]) || ((i % 2 === 0) ? '/pictures/Washology/3.png' : '/pictures/Washology/2.png'); %>
         <a class="service-card-new" href="<%= sUrl %>">
           <div class="service-image">
