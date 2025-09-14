@@ -8,9 +8,6 @@
 
   
 /* Text & links */
-a { color: var(--brand-red); }
-a:hover, a:focus { color: #d7341b; }
-
 /* Buttons */
 .btn-primary, .button, .wp-block-button__link, .btn.btn-primary {
   background-color: var(--brand-red) !important;
