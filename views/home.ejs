@@ -1,6 +1,16 @@
 <%- include('partials/header') %>
 
-<section class="hero hero-wrapper overlay-jade hero-aesthetic" data-hero-bg="<%= (homepage && homepage.heroBg) || '/pictures/Washology/2.png' %>" style="background-image: url(&quot;<%= (homepage && homepage.heroBg) || '/pictures/Washology/2.png' %>&quot;); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+<% 
+  // Compute a safe hero background URL; override legacy defaults
+  const _rawHomeHero = (homepage && homepage.heroBg) || '';
+  const _homeTrim = (typeof _rawHomeHero === 'string') ? _rawHomeHero.trim() : '';
+  const _homeAbs = /^https?:\/\//i.test(_homeTrim);
+  const _isGemini = /Gemini_Generated_Image_/i.test(_homeTrim);
+  const _homeHero = (!_homeTrim || !_isGemini)
+    ? '/pictures/Washology/Gemini_Generated_Image_gm76qbgm76qbgm76.png?v=2'
+    : (_homeAbs ? _homeTrim : ('/' + _homeTrim.replace(/^\/+/, '')));
+%>
+<section class="hero hero-wrapper overlay-jade hero-aesthetic" data-hero-bg="<%= _homeHero %>" style="background-image: url('<%= _homeHero %>'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <div class="content-wrapper container position-relative">
@@ -58,6 +68,20 @@
     </div>
   </div>
 </section>
+
+<script>
+  (function(){
+    try {
+      var hero = document.querySelector('section.hero.hero-wrapper');
+      var url = '<%= _homeHero %>';
+      function apply(){ if (hero) { hero.style.backgroundImage = "url('" + url + "')"; hero.dataset.heroBg = url; } }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', apply);
+      } else { apply(); }
+      setTimeout(apply, 600); // re-assert after other scripts
+    } catch(_) {}
+  })();
+  </script>
 
 <!-- (removed duplicate early ZIP modal block) -->
 
@@ -1046,13 +1070,13 @@
   .our-services-new .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
   .our-services-new .service-card-new { background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid rgba(11,94,142,.15); transition: transform .2s ease, box-shadow .2s ease; display: block; }
   .our-services-new .service-card-new:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0,0,0,.15); }
-  .our-services-new .service-image { position: relative; height: 200px; overflow: hidden; }
-  .our-services-new .service-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .our-services-new .service-image { position: relative; height: 260px; overflow: hidden; }
+  .our-services-new .service-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
   .our-services-new .service-icon { position: absolute; top: 14px; left: 14px; width: 42px; height: 42px; background: var(--brand-blue); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
   .our-services-new .service-content { padding: 1rem 1rem 1.25rem; }
   .our-services-new .service-title { color: var(--brand-blue); font-weight: 700; font-size: 1.05rem; margin: 0; }
   @media (max-width: 767.98px) { .our-services-new .services-header { flex-direction: column; align-items: flex-start; } }
-  @media (max-width: 575.98px) { .our-services-new .service-image { height: 180px; } }
+  @media (max-width: 575.98px) { .our-services-new .service-image { height: 220px; } }
 </style>
 
 <section class="why-choose-us">
@@ -1060,7 +1084,7 @@
 		<div class="row align-items-center gap-4 gap-lg-0">
 			<div class="col-sm-12 col-lg-6 position-relative">
 				<div class="image-container">
-					<img width="750" height="600" src="<%= (homepage && homepage.whoWeAreImage) || '/pictures/Washology/3.png' %>" class="img-fluid main-image" alt="Pressure washing professional at work" decoding="async" fetchpriority="high" />
+					<img width="750" height="600" src="<%= (homepage && homepage.whoWeAreImage) || '/pictures/Washology/Gemini_Generated_Image_foova8foova8foov.png' %>" class="img-fluid main-image" alt="Pressure washing professional at work" decoding="async" fetchpriority="high" />
 					
 					<!-- Testimonial overlay card -->
 					<div class="testimonial-card">
@@ -1069,7 +1093,7 @@
 						</blockquote>
 						<div class="testimonial-author">
 							<div class="author-avatar">
-								<img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50&h=50&fit=crop&crop=face" alt="Customer photo" />
+								<img src="/pictures/Washology/Gemini_Generated_Image_gl6ufrgl6ufrgl6u.png" alt="Customer photo" width="50" height="50" style="object-fit: cover; border-radius: 50%;" />
 							</div>
 							<div class="author-info">
 								<div class="author-name">Sarah M.</div>
@@ -1325,7 +1349,18 @@
       %>
         <% const sTitle = (homepage && homepage[`featuredService${i}Title`]) || _defaults[i-1].title; %>
         <% const sUrl = '/'; %>
-        <% const sImg = (homepage && homepage[`featuredService${i}Image`]) || ((i % 2 === 0) ? '/pictures/Washology/3.png' : '/pictures/Washology/2.png'); %>
+        <% 
+          const _serviceDefaults = [
+            '/pictures/Washology/Gemini_Generated_Image_5t5p1o5t5p1o5t5p.png',
+            '/pictures/Washology/Gemini_Generated_Image_spad6ospad6ospad.png',
+            '/pictures/Washology/Gemini_Generated_Image_gl6ufrgl6ufrgl6u.png',
+            '/pictures/Washology/Gemini_Generated_Image_foova8foova8foov.png'
+          ];
+          let _sImg = (homepage && homepage[`featuredService${i}Image`]) || _serviceDefaults[(i-1)%_serviceDefaults.length];
+          // Ensure it's absolute
+          if (_sImg && !/^https?:\/\//i.test(_sImg) && _sImg.charAt(0) !== '/') _sImg = '/' + _sImg.replace(/^\/+/, '');
+        %>
+        <% const sImg = _sImg; %>
         <a class="service-card-new" href="<%= sUrl %>">
           <div class="service-image">
             <img src="<%= sImg %>" alt="<%= sTitle %>" class="img-fluid">
